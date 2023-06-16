@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.disfluency.disfluencyapi.dto.PacienteDTO;
-import com.disfluency.disfluencyapi.service.PacienteService;
+import com.disfluency.disfluencyapi.dto.PatientDTO;
+import com.disfluency.disfluencyapi.service.PatientService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PacienteController {
 
-    private final PacienteService pacienteService;
+    private final PatientService pacienteService;
 
     @GetMapping("pacientes/{pacienteId}")
-    public PacienteDTO getPacienteById(@PathVariable String pacienteId) {
-        return pacienteService.getPacienteById(pacienteId).orElseThrow().toDTO();
+    public PatientDTO getPacienteById(@PathVariable String pacienteId) {
+        return pacienteService.getPatientById(pacienteId).orElseThrow().toDTO();
     }
 }

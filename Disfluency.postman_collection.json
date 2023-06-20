@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "57d5fdaa-180d-45c2-9109-bf41d4a055b2",
+		"name": "Disfluency",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20573673"
+	},
+	"item": [
+		{
+			"name": "Fono by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/therapists/{{fonoId}}",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"therapists",
+						"{{fonoId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pacientes by fonoId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/therapists/{{fonoId}}/patients",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"therapists",
+						"{{fonoId}}",
+						"patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New fono",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Jose\",\r\n    \"lastName\": \"Bruzzoni\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/therapists",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"therapists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New paciente to fono",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Pablo\",\r\n    \"lastName\": \"McCartney\",\r\n    \"birthday\": \"1942-11-03\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/therapists/{{fonoId}}/patients",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"therapists",
+						"{{fonoId}}",
+						"patients"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "fonoId",
+			"value": "64693fcf7b6f2858545cbcc3"
+		},
+		{
+			"key": "server",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

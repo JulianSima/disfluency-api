@@ -3,6 +3,7 @@ package com.disfluency.disfluencyapi.domain;
 import com.disfluency.disfluencyapi.dto.NewTherapistDTO;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class Therapist implements UserRole {
     private String name;
     private String lastName;
     private String profilePictureUrl;
+    @DocumentReference
     private List<Patient> patients;
     private List<Exercise> exercises;
     private List<Form> forms;

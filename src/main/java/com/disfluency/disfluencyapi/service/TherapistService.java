@@ -39,4 +39,8 @@ public class TherapistService {
         therapistRepo.save(therapist);
         return patient;
     }
+
+    public List<Therapist> getAllTherapist() {
+        return this.therapistRepo.findAll();
+    }
 }

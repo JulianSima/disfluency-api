@@ -1,5 +1,6 @@
 package com.disfluency.disfluencyapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.MediaType;
@@ -45,5 +46,10 @@ public class TherapistController {
     @PostMapping(value = "/therapists", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Therapist createTherapist(@RequestBody NewTherapistDTO newTherapist) {
         return therapistService.createTherapist(newTherapist);
+    }
+
+    @GetMapping("/therapists")
+    public List<Therapist> getAllTherapist() {
+        return therapistService.getAllTherapist();
     }
 }

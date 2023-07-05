@@ -11,12 +11,12 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class PacienteController {
+public class PatientController {
 
-    private final PatientService pacienteService;
+    private final PatientService patientService;
 
-    @GetMapping("pacientes/{pacienteId}")
-    public PatientDTO getPacienteById(@PathVariable String pacienteId) {
-        return pacienteService.getPatientById(pacienteId).orElseThrow().toDTO();
+    @GetMapping("patient/{patientId}")
+    public PatientDTO getPatientById(@PathVariable String patientId) {
+        return patientService.getPatientById(patientId).orElseThrow().toDTO();
     }
 }

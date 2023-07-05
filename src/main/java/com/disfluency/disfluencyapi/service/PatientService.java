@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.disfluency.disfluencyapi.domain.Patient;
-import com.disfluency.disfluencyapi.dto.NewPatientDTO;
+import com.disfluency.disfluencyapi.dto.patient.NewPatientDTO;
 import com.disfluency.disfluencyapi.repository.PatientRepo;
 
 import lombok.RequiredArgsConstructor;

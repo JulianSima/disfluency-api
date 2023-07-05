@@ -1,6 +1,5 @@
 package com.disfluency.disfluencyapi.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.MediaType;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.disfluency.disfluencyapi.domain.Therapist;
 import com.disfluency.disfluencyapi.domain.Patient;
 import com.disfluency.disfluencyapi.dto.NewTherapistDTO;
-import com.disfluency.disfluencyapi.dto.NewPatientDTO;
-import com.disfluency.disfluencyapi.dto.PatientDTO;
+import com.disfluency.disfluencyapi.dto.patient.NewPatientDTO;
+import com.disfluency.disfluencyapi.dto.patient.PatientDTO;
 import com.disfluency.disfluencyapi.service.TherapistService;
 
 import lombok.RequiredArgsConstructor;

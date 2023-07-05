@@ -1,7 +1,7 @@
 package com.disfluency.disfluencyapi.domain;
 
-import com.disfluency.disfluencyapi.dto.NewPatientDTO;
-import com.disfluency.disfluencyapi.dto.PatientDTO;
+import com.disfluency.disfluencyapi.dto.patient.NewPatientDTO;
+import com.disfluency.disfluencyapi.dto.patient.PatientDTO;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;

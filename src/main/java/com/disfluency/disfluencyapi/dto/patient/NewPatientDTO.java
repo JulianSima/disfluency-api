@@ -1,4 +1,4 @@
-package com.disfluency.disfluencyapi.dto;
+package com.disfluency.disfluencyapi.dto.patient;
 
 import java.time.LocalDate;
 

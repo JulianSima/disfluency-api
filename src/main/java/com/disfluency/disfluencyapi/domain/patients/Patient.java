@@ -1,7 +1,12 @@
-package com.disfluency.disfluencyapi.domain;
+package com.disfluency.disfluencyapi.domain.patients;
 
-import com.disfluency.disfluencyapi.dto.patient.NewPatientDTO;
-import com.disfluency.disfluencyapi.dto.patient.PatientDTO;
+import com.disfluency.disfluencyapi.domain.sessions.Session;
+import com.disfluency.disfluencyapi.domain.sessions.SessionTurn;
+import com.disfluency.disfluencyapi.domain.users.UserRole;
+import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
+import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
+import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
+import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;

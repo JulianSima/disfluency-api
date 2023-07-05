@@ -1,6 +1,6 @@
-package com.disfluency.disfluencyapi.dto.patient;
+package com.disfluency.disfluencyapi.dto.patients;
 
-import com.disfluency.disfluencyapi.domain.ExerciseAssignment;
+import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 
 import java.time.LocalDate;
 import java.util.List;

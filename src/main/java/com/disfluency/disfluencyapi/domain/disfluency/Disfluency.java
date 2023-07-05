@@ -1,4 +1,4 @@
-package com.disfluency.disfluencyapi.domain;
+package com.disfluency.disfluencyapi.domain.disfluency;
 
 public class Disfluency {
 

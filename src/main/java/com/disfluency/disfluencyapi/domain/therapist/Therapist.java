@@ -1,8 +1,14 @@
-package com.disfluency.disfluencyapi.domain;
+package com.disfluency.disfluencyapi.domain.therapist;
 
-import com.disfluency.disfluencyapi.dto.NewTherapistDTO;
+import com.disfluency.disfluencyapi.domain.users.UserRole;
+import com.disfluency.disfluencyapi.domain.exercises.Exercise;
+import com.disfluency.disfluencyapi.domain.forms.Form;
+import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
+import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.util.ArrayList;
@@ -12,6 +18,7 @@ import java.util.List;
 @Builder
 public class Therapist implements UserRole {
 
+    @Id
     private String id;
     private String name;
     private String lastName;
@@ -25,13 +32,20 @@ public class Therapist implements UserRole {
         patients.add(patient);
     }
 
+    public void addExercise(Exercise exercise) { exercises.add(exercise); }
+
     public static Therapist newTherapist(NewTherapistDTO newTherapist) {
         return Therapist.builder()
                 .name(newTherapist.name())
                 .lastName(newTherapist.lastName())
+                .profilePictureUrl(newTherapist.profilePictureUrl()) //TODO revisar cuando no se usen los avatares
                 .patients(new ArrayList<>())
                 .exercises(new ArrayList<>())
                 .forms(new ArrayList<>())
                 .build();
+    }
+
+    public TherapistDTO toDTO() {
+        return new TherapistDTO(id, name, lastName, Integer.valueOf(profilePictureUrl));
     }
 }

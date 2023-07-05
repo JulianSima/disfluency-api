@@ -1,4 +1,4 @@
-package com.disfluency.disfluencyapi.domain;
+package com.disfluency.disfluencyapi.domain.forms;
 
 import java.time.LocalDate;
 import java.util.List;

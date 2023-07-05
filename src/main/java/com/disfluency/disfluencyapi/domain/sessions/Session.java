@@ -1,4 +1,6 @@
-package com.disfluency.disfluencyapi.domain;
+package com.disfluency.disfluencyapi.domain.sessions;
+
+import com.disfluency.disfluencyapi.domain.disfluency.TranscriptionWord;
 
 import java.time.LocalDate;
 import java.util.List;

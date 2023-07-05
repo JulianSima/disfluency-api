@@ -1,4 +1,4 @@
-package com.disfluency.disfluencyapi.domain;
+package com.disfluency.disfluencyapi.domain.forms;
 
 public class FormQuestion {
 

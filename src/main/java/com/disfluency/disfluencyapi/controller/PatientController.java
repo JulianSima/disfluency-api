@@ -1,13 +1,13 @@
 package com.disfluency.disfluencyapi.controller;
 
-import com.disfluency.disfluencyapi.domain.ExerciseAssignment;
-import com.disfluency.disfluencyapi.domain.FormAssignment;
-import com.disfluency.disfluencyapi.domain.Session;
+import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
+import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
+import com.disfluency.disfluencyapi.domain.sessions.Session;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.disfluency.disfluencyapi.dto.patient.PatientDTO;
+import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
 import com.disfluency.disfluencyapi.service.PatientService;
 
 import lombok.RequiredArgsConstructor;

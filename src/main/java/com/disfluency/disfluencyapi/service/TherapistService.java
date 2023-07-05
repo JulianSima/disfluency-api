@@ -1,13 +1,16 @@
 package com.disfluency.disfluencyapi.service;
 
+import java.util.Collection;
 import java.util.List;
 
+import com.disfluency.disfluencyapi.domain.exercises.Exercise;
+import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
 import org.springframework.stereotype.Service;
 
-import com.disfluency.disfluencyapi.domain.Therapist;
-import com.disfluency.disfluencyapi.domain.Patient;
-import com.disfluency.disfluencyapi.dto.NewTherapistDTO;
-import com.disfluency.disfluencyapi.dto.patient.NewPatientDTO;
+import com.disfluency.disfluencyapi.domain.therapist.Therapist;
+import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
+import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.repository.TherapistRepo;
 
 import lombok.RequiredArgsConstructor;
@@ -18,18 +21,23 @@ public class TherapistService {
     
     private final TherapistRepo therapistRepo;
     private final PatientService patientService;
+    private final ExerciseService exerciseService;
 
-    public List<Patient> getPatientsByTherapistId(String therapistId) {
-        return therapistRepo.findById(therapistId).orElseThrow().getPatients();
+    public Therapist createTherapist(NewTherapistDTO newTherapist) {
+        var therapist = Therapist.newTherapist(newTherapist);
+        return therapistRepo.save(therapist);
     }
 
     public Therapist getTherapistById(String therapistId) {
         return therapistRepo.findById(therapistId).orElseThrow();
     }
 
-    public Therapist createTherapist(NewTherapistDTO newTherapist) {
-        var therapist = Therapist.newTherapist(newTherapist);
-        return therapistRepo.save(therapist);
+    public List<Therapist> getAllTherapist() {
+        return this.therapistRepo.findAll();
+    }
+
+    public List<Patient> getPatientsByTherapistId(String therapistId) {
+        return therapistRepo.findById(therapistId).orElseThrow().getPatients();
     }
 
     public Patient createPatientForTherapist(NewPatientDTO newPatient, String therapistId) {
@@ -40,7 +48,15 @@ public class TherapistService {
         return patient;
     }
 
-    public List<Therapist> getAllTherapist() {
-        return this.therapistRepo.findAll();
+    public Exercise createExerciseForTherapist(NewExerciseDTO newExercise, String therapistId) {
+        var exercise = exerciseService.createExercise(newExercise);
+        var therapist = therapistRepo.findById(therapistId).orElseThrow();
+        therapist.addExercise(exercise);
+        therapistRepo.save(therapist);
+        return exercise;
+    }
+
+    public List<Exercise> getExercisesByTherapistId(String therapistId) {
+        return therapistRepo.findById(therapistId).orElseThrow().getExercises();
     }
 }

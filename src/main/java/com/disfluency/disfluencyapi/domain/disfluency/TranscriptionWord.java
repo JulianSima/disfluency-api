@@ -1,4 +1,6 @@
-package com.disfluency.disfluencyapi.domain;
+package com.disfluency.disfluencyapi.domain.disfluency;
+
+import com.disfluency.disfluencyapi.domain.disfluency.Disfluency;
 
 public class TranscriptionWord {
 

@@ -1,4 +1,4 @@
-package com.disfluency.disfluencyapi.domain;
+package com.disfluency.disfluencyapi.domain.sessions;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

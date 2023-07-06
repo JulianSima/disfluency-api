@@ -23,7 +23,7 @@ import java.util.List;
 @Builder
 @Document(collection = "patients")
 public class Patient implements UserRole {
-    //TOOD: falta User
+
     @Id
     private String id;
     private String name;

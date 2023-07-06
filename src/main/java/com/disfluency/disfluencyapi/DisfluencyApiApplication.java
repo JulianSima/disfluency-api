@@ -42,7 +42,7 @@ public class DisfluencyApiApplication {
 		};
 	}*/
 
-	/*@Bean
+	@Bean
 	CommandLineRunner initDatabase(PatientRepo patientRepo, TherapistRepo therapistRepo, ExerciseRepo exerciseRepo, UserRepo userRepo) {
 
 		return args -> {
@@ -51,6 +51,6 @@ public class DisfluencyApiApplication {
 			therapistRepo.deleteAll();
 			userRepo.deleteAll();
 		};
-	}*/
+	}
 
 }

@@ -1,10 +1,8 @@
 package com.disfluency.disfluencyapi.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
-import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.dto.exercises.NewExerciseAssignmentDTO;
 import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
 import org.springframework.stereotype.Service;
@@ -24,6 +22,7 @@ public class TherapistService {
     private final TherapistRepo therapistRepo;
     private final PatientService patientService;
     private final ExerciseService exerciseService;
+    private final UserService userService;
 
     public Therapist createTherapist(NewTherapistDTO newTherapist) {
         var therapist = Therapist.newTherapist(newTherapist);
@@ -44,6 +43,7 @@ public class TherapistService {
 
     public Patient createPatientForTherapist(NewPatientDTO newPatient, String therapistId) {
         var patient = patientService.createPatient(newPatient, therapistId);
+        userService.createUser(newPatient.email(), "12345678", patient);  //TODO mandar mail
         var therapist = therapistRepo.findById(therapistId).orElseThrow();
         therapist.addPatient(patient);
         therapistRepo.save(therapist);

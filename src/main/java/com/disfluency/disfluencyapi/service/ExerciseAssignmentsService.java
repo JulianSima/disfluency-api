@@ -2,7 +2,6 @@ package com.disfluency.disfluencyapi.service;
 
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
-import com.disfluency.disfluencyapi.domain.exercises.ExercisePractice;
 import com.disfluency.disfluencyapi.dto.exercises.ExercisePracticeDTO;
 import com.disfluency.disfluencyapi.repository.ExerciseAssignmentsRepo;
 import lombok.RequiredArgsConstructor;

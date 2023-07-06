@@ -1,6 +1,5 @@
 package com.disfluency.disfluencyapi.domain.users;
 
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 

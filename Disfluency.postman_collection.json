@@ -7,102 +7,55 @@
 	},
 	"item": [
 		{
-			"name": "patient",
+			"name": "user",
 			"item": [
 				{
-					"name": "patient by id",
+					"name": "login",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"account\": \"tecomo@gmail.com\",\r\n    \"password\": \"18122022\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{server}}/patient/::id",
+							"raw": "{{server}}/login",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
-								"patient",
-								"::id"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "{{patientId}}"
-								}
+								"login"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "exerciseAssignments",
+					"name": "signUp",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"account\": \"jbruzzoni@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"user\": {\r\n        \"name\": \"Jose\",\r\n        \"lastName\": \"Bruzzoni\",\r\n        \"profilePictureUrl\": \"1\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{server}}/patient/::id/exerciseAssignments",
+							"raw": "{{server}}/signUp",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
-								"patient",
-								"::id",
-								"exerciseAssignments"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "{{patientId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "formAssignments",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/patient/::id/formAssignments",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"patient",
-								"::id",
-								"formAssignments"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "{{patientId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "therapySession",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/patient/::id/therapySession",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"patient",
-								"::id",
-								"therapySession"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "{{patientId}}"
-								}
+								"signUp"
 							]
 						}
 					},
@@ -438,7 +391,111 @@
 							"variable": [
 								{
 									"key": ":id",
-									"value": "64a63cda34923b0e2f7a4781"
+									"value": "64a71e8ddacc2a1dc3c30f78"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "patient",
+			"item": [
+				{
+					"name": "patient by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/patient/::id",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"patient",
+								"::id"
+							],
+							"variable": [
+								{
+									"key": ":id",
+									"value": "{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "exerciseAssignments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/patient/::id/exerciseAssignments",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"patient",
+								"::id",
+								"exerciseAssignments"
+							],
+							"variable": [
+								{
+									"key": ":id",
+									"value": "{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "formAssignments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/patient/::id/formAssignments",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"patient",
+								"::id",
+								"formAssignments"
+							],
+							"variable": [
+								{
+									"key": ":id",
+									"value": "{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "therapySession",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/patient/::id/therapySession",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"patient",
+								"::id",
+								"therapySession"
+							],
+							"variable": [
+								{
+									"key": ":id",
+									"value": "{{patientId}}"
 								}
 							]
 						}
@@ -476,12 +533,12 @@
 		},
 		{
 			"key": "fonoId",
-			"value": "64a63bdc34923b0e2f7a477d",
+			"value": "64a71d08dacc2a1dc3c30f71",
 			"type": "string"
 		},
 		{
 			"key": "patientId",
-			"value": "64a63bdc34923b0e2f7a477c",
+			"value": "64a71d35dacc2a1dc3c30f73",
 			"type": "string"
 		}
 	]

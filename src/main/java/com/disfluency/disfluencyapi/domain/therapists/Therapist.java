@@ -1,4 +1,4 @@
-package com.disfluency.disfluencyapi.domain.therapist;
+package com.disfluency.disfluencyapi.domain.therapists;
 
 import com.disfluency.disfluencyapi.domain.users.UserRole;
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;

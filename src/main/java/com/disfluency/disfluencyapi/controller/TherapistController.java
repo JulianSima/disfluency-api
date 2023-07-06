@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.disfluency.disfluencyapi.domain.therapist.Therapist;
+import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
-import com.disfluency.disfluencyapi.service.TherapistService;
+import com.disfluency.disfluencyapi.service.therapists.TherapistService;
 
 import lombok.RequiredArgsConstructor;
 

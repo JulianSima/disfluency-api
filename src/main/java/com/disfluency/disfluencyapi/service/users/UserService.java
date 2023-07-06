@@ -1,4 +1,4 @@
-package com.disfluency.disfluencyapi.service;
+package com.disfluency.disfluencyapi.service.users;
 
 import com.disfluency.disfluencyapi.domain.users.User;
 import com.disfluency.disfluencyapi.domain.users.UserRole;

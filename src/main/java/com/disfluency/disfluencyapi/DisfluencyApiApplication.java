@@ -1,7 +1,7 @@
 package com.disfluency.disfluencyapi;
 
 import com.disfluency.disfluencyapi.domain.patients.Patient;
-import com.disfluency.disfluencyapi.domain.therapist.Therapist;
+import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.domain.users.User;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;

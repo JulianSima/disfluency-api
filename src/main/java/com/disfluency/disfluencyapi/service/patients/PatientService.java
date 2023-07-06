@@ -1,10 +1,11 @@
-package com.disfluency.disfluencyapi.service;
+package com.disfluency.disfluencyapi.service.patients;
 
 import java.util.List;
 import java.util.Optional;
 
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
+import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentsService;
 import org.springframework.stereotype.Service;
 
 import com.disfluency.disfluencyapi.domain.patients.Patient;

@@ -1,4 +1,4 @@
-package com.disfluency.disfluencyapi.service;
+package com.disfluency.disfluencyapi.service.exercises;
 
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;

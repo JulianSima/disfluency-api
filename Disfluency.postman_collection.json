@@ -258,7 +258,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"patientsIds\": [\"{{patientId}}\"],\r\n    \"exerciseIds\": [\"64a63c3634923b0e2f7a477e\", \"64a63c4a34923b0e2f7a477f\", \"64a63c6e34923b0e2f7a4780\"]\r\n}",
+							"raw": "{\r\n    \"patientsIds\": [\"{{patientId}}\"],\r\n    \"exerciseIds\": [\"64a7510931bba17fa059fd01\", \"64a7511131bba17fa059fd02\", \"64a7511831bba17fa059fd03\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -533,12 +533,12 @@
 		},
 		{
 			"key": "fonoId",
-			"value": "64a71d08dacc2a1dc3c30f71",
+			"value": "64a74efe31bba17fa059fcfe",
 			"type": "string"
 		},
 		{
 			"key": "patientId",
-			"value": "64a71d35dacc2a1dc3c30f73",
+			"value": "64a74efe31bba17fa059fcfd",
 			"type": "string"
 		}
 	]

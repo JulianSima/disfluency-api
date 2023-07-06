@@ -7,6 +7,7 @@ import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
+import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -65,5 +66,10 @@ public class Patient implements UserRole {
 
     public void addExercisesAssignment(List<ExerciseAssignment> exerciseAssignments) {
         this.exerciseAssignments.addAll(exerciseAssignments);
+    }
+
+    @Override
+    public UserRoleDTO toUserRoleDTO() {
+        return new UserRoleDTO("Patient", this);
     }
 }

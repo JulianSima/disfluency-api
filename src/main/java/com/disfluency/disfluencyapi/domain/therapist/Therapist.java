@@ -6,6 +6,7 @@ import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
+import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -55,5 +56,10 @@ public class Therapist implements UserRole {
 
     public List<Patient> getPatientsWithIds(List<String> patientsIds) {
         return patients.stream().filter(patient -> patientsIds.contains(patient.getId()) ).toList();
+    }
+
+    @Override
+    public UserRoleDTO toUserRoleDTO() {
+        return new UserRoleDTO("Therapist", this);
     }
 }

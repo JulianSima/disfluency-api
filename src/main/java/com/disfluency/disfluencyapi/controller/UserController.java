@@ -1,7 +1,8 @@
 package com.disfluency.disfluencyapi.controller;
 
-import com.disfluency.disfluencyapi.domain.users.UserRole;
+import com.disfluency.disfluencyapi.dto.users.NewTherapistUserDTO;
 import com.disfluency.disfluencyapi.dto.users.UserDTO;
+import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
 import com.disfluency.disfluencyapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -16,7 +17,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserRole login(@RequestBody UserDTO userDTO) {
+    public UserRoleDTO login(@RequestBody UserDTO userDTO) {
         return userService.getUserRoleByCredentials(userDTO);
+    }
+
+    @PostMapping(value = "/signUp", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public UserRoleDTO signUp(@RequestBody NewTherapistUserDTO newUser) {
+        return userService.createTherapistUser(newUser.account(), newUser.password(), newUser.user());
     }
 }

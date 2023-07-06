@@ -26,4 +26,8 @@ public class ExerciseAssignment {
         dateOfAssignment = LocalDate.now();
         practiceAttempts = new ArrayList<>();
     }
+
+    public void addExercisePractice(ExercisePractice exercisePractice) {
+        practiceAttempts.add(exercisePractice);
+    }
 }

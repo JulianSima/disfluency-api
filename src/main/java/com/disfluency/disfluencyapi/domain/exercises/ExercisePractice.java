@@ -1,5 +1,6 @@
 package com.disfluency.disfluencyapi.domain.exercises;
 
+import com.disfluency.disfluencyapi.dto.exercises.ExercisePracticeDTO;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -16,4 +17,8 @@ public class ExercisePractice {
     private String id;
     private LocalDate date;
     private String recordingUrl;
+
+    public static ExercisePractice newExercisePractice(ExercisePracticeDTO exercisePracticeDTO) {
+        return builder().date(LocalDate.now()).recordingUrl(exercisePracticeDTO.recordingUrl()).build();
+    }
 }

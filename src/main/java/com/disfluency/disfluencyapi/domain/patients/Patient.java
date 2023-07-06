@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -33,6 +34,7 @@ public class Patient implements UserRole {
     private LocalDate joinedSince;
 
     private List<Session> therapySession;
+    @DocumentReference
     private List<ExerciseAssignment> exerciseAssignments;
     private List<FormAssignment> formAssignments;
 
@@ -59,5 +61,9 @@ public class Patient implements UserRole {
                 .formAssignments(new ArrayList<>())
                 //.therapistId(therapistId) //TODO revisar si es necesario tener el id del terapeuta
                 .build();
+    }
+
+    public void addExercisesAssignment(List<ExerciseAssignment> exerciseAssignments) {
+        this.exerciseAssignments.addAll(exerciseAssignments);
     }
 }

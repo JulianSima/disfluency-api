@@ -3,6 +3,8 @@ package com.disfluency.disfluencyapi.controller;
 import java.util.List;
 
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
+import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.dto.exercises.NewExerciseAssignmentDTO;
 import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
 import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
 import org.springframework.http.MediaType;
@@ -50,7 +52,7 @@ public class TherapistController {
     public List<PatientDTO> getPatientsByTherapistId(@PathVariable String therapistId) {
         return therapistService.getPatientsByTherapistId(therapistId)
             .stream()
-            .map(p -> p.toDTO())
+            .map(Patient::toDTO)
             .toList();
     }
 
@@ -62,5 +64,10 @@ public class TherapistController {
     @GetMapping("/therapists/{therapistId}/exercises")
     public List<Exercise> getExercisesByTherapistId(@PathVariable String therapistId) {
         return therapistService.getExercisesByTherapistId(therapistId);
+    }
+
+    @PostMapping(value = "/therapists/{therapistId}/exercises/assignment", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createExercisesAssignment(@RequestBody NewExerciseAssignmentDTO assignment, @PathVariable String therapistId) {
+        therapistService.createExercisesAssignment(assignment, therapistId);
     }
 }

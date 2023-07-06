@@ -1,9 +1,11 @@
 package com.disfluency.disfluencyapi.service;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
+import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
+import com.disfluency.disfluencyapi.dto.exercises.NewExerciseAssignmentDTO;
 import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
 import org.springframework.stereotype.Service;
 
@@ -58,5 +60,12 @@ public class TherapistService {
 
     public List<Exercise> getExercisesByTherapistId(String therapistId) {
         return therapistRepo.findById(therapistId).orElseThrow().getExercises();
+    }
+
+    public void createExercisesAssignment(NewExerciseAssignmentDTO assignment, String therapistId) {
+        var therapist = therapistRepo.findById(therapistId).orElseThrow();
+        List<Exercise> exercises = therapist.getExercisesWithIds(assignment.exerciseIds());
+        List<Patient> patients = therapist.getPatientsWithIds(assignment.patientsIds());
+        patients.forEach(patient -> patientService.exercisesAssignments(patient.getId(), exercises));
     }
 }

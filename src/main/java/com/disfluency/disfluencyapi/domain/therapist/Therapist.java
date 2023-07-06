@@ -48,4 +48,12 @@ public class Therapist implements UserRole {
     public TherapistDTO toDTO() {
         return new TherapistDTO(id, name, lastName, Integer.valueOf(profilePictureUrl));
     }
+
+    public List<Exercise> getExercisesWithIds(List<String> exercisesIds) {
+        return exercises.stream().filter( exercise ->  exercisesIds.contains(exercise.getId()) ).toList();
+    }
+
+    public List<Patient> getPatientsWithIds(List<String> patientsIds) {
+        return patients.stream().filter(patient -> patientsIds.contains(patient.getId()) ).toList();
+    }
 }

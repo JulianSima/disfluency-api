@@ -1,9 +1,9 @@
 package com.disfluency.disfluencyapi.domain.therapists;
 
-import com.disfluency.disfluencyapi.domain.users.UserRole;
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.users.UserRole;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
 import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
@@ -23,7 +23,7 @@ public class Therapist implements UserRole {
     private String id;
     private String name;
     private String lastName;
-    private String profilePictureUrl;
+    private int profilePictureUrl;
     @DocumentReference
     private List<Patient> patients;
     private List<Exercise> exercises;

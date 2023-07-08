@@ -1,10 +1,10 @@
 package com.disfluency.disfluencyapi.domain.patients;
 
+import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
+import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
 import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.domain.sessions.SessionTurn;
 import com.disfluency.disfluencyapi.domain.users.UserRole;
-import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
-import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
 import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
@@ -29,7 +29,7 @@ public class Patient implements UserRole {
     private String name;
     private String lastName;
     private LocalDate dateOfBirth;
-    private String profilePictureUrl;
+    private int profilePictureUrl;
     private SessionTurn sessionTurn;
 
     private LocalDate joinedSince;
@@ -46,7 +46,7 @@ public class Patient implements UserRole {
     public PatientDTO toDTO() {
         //TODO validar DTO en mobile
         return new PatientDTO(name, lastName, dateOfBirth, id, "abc@gmail.com", joinedSince,
-                Integer.valueOf(profilePictureUrl), sessionTurn.getDays(), sessionTurn.getTime(), exerciseAssignments);
+                profilePictureUrl, sessionTurn.getDays(), sessionTurn.getTime(), exerciseAssignments);
     }
 
     public static Patient newPatient(NewPatientDTO newPatientDTO, String therapistId) {
@@ -55,7 +55,7 @@ public class Patient implements UserRole {
                 .lastName(newPatientDTO.lastName())
                 .dateOfBirth(newPatientDTO.birthday())
                 .joinedSince(LocalDate.now())
-                .profilePictureUrl("1") //TODO preguntar como dejar esto para mobile
+                .profilePictureUrl(2130968584) //TODO preguntar como dejar esto para mobile
                 .sessionTurn(new SessionTurn(newPatientDTO.weeklyTurn(),newPatientDTO.weeklyHour()))
                 .therapySession(new ArrayList<>())
                 .exerciseAssignments(new ArrayList<>())

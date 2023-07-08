@@ -15,7 +15,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 @SpringBootApplication
 @EnableMongoRepositories
@@ -29,10 +32,10 @@ public class DisfluencyApiApplication {
 	CommandLineRunner initDatabase(PatientRepo patientRepo, TherapistRepo therapistRepo, UserRepo userRepo) {
 
 		return args -> {
-			Therapist messi = Therapist.newTherapist(new NewTherapistDTO("Lionel", "Messi", "1"));
+			Therapist messi = Therapist.newTherapist(new NewTherapistDTO("Lionel", "Messi", 2130968583));
 			User messiU = new User("messi10@gmail.com", "18122022", messi);
 			Patient dibu = Patient.newPatient(new NewPatientDTO("Emiliano", "Martinez",
-					"tecomo@gmail.com", LocalDate.now(), "Lunes y Miercoles","18:00"), "");
+					"tecomo@gmail.com", LocalDate.now(), List.of(DayOfWeek.MONDAY, DayOfWeek.THURSDAY), LocalTime.of(15, 30)), "");
 			User dibuU = new User("tecomo@gmail.com", "18122022", dibu);
 			messi.addPatient(dibu);
 			patientRepo.save(dibu);
@@ -44,7 +47,6 @@ public class DisfluencyApiApplication {
 
 	/*@Bean
 	CommandLineRunner initDatabase(PatientRepo patientRepo, TherapistRepo therapistRepo, ExerciseRepo exerciseRepo, UserRepo userRepo) {
-
 		return args -> {
 			patientRepo.deleteAll();
 			exerciseRepo.deleteAll();

@@ -1,18 +1,16 @@
 package com.disfluency.disfluencyapi.service.patients;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
-import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentsService;
-import org.springframework.stereotype.Service;
-
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.repository.PatientRepo;
-
+import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

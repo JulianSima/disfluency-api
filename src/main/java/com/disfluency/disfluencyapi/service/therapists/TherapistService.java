@@ -1,22 +1,20 @@
 package com.disfluency.disfluencyapi.service.therapists;
 
-import java.util.List;
-
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
+import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.dto.exercises.NewExerciseAssignmentDTO;
 import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
-import com.disfluency.disfluencyapi.service.users.UserService;
+import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
+import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
+import com.disfluency.disfluencyapi.repository.TherapistRepo;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
+import com.disfluency.disfluencyapi.service.users.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.disfluency.disfluencyapi.domain.therapists.Therapist;
-import com.disfluency.disfluencyapi.domain.patients.Patient;
-import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
-import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
-import com.disfluency.disfluencyapi.repository.TherapistRepo;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

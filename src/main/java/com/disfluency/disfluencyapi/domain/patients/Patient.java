@@ -53,7 +53,7 @@ public class Patient implements UserRole {
         return Patient.builder()
                 .name(newPatientDTO.name())
                 .lastName(newPatientDTO.lastName())
-                .dateOfBirth(newPatientDTO.birthday())
+                .dateOfBirth(newPatientDTO.dateOfBirth())
                 .joinedSince(LocalDate.now())
                 .profilePictureUrl(2130968584) //TODO preguntar como dejar esto para mobile
                 .sessionTurn(new SessionTurn(newPatientDTO.weeklyTurn(),newPatientDTO.weeklyHour()))

@@ -28,22 +28,30 @@ public class DisfluencyApiApplication {
 		SpringApplication.run(DisfluencyApiApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	CommandLineRunner initDatabase(PatientRepo patientRepo, TherapistRepo therapistRepo, UserRepo userRepo) {
 
 		return args -> {
-			Therapist messi = Therapist.newTherapist(new NewTherapistDTO("Lionel", "Messi", 2130968583));
-			User messiU = new User("messi10@gmail.com", "18122022", messi);
-			Patient dibu = Patient.newPatient(new NewPatientDTO("Emiliano", "Martinez",
-					"tecomo@gmail.com", LocalDate.now(), List.of(DayOfWeek.MONDAY, DayOfWeek.THURSDAY), LocalTime.of(15, 30)), "");
-			User dibuU = new User("tecomo@gmail.com", "18122022", dibu);
+			Therapist messi = Therapist.newTherapist(
+					new NewTherapistDTO("Lionel", "Messi", 2130968583)
+			);
+			User messiU = new User("Lio", "123", messi);
+
+			Patient dibu = Patient.newPatient(
+					new NewPatientDTO(
+							"Emiliano", "Martinez", "tecomo@gmail.com", LocalDate.now().minusYears(5),
+							List.of(DayOfWeek.MONDAY, DayOfWeek.THURSDAY), LocalTime.of(15, 30)),
+					""
+			);
+			User dibuU = new User("Dibu", "123", dibu);
+
 			messi.addPatient(dibu);
 			patientRepo.save(dibu);
 			therapistRepo.save(messi);
 			userRepo.save(messiU);
 			userRepo.save(dibuU);
 		};
-	}
+	}*/
 
 	/*@Bean
 	CommandLineRunner initDatabase(PatientRepo patientRepo, TherapistRepo therapistRepo, ExerciseRepo exerciseRepo, UserRepo userRepo) {
@@ -54,5 +62,4 @@ public class DisfluencyApiApplication {
 			userRepo.deleteAll();
 		};
 	}*/
-
 }

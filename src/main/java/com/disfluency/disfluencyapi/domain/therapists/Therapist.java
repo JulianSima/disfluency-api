@@ -7,6 +7,8 @@ import com.disfluency.disfluencyapi.domain.users.UserRole;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
 import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @Data
 @Builder
+@JsonTypeName("therapist")
 public class Therapist implements UserRole {
 
     @Id
@@ -25,8 +28,11 @@ public class Therapist implements UserRole {
     private String lastName;
     private int profilePictureUrl;
     @DocumentReference
+    @JsonIgnore
     private List<Patient> patients;
+    @JsonIgnore
     private List<Exercise> exercises;
+    @JsonIgnore
     private List<Form> forms;
 
     public void addPatient(Patient patient) {

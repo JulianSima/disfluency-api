@@ -31,7 +31,7 @@ public class PatientService {
     public void exercisesAssignments(String patientId, List<Exercise> exercises) {
         var patient = getPatientById(patientId).orElseThrow();
         List<ExerciseAssignment> exerciseAssignments = exercises.stream()
-                .map(exercise -> exerciseAssignmentsService.createExerciseAssignments(exercise))
+                .map(exerciseAssignmentsService::createExerciseAssignments)
                 .toList();
         patient.addExercisesAssignment(exerciseAssignments);
         patientRepo.save(patient);

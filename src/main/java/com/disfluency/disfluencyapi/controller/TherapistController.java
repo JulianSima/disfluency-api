@@ -11,6 +11,7 @@ import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
 import com.disfluency.disfluencyapi.service.therapists.TherapistService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class TherapistController {
     
     private final TherapistService therapistService;
@@ -62,6 +64,7 @@ public class TherapistController {
 
     @PostMapping(value = "/therapists/{therapistId}/exercises/assignment", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createExercisesAssignment(@RequestBody NewExerciseAssignmentDTO assignment, @PathVariable String therapistId) {
+        log.info(assignment.toString());
         therapistService.createExercisesAssignment(assignment, therapistId);
     }
 }

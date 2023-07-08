@@ -12,12 +12,14 @@ import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import com.disfluency.disfluencyapi.service.users.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TherapistService {
     
     private final TherapistRepo therapistRepo;
@@ -65,6 +67,7 @@ public class TherapistService {
 
     public void createExercisesAssignment(NewExerciseAssignmentDTO assignment, String therapistId) {
         var therapist = therapistRepo.findById(therapistId).orElseThrow();
+        log.info(therapist.toString());
         List<Exercise> exercises = therapist.getExercisesWithIds(assignment.exerciseIds());
         List<Patient> patients = therapist.getPatientsWithIds(assignment.patientsIds());
         patients.forEach(patient -> patientService.exercisesAssignments(patient.getId(), exercises));

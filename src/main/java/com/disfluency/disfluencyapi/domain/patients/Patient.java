@@ -8,6 +8,9 @@ import com.disfluency.disfluencyapi.domain.users.UserRole;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
 import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -22,6 +25,7 @@ import java.util.List;
 @Data
 @Builder
 @Document(collection = "patients")
+@JsonTypeName("patient")
 public class Patient implements UserRole {
 
     @Id
@@ -30,15 +34,21 @@ public class Patient implements UserRole {
     private String lastName;
     private LocalDate dateOfBirth;
     private int profilePictureUrl;
+    @JsonUnwrapped
     private SessionTurn sessionTurn;
+    private String email;
 
     private LocalDate joinedSince;
 
+    @JsonIgnore
     private List<Session> therapySession;
+    @JsonIgnore
     @DocumentReference
     private List<ExerciseAssignment> exerciseAssignments;
+    @JsonIgnore
     private List<FormAssignment> formAssignments;
 
+    @JsonIgnore
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
@@ -46,7 +56,7 @@ public class Patient implements UserRole {
     public PatientDTO toDTO() {
         //TODO validar DTO en mobile
         return new PatientDTO(name, lastName, dateOfBirth, id, "abc@gmail.com", joinedSince,
-                profilePictureUrl, sessionTurn.getDays(), sessionTurn.getTime(), exerciseAssignments);
+                profilePictureUrl, sessionTurn.getWeeklyTurn(), sessionTurn.getWeeklyHour(), exerciseAssignments);
     }
 
     public static Patient newPatient(NewPatientDTO newPatientDTO, String therapistId) {
@@ -60,6 +70,7 @@ public class Patient implements UserRole {
                 .therapySession(new ArrayList<>())
                 .exerciseAssignments(new ArrayList<>())
                 .formAssignments(new ArrayList<>())
+                .email(newPatientDTO.email())
                 //.therapistId(therapistId) //TODO revisar si es necesario tener el id del terapeuta
                 .build();
     }

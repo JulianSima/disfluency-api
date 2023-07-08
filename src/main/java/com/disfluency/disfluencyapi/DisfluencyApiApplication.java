@@ -25,7 +25,7 @@ public class DisfluencyApiApplication {
 		SpringApplication.run(DisfluencyApiApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	CommandLineRunner initDatabase(PatientRepo patientRepo, TherapistRepo therapistRepo, UserRepo userRepo) {
 
 		return args -> {
@@ -40,7 +40,7 @@ public class DisfluencyApiApplication {
 			userRepo.save(messiU);
 			userRepo.save(dibuU);
 		};
-	}
+	}*/
 
 	/*@Bean
 	CommandLineRunner initDatabase(PatientRepo patientRepo, TherapistRepo therapistRepo, ExerciseRepo exerciseRepo, UserRepo userRepo) {

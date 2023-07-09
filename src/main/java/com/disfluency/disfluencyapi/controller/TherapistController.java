@@ -41,6 +41,7 @@ public class TherapistController {
 
     @PostMapping(value = "/therapists/{therapistId}/patients", consumes = MediaType.APPLICATION_JSON_VALUE)
     public PatientDTO createPatient(@RequestBody NewPatientDTO newPatient, @PathVariable String therapistId) {
+        log.info(newPatient.toString());
         return therapistService.createPatientForTherapist(newPatient, therapistId).toDTO();
     }
     

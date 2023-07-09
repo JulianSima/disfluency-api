@@ -8,6 +8,6 @@ import java.time.LocalTime;
 import java.util.List;
 
 public record PatientDTO(String name, String lastName, LocalDate dateOfBirth, String id, String email,
-                         LocalDate joinedSince, Integer profilePic, List<DayOfWeek> weeklyTurn, LocalTime weeklyHour,
+                         LocalDate joinedSince, Integer profilePictureUrl, List<DayOfWeek> weeklyTurn, LocalTime weeklyHour,
                          List<ExerciseAssignment> exercises) {
 }

@@ -83,13 +83,14 @@ public class DisfluencyApiApplication {
 
 			// Creating therapists
 			Therapist scaloni = Therapist.newTherapist(new NewTherapistDTO("Lionel", "Scaloni", 2130968583));
+			scaloni.addExercise(exerciseList.stream().findFirst().get());
 			therapistList.add(scaloni);
 			userList.add(new User("Scalo", "123", scaloni));
 
 			// Creating patients
 			Patient dibu = Patient.newPatient(
 					new NewPatientDTO("Emiliano", "Martinez", "tecomo@gmail.com", LocalDate.now().minusYears(32),
-							List.of(DayOfWeek.MONDAY, DayOfWeek.THURSDAY), LocalTime.of(15, 30)),
+							List.of(DayOfWeek.MONDAY, DayOfWeek.THURSDAY), LocalTime.of(15, 30), 2131165275),
 					scaloni.getId());
 			scaloni.addPatient(dibu);
 			patientList.add(dibu);
@@ -97,7 +98,7 @@ public class DisfluencyApiApplication {
 
 			Patient messi = Patient.newPatient(
 					new NewPatientDTO("Lionel Andrés", "Messi", "lio@gmail.com", LocalDate.now().minusYears(36),
-							List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY), LocalTime.of(15, 30)),
+							List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY), LocalTime.of(15, 30),2131165276),
 					scaloni.getId());
 			scaloni.addPatient(messi);
 			patientList.add(messi);
@@ -105,7 +106,7 @@ public class DisfluencyApiApplication {
 
 			Patient depaul = Patient.newPatient(
 					new NewPatientDTO("Rodrigo", "De Paul", "rodri@gmail.com", LocalDate.now().minusYears(28),
-							List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY), LocalTime.of(15, 30)),
+							List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY), LocalTime.of(15, 30), 2131165277),
 					scaloni.getId());
 			scaloni.addPatient(depaul);
 			patientList.add(depaul);
@@ -114,7 +115,7 @@ public class DisfluencyApiApplication {
 
 			Patient paredes = Patient.newPatient(
 					new NewPatientDTO("Leandro", "Paredes", "paredes@gmail.com", LocalDate.now().minusYears(29),
-							List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY), LocalTime.of(15, 30)),
+							List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY), LocalTime.of(15, 30), 2131165278),
 					scaloni.getId());
 			scaloni.addPatient(paredes);
 			patientList.add(paredes);
@@ -157,16 +158,16 @@ public class DisfluencyApiApplication {
 	}*/
 
 
-//	@Bean
-//	CommandLineRunner initDatabase(PatientRepo patientRepo, TherapistRepo therapistRepo, ExerciseRepo exerciseRepo, UserRepo userRepo, ExerciseAssignmentsRepo exerciseAssignmentsRepo, ExercisePracticeRepo exercisePracticeRepo) {
-//		return args -> {
-//			patientRepo.deleteAll();
-//			exerciseRepo.deleteAll();
-//			therapistRepo.deleteAll();
-//			userRepo.deleteAll();
-//			exerciseAssignmentsRepo.deleteAll();
-//			exercisePracticeRepo.deleteAll();
-//		};
-//	}
+/*	@Bean
+	CommandLineRunner initDatabase(PatientRepo patientRepo, TherapistRepo therapistRepo, ExerciseRepo exerciseRepo, UserRepo userRepo, ExerciseAssignmentsRepo exerciseAssignmentsRepo, ExercisePracticeRepo exercisePracticeRepo) {
+		return args -> {
+			patientRepo.deleteAll();
+			exerciseRepo.deleteAll();
+			therapistRepo.deleteAll();
+			userRepo.deleteAll();
+			exerciseAssignmentsRepo.deleteAll();
+			exercisePracticeRepo.deleteAll();
+		};
+	}*/
 
 }

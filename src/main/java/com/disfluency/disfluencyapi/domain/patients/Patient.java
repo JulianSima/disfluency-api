@@ -54,8 +54,7 @@ public class Patient implements UserRole {
     }
 
     public PatientDTO toDTO() {
-        //TODO validar DTO en mobile
-        return new PatientDTO(name, lastName, dateOfBirth, id, "abc@gmail.com", joinedSince,
+        return new PatientDTO(name, lastName, dateOfBirth, id, email, joinedSince,
                 profilePictureUrl, sessionTurn.getWeeklyTurn(), sessionTurn.getWeeklyHour(), exerciseAssignments);
     }
 
@@ -65,7 +64,7 @@ public class Patient implements UserRole {
                 .lastName(newPatientDTO.lastName())
                 .dateOfBirth(newPatientDTO.dateOfBirth())
                 .joinedSince(LocalDate.now())
-                .profilePictureUrl(2130968584) //TODO preguntar como dejar esto para mobile
+                .profilePictureUrl(newPatientDTO.profilePictureUrl())
                 .sessionTurn(new SessionTurn(newPatientDTO.weeklyTurn(),newPatientDTO.weeklyHour()))
                 .therapySession(new ArrayList<>())
                 .exerciseAssignments(new ArrayList<>())

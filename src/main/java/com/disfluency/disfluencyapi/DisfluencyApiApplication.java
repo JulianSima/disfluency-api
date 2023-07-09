@@ -40,6 +40,7 @@ public class DisfluencyApiApplication {
 								   ExerciseAssignmentsRepo exerciseAssignmentsRepo,
 								   ExercisePracticeRepo exercisePracticeRepo) {
 
+
 		return args -> {
 			List<Patient> patientList = new ArrayList<>();
 			List<Therapist> therapistList = new ArrayList<>();

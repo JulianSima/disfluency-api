@@ -47,7 +47,8 @@ public class Patient implements UserRole {
     private List<ExerciseAssignment> exerciseAssignments;
     @JsonIgnore
     private List<FormAssignment> formAssignments;
-
+    @JsonIgnore
+    private String fcmToken;
     @JsonIgnore
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();

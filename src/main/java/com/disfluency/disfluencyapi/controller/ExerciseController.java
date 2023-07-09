@@ -7,13 +7,16 @@ import com.disfluency.disfluencyapi.dto.exercises.ExercisePracticeDTO;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentsService;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ExerciseController {
 
     private final ExerciseService exerciseService;
@@ -29,9 +32,10 @@ public class ExerciseController {
         return exerciseAssignmentService.getExerciseAssignmentById(exerciseId).orElseThrow();
     }
 
+    // TODO
     @PostMapping(value = "exercisesAssignments/{exerciseId}/practices", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createExercisePractice(@RequestBody ExercisePracticeDTO exercisePracticeDTO, @PathVariable String exerciseId) {
-        exerciseAssignmentService.createExercisePractice(exerciseId, exercisePracticeDTO);
+    public void createExercisePractice(@RequestBody ExercisePracticeDTO practice, @PathVariable String exerciseId) {
+        exerciseAssignmentService.createExercisePractice(exerciseId, practice);
     }
 
     @GetMapping("exercisesAssignments/{exerciseId}/practices")

@@ -63,7 +63,7 @@ public class MockedData {
         exerciseList.add(velocidadComoda);
 
         // Creating therapists
-        Therapist scaloni = Therapist.newTherapist(new NewTherapistDTO("Lionel", "Scaloni", 2130968583));
+        Therapist scaloni = Therapist.newTherapist(new NewTherapistDTO("Lionel", "Scaloni", 2131165276));
         scaloni.addExercise(exerciseList.stream().findFirst().get());
         therapistList.add(scaloni);
         userList.add(new User("Scalo", "123", scaloni));

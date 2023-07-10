@@ -21,6 +21,8 @@ import java.util.List;
 
 public class MockedData {
 
+    private static final Integer[] PROFILE_PICTURES = {2130968582, 2130968583, 2130968584, 2130968585, 2130968586, 2130968587, 2130968588};
+
     public static void saveData(PatientRepo patientRepo, TherapistRepo therapistRepo, ExerciseRepo exerciseRepo, UserRepo userRepo, ExerciseAssignmentsRepo exerciseAssignmentsRepo, ExercisePracticeRepo exercisePracticeRepo){
         List<Patient> patientList = new ArrayList<>();
         List<Therapist> therapistList = new ArrayList<>();
@@ -58,20 +60,20 @@ public class MockedData {
                 "Velocidad cómoda y fluida",
                 "Controlar la velocidad de manera que me sea cómodo, tratar de mantenerla ajustándola a mi comodidad. Hablá a una velocidad cómoda y constante a lo largo de las palabras; y de las frases; bajá un poco la velocidad cuando notás un poco de tensión en tu máquina de hablar",
                 "La usabilidad es la capacidad del producto software para ser entendido, aprendido, usado y resultar atractivo para el usuario, cuando se usa bajo determinadas condiciones",
-                "https://pf5302.s3.us-east-2.amazonaws.com/audios/velocidad.ogg")
+                "https://pf5302.s3.us-east-2.amazonaws.com/audios/velocidad.mp3")
         );
         exerciseList.add(velocidadComoda);
 
         // Creating therapists
-        Therapist scaloni = Therapist.newTherapist(new NewTherapistDTO("Lionel", "Scaloni", 2131165276));
-        scaloni.addExercise(exerciseList.stream().findFirst().get());
+        Therapist scaloni = Therapist.newTherapist(new NewTherapistDTO("Lionel", "Scaloni", PROFILE_PICTURES[0]));
+        scaloni.getExercises().addAll(exerciseList);
         therapistList.add(scaloni);
         userList.add(new User("Scalo", "123", scaloni));
 
         // Creating patients
         Patient dibu = Patient.newPatient(
                 new NewPatientDTO("Emiliano", "Martinez", "tecomo@gmail.com", LocalDate.now().minusYears(32),
-                        List.of(DayOfWeek.MONDAY, DayOfWeek.THURSDAY), LocalTime.of(15, 30), 2131165275),
+                        List.of(DayOfWeek.MONDAY, DayOfWeek.THURSDAY), LocalTime.of(15, 30), PROFILE_PICTURES[2]),
                 scaloni.getId());
         scaloni.addPatient(dibu);
         patientList.add(dibu);
@@ -79,7 +81,7 @@ public class MockedData {
 
         Patient messi = Patient.newPatient(
                 new NewPatientDTO("Lionel Andrés", "Messi", "lio@gmail.com", LocalDate.now().minusYears(36),
-                        List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY), LocalTime.of(15, 30),2131165276),
+                        List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY), LocalTime.of(15, 30),PROFILE_PICTURES[1]),
                 scaloni.getId());
         scaloni.addPatient(messi);
         patientList.add(messi);
@@ -87,7 +89,7 @@ public class MockedData {
 
         Patient depaul = Patient.newPatient(
                 new NewPatientDTO("Rodrigo", "De Paul", "rodri@gmail.com", LocalDate.now().minusYears(28),
-                        List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY), LocalTime.of(15, 30), 2131165277),
+                        List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY), LocalTime.of(15, 30), PROFILE_PICTURES[3]),
                 scaloni.getId());
         scaloni.addPatient(depaul);
         patientList.add(depaul);
@@ -96,7 +98,7 @@ public class MockedData {
 
         Patient paredes = Patient.newPatient(
                 new NewPatientDTO("Leandro", "Paredes", "paredes@gmail.com", LocalDate.now().minusYears(29),
-                        List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY), LocalTime.of(15, 30), 2131165278),
+                        List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY), LocalTime.of(15, 30), PROFILE_PICTURES[5]),
                 scaloni.getId());
         scaloni.addPatient(paredes);
         patientList.add(paredes);

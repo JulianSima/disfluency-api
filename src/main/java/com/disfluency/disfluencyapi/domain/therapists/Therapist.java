@@ -1,12 +1,14 @@
 package com.disfluency.disfluencyapi.domain.therapists;
 
-import com.disfluency.disfluencyapi.domain.users.UserRole;
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.users.UserRole;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
 import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -17,16 +19,20 @@ import java.util.List;
 
 @Data
 @Builder
+@JsonTypeName("therapist")
 public class Therapist implements UserRole {
 
     @Id
     private String id;
     private String name;
     private String lastName;
-    private String profilePictureUrl;
+    private int profilePictureUrl;
     @DocumentReference
+    @JsonIgnore
     private List<Patient> patients;
+    @JsonIgnore
     private List<Exercise> exercises;
+    @JsonIgnore
     private List<Form> forms;
 
     public void addPatient(Patient patient) {

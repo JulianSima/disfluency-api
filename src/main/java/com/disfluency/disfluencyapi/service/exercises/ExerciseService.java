@@ -1,11 +1,10 @@
 package com.disfluency.disfluencyapi.service.exercises;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
 import com.disfluency.disfluencyapi.repository.ExerciseRepo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 

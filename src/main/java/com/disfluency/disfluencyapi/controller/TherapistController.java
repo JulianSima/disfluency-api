@@ -1,29 +1,25 @@
 package com.disfluency.disfluencyapi.controller;
 
-import java.util.List;
-
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.dto.exercises.NewExerciseAssignmentDTO;
 import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
-import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.disfluency.disfluencyapi.domain.therapists.Therapist;
-import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
+import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
+import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
 import com.disfluency.disfluencyapi.service.therapists.TherapistService;
-
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class TherapistController {
     
     private final TherapistService therapistService;
@@ -45,6 +41,7 @@ public class TherapistController {
 
     @PostMapping(value = "/therapists/{therapistId}/patients", consumes = MediaType.APPLICATION_JSON_VALUE)
     public PatientDTO createPatient(@RequestBody NewPatientDTO newPatient, @PathVariable String therapistId) {
+        log.info(newPatient.toString());
         return therapistService.createPatientForTherapist(newPatient, therapistId).toDTO();
     }
     
@@ -68,6 +65,7 @@ public class TherapistController {
 
     @PostMapping(value = "/therapists/{therapistId}/exercises/assignment", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createExercisesAssignment(@RequestBody NewExerciseAssignmentDTO assignment, @PathVariable String therapistId) {
+        log.info(assignment.toString());
         therapistService.createExercisesAssignment(assignment, therapistId);
     }
 }

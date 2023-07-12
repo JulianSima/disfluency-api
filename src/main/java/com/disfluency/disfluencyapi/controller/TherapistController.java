@@ -1,10 +1,7 @@
 package com.disfluency.disfluencyapi.controller;
 
-import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
-import com.disfluency.disfluencyapi.dto.exercises.NewExerciseAssignmentDTO;
-import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
@@ -51,21 +48,5 @@ public class TherapistController {
             .stream()
             .map(Patient::toDTO)
             .toList();
-    }
-
-    @PostMapping(value = "/therapists/{therapistId}/exercises", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Exercise createExercise(@RequestBody NewExerciseDTO exercise, @PathVariable String therapistId) {
-        return therapistService.createExerciseForTherapist(exercise, therapistId);
-    }
-
-    @GetMapping("/therapists/{therapistId}/exercises")
-    public List<Exercise> getExercisesByTherapistId(@PathVariable String therapistId) {
-        return therapistService.getExercisesByTherapistId(therapistId);
-    }
-
-    @PostMapping(value = "/therapists/{therapistId}/exercises/assignment", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createExercisesAssignment(@RequestBody NewExerciseAssignmentDTO assignment, @PathVariable String therapistId) {
-        log.info(assignment.toString());
-        therapistService.createExercisesAssignment(assignment, therapistId);
     }
 }

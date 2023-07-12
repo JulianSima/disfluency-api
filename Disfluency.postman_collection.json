@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "733c73b3-1b58-4de9-b662-653808f8095d",
+		"_postman_id": "e4ead507-3798-489c-80ed-b069c51af19d",
 		"name": "Disfluency",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "13822479"
+		"_exporter_id": "20436497"
 	},
 	"item": [
 		{
@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"account\": \"tecomo@gmail.com\",\r\n    \"password\": \"18122022\"\r\n}",
+							"raw": "{\r\n    \"account\": \"Scalo\",\r\n    \"password\": \"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -42,7 +42,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"account\": \"jbruzzoni@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"user\": {\r\n        \"name\": \"Jose\",\r\n        \"lastName\": \"Bruzzoni\",\r\n        \"profilePictureUrl\": \"1\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"account\": \"jbruzzoni@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"user\": {\r\n        \"name\": \"Jose\",\r\n        \"lastName\": \"Bruzzoni\",\r\n        \"profilePictureUrl\": \"2130968582\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -140,7 +140,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Agustin\",\r\n    \"lastName\": \"Cragno\",\r\n    \"email\": \"acragno@frba.utn.edu.ar\",\r\n    \"birthday\": \"1998-07-30\",\r\n    \"weeklyTurn\": \"Lunes y Miercoles\", \r\n    \"weeklyHour\": \"18:00\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Agustin\",\r\n    \"lastName\": \"Cragno\",\r\n    \"email\": \"acragno@frba.utn.edu.ar\",\r\n    \"dateOfBirth\": \"1998-07-30\",\r\n    \"profilePic\": 2130968582,\r\n    \"weeklyTurn\": [\"MONDAY\", \"WEDNESDAY\"], \r\n    \"weeklyHour\": \"17:30:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -160,7 +160,7 @@
 							"variable": [
 								{
 									"key": ":id",
-									"value": "{{fonoId}}"
+									"value": "64af0a5b2fe753286e42e0a6"
 								}
 							]
 						}
@@ -185,213 +185,7 @@
 							"variable": [
 								{
 									"key": ":id",
-									"value": "{{fonoId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create exercise",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Repetir 3\",\r\n    \"instruction\": \"Repita la siguiente frase 3\",\r\n    \"phrase\": \"Pablito clavó un clavito 3\",\r\n    \"sampleRecordingUrl\": \"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/therapists/::id/exercises",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"therapists",
-								"::id",
-								"exercises"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "{{fonoId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "exercises by fonoId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/therapists/::id/exercises",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"therapists",
-								"::id",
-								"exercises"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "{{fonoId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "exerciseAssignment",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"patientsIds\": [\"{{patientId}}\"],\r\n    \"exerciseIds\": [\"64a7510931bba17fa059fd01\", \"64a7511131bba17fa059fd02\", \"64a7511831bba17fa059fd03\"]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/therapists/::id/exercises/assignment",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"therapists",
-								"::id",
-								"exercises",
-								"assignment"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "{{fonoId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "exercise",
-			"item": [
-				{
-					"name": "exercise by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/exercises/::id",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"exercises",
-								"::id"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "64a63c3634923b0e2f7a477e"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "exerciseAssignments by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/exercisesAssignments/::id",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"exercisesAssignments",
-								"::id"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "64a63cda34923b0e2f7a4781"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PracticeAttempts",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/exercisesAssignments/::id/practices",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"exercisesAssignments",
-								"::id",
-								"practices"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "64a63cda34923b0e2f7a4781"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PracticeAttempts",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"recordingUrl\": \"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/exercisesAssignments/::id/practices",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"exercisesAssignments",
-								"::id",
-								"practices"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "64a71e8ddacc2a1dc3c30f78"
+									"value": "64af0a5b2fe753286e42e0a6"
 								}
 							]
 						}
@@ -416,81 +210,6 @@
 							"path": [
 								"patient",
 								"::id"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "{{patientId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "exerciseAssignments",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/patient/::id/exerciseAssignments",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"patient",
-								"::id",
-								"exerciseAssignments"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "{{patientId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "formAssignments",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/patient/::id/formAssignments",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"patient",
-								"::id",
-								"formAssignments"
-							],
-							"variable": [
-								{
-									"key": ":id",
-									"value": "{{patientId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "therapySession",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/patient/::id/therapySession",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"patient",
-								"::id",
-								"therapySession"
 							],
 							"variable": [
 								{
@@ -538,7 +257,7 @@
 		},
 		{
 			"key": "patientId",
-			"value": "64a74efe31bba17fa059fcfd",
+			"value": "64af0a5a2fe753286e42e0a2",
 			"type": "string"
 		}
 	]

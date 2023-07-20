@@ -21,7 +21,7 @@ import java.util.List;
 
 public class MockedData {
 
-    private static final Integer[] PROFILE_PICTURES = {2130968582, 2130968583, 2130968584, 2130968585, 2130968586, 2130968587, 2130968588};
+    private static final Integer[] PROFILE_PICTURES = {1, 2, 3, 4, 5, 6, 7};
 
     public static void saveData(PatientRepo patientRepo, TherapistRepo therapistRepo, ExerciseRepo exerciseRepo, UserRepo userRepo, ExerciseAssignmentsRepo exerciseAssignmentsRepo, ExercisePracticeRepo exercisePracticeRepo){
         List<Patient> patientList = new ArrayList<>();

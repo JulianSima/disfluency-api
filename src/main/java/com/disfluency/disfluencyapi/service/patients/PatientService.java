@@ -20,7 +20,7 @@ public class PatientService {
         return patientRepo.findById(patientId);
     }
 
-    public Patient createPatient(NewPatientDTO newPatient, String therapistId) {
-        return patientRepo.save(Patient.newPatient(newPatient, therapistId));
+    public Patient createPatient(NewPatientDTO newPatient) {
+        return patientRepo.save(Patient.newPatient(newPatient));
     }
 }

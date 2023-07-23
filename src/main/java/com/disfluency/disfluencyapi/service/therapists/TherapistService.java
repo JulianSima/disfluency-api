@@ -2,11 +2,10 @@ package com.disfluency.disfluencyapi.service.therapists;
 
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
-import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
+import com.disfluency.disfluencyapi.exception.ExistingAccountException;
+import com.disfluency.disfluencyapi.exception.UserNotFoundException;
 import com.disfluency.disfluencyapi.repository.TherapistRepo;
-import com.disfluency.disfluencyapi.service.patients.PatientService;
-import com.disfluency.disfluencyapi.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,8 +18,6 @@ import java.util.List;
 public class TherapistService {
     
     private final TherapistRepo therapistRepo;
-    private final PatientService patientService;
-    private final UserService userService;
 
     public Therapist createTherapist(NewTherapistDTO newTherapist) {
         var therapist = Therapist.newTherapist(newTherapist);
@@ -39,12 +36,20 @@ public class TherapistService {
         return therapistRepo.findById(therapistId).orElseThrow().getPatients();
     }
 
-    public Patient createPatientForTherapist(NewPatientDTO newPatient, String therapistId) {
-        var patient = patientService.createPatient(newPatient, therapistId);
-        userService.createUser(newPatient.email(), "12345678", patient);  //TODO mandar mail
-        var therapist = therapistRepo.findById(therapistId).orElseThrow();
+    public void validateExistingTherapist(String therapistId) {
+        if(!isAnExistingTherapist(therapistId)) {
+            throw new UserNotFoundException();
+        }
+    }
+
+    private Boolean isAnExistingTherapist(String therapistId) {
+        return therapistRepo.existsById(therapistId);
+    }
+
+
+    public void addPatientToTherapist(String therapistId, Patient patient) {
+        var therapist = getTherapistById(therapistId);
         therapist.addPatient(patient);
         therapistRepo.save(therapist);
-        return patient;
     }
 }

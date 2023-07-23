@@ -7,6 +7,7 @@ import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
 import com.disfluency.disfluencyapi.service.therapists.TherapistService;
+import com.disfluency.disfluencyapi.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ import java.util.List;
 public class TherapistController {
     
     private final TherapistService therapistService;
+    private final UserService userService;
 
     @PostMapping(value = "/therapists", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Therapist createTherapist(@RequestBody NewTherapistDTO newTherapist) {
@@ -39,7 +41,8 @@ public class TherapistController {
     @PostMapping(value = "/therapists/{therapistId}/patients", consumes = MediaType.APPLICATION_JSON_VALUE)
     public PatientDTO createPatient(@RequestBody NewPatientDTO newPatient, @PathVariable String therapistId) {
         log.info(newPatient.toString());
-        return therapistService.createPatientForTherapist(newPatient, therapistId).toDTO();
+        therapistService.validateExistingTherapist(therapistId);
+        return userService.createPatientForTherapist(newPatient, therapistId).toDTO();
     }
     
     @GetMapping("/therapists/{therapistId}/patients")

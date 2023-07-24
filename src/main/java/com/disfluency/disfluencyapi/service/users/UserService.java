@@ -17,7 +17,7 @@ public class UserService {
 
     public UserRole getUserRoleByCredentials(UserDTO userDTO) {
         var user = userRepo.findOneByAccountAndPassword(userDTO.account(), userDTO.password());
-        var userRole = user.orElseThrow(UserNotFoundException::new);
+        var userRole = user.orElseThrow(() -> new UserNotFoundException(userDTO.account()));
         return userRole.getRole();
     }
 

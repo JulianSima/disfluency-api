@@ -4,6 +4,7 @@ import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
+import com.disfluency.disfluencyapi.exception.TherapistNotFoundException;
 import com.disfluency.disfluencyapi.repository.TherapistRepo;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import com.disfluency.disfluencyapi.service.users.UserService;
@@ -36,13 +37,13 @@ public class TherapistService {
     }
 
     public List<Patient> getPatientsByTherapistId(String therapistId) {
-        return therapistRepo.findById(therapistId).orElseThrow().getPatients();
+        return therapistRepo.findById(therapistId).orElseThrow(() -> new TherapistNotFoundException(therapistId)).getPatients();
     }
 
     public Patient createPatientForTherapist(NewPatientDTO newPatient, String therapistId) {
+        var therapist = therapistRepo.findById(therapistId).orElseThrow(() -> new TherapistNotFoundException(therapistId));
         var patient = patientService.createPatient(newPatient, therapistId);
         userService.createUser(newPatient.email(), "12345678", patient);  //TODO mandar mail
-        var therapist = therapistRepo.findById(therapistId).orElseThrow();
         therapist.addPatient(patient);
         therapistRepo.save(therapist);
         return patient;

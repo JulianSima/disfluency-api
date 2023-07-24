@@ -44,6 +44,7 @@ public class TherapistController {
     
     @GetMapping("/therapists/{therapistId}/patients")
     public List<PatientDTO> getPatientsByTherapistId(@PathVariable String therapistId) {
+        log.info("Retrieving patients of therapist: " + therapistId);
         return therapistService.getPatientsByTherapistId(therapistId)
             .stream()
             .map(Patient::toDTO)

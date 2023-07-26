@@ -59,7 +59,7 @@ public class Patient implements UserRole {
                 profilePictureUrl, sessionTurn.getWeeklyTurn(), sessionTurn.getWeeklyHour(), exerciseAssignments);
     }
 
-    public static Patient newPatient(NewPatientDTO newPatientDTO, String therapistId) {
+    public static Patient newPatient(NewPatientDTO newPatientDTO) {
         return Patient.builder()
                 .name(newPatientDTO.name())
                 .lastName(newPatientDTO.lastName())
@@ -71,7 +71,6 @@ public class Patient implements UserRole {
                 .exerciseAssignments(new ArrayList<>())
                 .formAssignments(new ArrayList<>())
                 .email(newPatientDTO.email())
-                //.therapistId(therapistId) //TODO revisar si es necesario tener el id del terapeuta
                 .build();
     }
 

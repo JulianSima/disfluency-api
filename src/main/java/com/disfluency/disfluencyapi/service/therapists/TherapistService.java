@@ -1,16 +1,11 @@
 package com.disfluency.disfluencyapi.service.therapists;
 
-import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
-import com.disfluency.disfluencyapi.dto.exercises.NewExerciseAssignmentDTO;
-import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
-import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
+import com.disfluency.disfluencyapi.exception.UserNotFoundException;
+import com.disfluency.disfluencyapi.exception.TherapistNotFoundException;
 import com.disfluency.disfluencyapi.repository.TherapistRepo;
-import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
-import com.disfluency.disfluencyapi.service.patients.PatientService;
-import com.disfluency.disfluencyapi.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,9 +18,6 @@ import java.util.List;
 public class TherapistService {
     
     private final TherapistRepo therapistRepo;
-    private final PatientService patientService;
-    private final ExerciseService exerciseService;
-    private final UserService userService;
 
     public Therapist createTherapist(NewTherapistDTO newTherapist) {
         var therapist = Therapist.newTherapist(newTherapist);
@@ -33,7 +25,7 @@ public class TherapistService {
     }
 
     public Therapist getTherapistById(String therapistId) {
-        return therapistRepo.findById(therapistId).orElseThrow();
+        return therapistRepo.findById(therapistId).orElseThrow(() -> new TherapistNotFoundException(therapistId));
     }
 
     public List<Therapist> getAllTherapist() {
@@ -41,35 +33,23 @@ public class TherapistService {
     }
 
     public List<Patient> getPatientsByTherapistId(String therapistId) {
-        return therapistRepo.findById(therapistId).orElseThrow().getPatients();
+        return therapistRepo.findById(therapistId).orElseThrow(() -> new TherapistNotFoundException(therapistId)).getPatients();
     }
 
-    public Patient createPatientForTherapist(NewPatientDTO newPatient, String therapistId) {
-        var patient = patientService.createPatient(newPatient, therapistId);
-        userService.createUser(newPatient.email(), "12345678", patient);  //TODO mandar mail
-        var therapist = therapistRepo.findById(therapistId).orElseThrow();
+    public void validateExistingTherapist(String therapistId) {
+        if(!isAnExistingTherapist(therapistId)) {
+            throw new UserNotFoundException(therapistId);
+        }
+    }
+
+    private Boolean isAnExistingTherapist(String therapistId) {
+        return therapistRepo.existsById(therapistId);
+    }
+
+
+    public void addPatientToTherapist(String therapistId, Patient patient) {
+        var therapist = getTherapistById(therapistId);
         therapist.addPatient(patient);
         therapistRepo.save(therapist);
-        return patient;
-    }
-
-    public Exercise createExerciseForTherapist(NewExerciseDTO newExercise, String therapistId) {
-        var exercise = exerciseService.createExercise(newExercise);
-        var therapist = therapistRepo.findById(therapistId).orElseThrow();
-        therapist.addExercise(exercise);
-        therapistRepo.save(therapist);
-        return exercise;
-    }
-
-    public List<Exercise> getExercisesByTherapistId(String therapistId) {
-        return therapistRepo.findById(therapistId).orElseThrow().getExercises();
-    }
-
-    public void createExercisesAssignment(NewExerciseAssignmentDTO assignment, String therapistId) {
-        var therapist = therapistRepo.findById(therapistId).orElseThrow();
-        log.info(therapist.toString());
-        List<Exercise> exercises = therapist.getExercisesWithIds(assignment.exerciseIds());
-        List<Patient> patients = therapist.getPatientsWithIds(assignment.patientsIds());
-        patients.forEach(patient -> patientService.exercisesAssignments(patient.getId(), exercises));
     }
 }

@@ -26,7 +26,7 @@ public class UserService {
 
     public UserRole getUserRoleByAccount(UserDTO userDTO) {
         var user = userRepo.findOneByAccount(userDTO.account());
-        var userRole = user.orElseThrow(UserNotFoundException::new);
+        var userRole = user.orElseThrow(() -> new UserNotFoundException(userDTO.account()));
         return userRole.getRole();
     }
 

@@ -15,6 +15,6 @@ public class PatientController {
 
     @GetMapping("patient/{patientId}")
     public PatientDTO getPatientById(@PathVariable String patientId) {
-        return patientService.getPatientById(patientId).orElseThrow().toDTO();
+        return patientService.getPatientById(patientId).toDTO();
     }
 }

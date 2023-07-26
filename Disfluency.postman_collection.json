@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e4ead507-3798-489c-80ed-b069c51af19d",
+		"_postman_id": "d70119e1-84a3-46a0-9168-f205fd09a9d1",
 		"name": "Disfluency",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20436497"
+		"_exporter_id": "13822479"
 	},
 	"item": [
 		{
@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"account\": \"Scalo\",\r\n    \"password\": \"123\"\r\n}",
+							"raw": "{\r\n    \"account\": \"acragno@frba.utn.edu.ar\",\r\n    \"password\": \"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -36,7 +36,7 @@
 					"response": []
 				},
 				{
-					"name": "signUp",
+					"name": "signUp Therapist",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -66,32 +66,6 @@
 		{
 			"name": "therapist",
 			"item": [
-				{
-					"name": "create therapist",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Jose\",\r\n    \"lastName\": \"Bruzzoni\",\r\n    \"profilePictureUrl\": \"1\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/therapists",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"therapists"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "therapist by id",
 					"request": {
@@ -160,7 +134,7 @@
 							"variable": [
 								{
 									"key": ":id",
-									"value": "64af0a5b2fe753286e42e0a6"
+									"value": "{{fonoId}}"
 								}
 							]
 						}
@@ -185,7 +159,7 @@
 							"variable": [
 								{
 									"key": ":id",
-									"value": "64af0a5b2fe753286e42e0a6"
+									"value": "{{fonoId}}"
 								}
 							]
 						}
@@ -252,12 +226,12 @@
 		},
 		{
 			"key": "fonoId",
-			"value": "64a74efe31bba17fa059fcfe",
+			"value": "64c15f56b5eafa4b99c1ee08",
 			"type": "string"
 		},
 		{
 			"key": "patientId",
-			"value": "64af0a5a2fe753286e42e0a2",
+			"value": "64c15fc9b5eafa4b99c1ee0a",
 			"type": "string"
 		}
 	]

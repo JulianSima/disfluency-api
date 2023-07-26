@@ -23,7 +23,7 @@ public class TherapistController {
     private final TherapistService therapistService;
     private final UserService userService;
 
-    @PostMapping(value = "/therapists", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/therapists", consumes = MediaType.APPLICATION_JSON_VALUE) //TODO Eliminar
     public Therapist createTherapist(@RequestBody NewTherapistDTO newTherapist) {
         return therapistService.createTherapist(newTherapist);
     }
@@ -47,6 +47,7 @@ public class TherapistController {
     
     @GetMapping("/therapists/{therapistId}/patients")
     public List<PatientDTO> getPatientsByTherapistId(@PathVariable String therapistId) {
+        log.info("Retrieving patients of therapist: " + therapistId);
         return therapistService.getPatientsByTherapistId(therapistId)
             .stream()
             .map(Patient::toDTO)

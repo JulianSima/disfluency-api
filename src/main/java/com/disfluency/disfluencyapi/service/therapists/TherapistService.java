@@ -3,8 +3,8 @@ package com.disfluency.disfluencyapi.service.therapists;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
-import com.disfluency.disfluencyapi.exception.ExistingAccountException;
 import com.disfluency.disfluencyapi.exception.UserNotFoundException;
+import com.disfluency.disfluencyapi.exception.TherapistNotFoundException;
 import com.disfluency.disfluencyapi.repository.TherapistRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class TherapistService {
     }
 
     public Therapist getTherapistById(String therapistId) {
-        return therapistRepo.findById(therapistId).orElseThrow();
+        return therapistRepo.findById(therapistId).orElseThrow(() -> new TherapistNotFoundException(therapistId));
     }
 
     public List<Therapist> getAllTherapist() {
@@ -33,12 +33,12 @@ public class TherapistService {
     }
 
     public List<Patient> getPatientsByTherapistId(String therapistId) {
-        return therapistRepo.findById(therapistId).orElseThrow().getPatients();
+        return therapistRepo.findById(therapistId).orElseThrow(() -> new TherapistNotFoundException(therapistId)).getPatients();
     }
 
     public void validateExistingTherapist(String therapistId) {
         if(!isAnExistingTherapist(therapistId)) {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(therapistId);
         }
     }
 

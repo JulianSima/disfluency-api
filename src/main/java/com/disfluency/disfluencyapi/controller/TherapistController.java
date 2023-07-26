@@ -33,7 +33,7 @@ public class TherapistController {
         return therapistService.getTherapistById(therapistId).toDTO();
     }
 
-    @GetMapping("/therapists")
+    @GetMapping("/therapists") //TODO Eliminar
     public List<Therapist> getAllTherapist() {
         return therapistService.getAllTherapist();
     }

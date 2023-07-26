@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"account\": \"acragno@frba.utn.edu.ar\",\r\n    \"password\": \"123\"\r\n}",
+							"raw": "{\r\n    \"account\": \"jbruzzoni@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -42,7 +42,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"account\": \"jbruzzoni@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"user\": {\r\n        \"name\": \"Jose\",\r\n        \"lastName\": \"Bruzzoni\",\r\n        \"profilePictureUrl\": \"2130968582\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"account\": \"jbruzzoni@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"user\": {\r\n        \"name\": \"Jose\",\r\n        \"lastName\": \"Bruzzoni\",\r\n        \"profilePictureUrl\": 3\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -91,30 +91,13 @@
 					"response": []
 				},
 				{
-					"name": "all therapist",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server}}/therapists",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"therapists"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "create patient",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Agustin\",\r\n    \"lastName\": \"Cragno\",\r\n    \"email\": \"acragno@frba.utn.edu.ar\",\r\n    \"dateOfBirth\": \"1998-07-30\",\r\n    \"profilePic\": 2130968582,\r\n    \"weeklyTurn\": [\"MONDAY\", \"WEDNESDAY\"], \r\n    \"weeklyHour\": \"17:30:00\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Agustin\",\r\n    \"lastName\": \"Cragno\",\r\n    \"email\": \"acragno@frba.utn.edu.ar\",\r\n    \"dateOfBirth\": \"1998-07-30\",\r\n    \"profilePictureUrl\": 5,\r\n    \"weeklyTurn\": [\"MONDAY\", \"WEDNESDAY\"], \r\n    \"weeklyHour\": \"17:30:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -196,6 +179,28 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "borrar",
+			"item": [
+				{
+					"name": "all therapist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/therapists",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"therapists"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -226,12 +231,12 @@
 		},
 		{
 			"key": "fonoId",
-			"value": "64c15f56b5eafa4b99c1ee08",
+			"value": "64c1717ded027e2d9fdef130",
 			"type": "string"
 		},
 		{
 			"key": "patientId",
-			"value": "64c15fc9b5eafa4b99c1ee0a",
+			"value": "64c171bbed027e2d9fdef132",
 			"type": "string"
 		}
 	]

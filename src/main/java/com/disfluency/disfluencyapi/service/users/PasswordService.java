@@ -1,15 +1,19 @@
 package com.disfluency.disfluencyapi.service.users;
 
 import com.disfluency.disfluencyapi.domain.users.UserPassword;
+import com.disfluency.disfluencyapi.exception.InvalidPasswordException;
+import com.disfluency.disfluencyapi.exception.SaltException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class PasswordService {
 
@@ -24,9 +28,10 @@ public class PasswordService {
     }
 
     public void validatePassword(String password, byte[] saltedPassword, byte[] salt) {
-        byte[] passwordCheck = encode(password, salt);
-        if(!passwordCheck.equals(saltedPassword)) {
-            throw new RuntimeException("Error, la contraseña no es correcta");
+        String passwordToCheck = new String(encode(password, salt));
+        String realPassword = new String (saltedPassword);
+        if(!passwordToCheck.equals(realPassword)) {
+            throw new InvalidPasswordException();
         }
     }
 
@@ -36,7 +41,8 @@ public class PasswordService {
             SecretKeyFactory factory = SecretKeyFactory.getInstance(algorithm);
             return factory.generateSecret(spec).getEncoded();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            log.info(e.getMessage());
+            throw new SaltException();
         }
     }
 

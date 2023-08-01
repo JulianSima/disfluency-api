@@ -27,9 +27,10 @@ public class UserService {
     private final PasswordService passwordService;
 
     public UserRole getUserRoleByAccount(UserDTO userDTO) {
-        var user = userRepo.findOneByAccount(userDTO.account());
-        var userRole = user.orElseThrow(() -> new UserNotFoundException(userDTO.account()));
-        return userRole.getRole();
+        var user = userRepo.findOneByAccount(userDTO.account())
+                        .orElseThrow( () -> new UserNotFoundException(userDTO.account()) );
+        passwordService.validatePassword(userDTO.password(), user.getPassword(), user.getSalt());
+        return user.getRole();
     }
 
     public UserRoleDTO createTherapistUser(NewTherapistUserDTO newUser) {

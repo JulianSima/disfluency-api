@@ -2,6 +2,7 @@ package com.disfluency.disfluencyapi.service.users;
 
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.users.User;
+import com.disfluency.disfluencyapi.domain.users.UserPassword;
 import com.disfluency.disfluencyapi.domain.users.UserRole;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.users.NewTherapistUserDTO;
@@ -23,6 +24,7 @@ public class UserService {
 
     private final TherapistService therapistService;
     private final PatientService patientService;
+    private final PasswordService passwordService;
 
     public UserRole getUserRoleByAccount(UserDTO userDTO) {
         var user = userRepo.findOneByAccount(userDTO.account());
@@ -50,7 +52,8 @@ public class UserService {
     }
 
     private UserRole createUser(String account, String password, UserRole user) {
-        return userRepo.save(new User(account, password, user)).getRole();
+        UserPassword userPassword = passwordService.createPasswordHash(password);
+        return userRepo.save(new User(account, userPassword,user)).getRole();
     }
 
     private void validateExistingAccount(String account) {

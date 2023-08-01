@@ -11,6 +11,7 @@ import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.repository.*;
+import com.disfluency.disfluencyapi.service.users.PasswordService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -24,6 +25,8 @@ public class MockedData {
     private static final Integer[] PROFILE_PICTURES = {1, 2, 3, 4, 5, 6, 7};
 
     public static void saveData(PatientRepo patientRepo, TherapistRepo therapistRepo, ExerciseRepo exerciseRepo, UserRepo userRepo, ExerciseAssignmentsRepo exerciseAssignmentsRepo, ExercisePracticeRepo exercisePracticeRepo){
+        PasswordService passwordService = new PasswordService();
+
         List<Patient> patientList = new ArrayList<>();
         List<Therapist> therapistList = new ArrayList<>();
         List<User> userList = new ArrayList<>();
@@ -68,7 +71,7 @@ public class MockedData {
         Therapist scaloni = Therapist.newTherapist(new NewTherapistDTO("Lionel", "Scaloni", PROFILE_PICTURES[0]));
         scaloni.getExercises().addAll(exerciseList);
         therapistList.add(scaloni);
-        //userList.add(new User("Scalo", passwordService.createPasswordHash("123"), scaloni));
+        userList.add(new User("Scalo", passwordService.createPasswordHash("123"), scaloni));
 
         // Creating patients
         Patient dibu = Patient.newPatient(
@@ -76,21 +79,21 @@ public class MockedData {
                         List.of(DayOfWeek.MONDAY, DayOfWeek.THURSDAY), LocalTime.of(15, 30), PROFILE_PICTURES[2]));
         scaloni.addPatient(dibu);
         patientList.add(dibu);
-        //userList.add(new User("Dibu", passwordService.createPasswordHash("123"), dibu));
+        userList.add(new User("Dibu", passwordService.createPasswordHash("123"), dibu));
 
         Patient messi = Patient.newPatient(
                 new NewPatientDTO("Lionel Andrés", "Messi", "lio@gmail.com", LocalDate.now().minusYears(36),
                         List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY), LocalTime.of(15, 30),PROFILE_PICTURES[1]));
         scaloni.addPatient(messi);
         patientList.add(messi);
-        //userList.add(new User("Messi", passwordService.createPasswordHash("123"), messi));
+        userList.add(new User("Messi", passwordService.createPasswordHash("123"), messi));
 
         Patient depaul = Patient.newPatient(
                 new NewPatientDTO("Rodrigo", "De Paul", "rodri@gmail.com", LocalDate.now().minusYears(28),
                         List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY), LocalTime.of(15, 30), PROFILE_PICTURES[3]));
         scaloni.addPatient(depaul);
         patientList.add(depaul);
-        //userList.add(new User("Rodri", passwordService.createPasswordHash("123"), depaul));
+        userList.add(new User("Rodri", passwordService.createPasswordHash("123"), depaul));
 
 
         Patient paredes = Patient.newPatient(
@@ -98,7 +101,7 @@ public class MockedData {
                         List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY), LocalTime.of(15, 30), PROFILE_PICTURES[5]));
         scaloni.addPatient(paredes);
         patientList.add(paredes);
-        //userList.add(new User("Paredes", passwordService.createPasswordHash("123"), paredes));
+        userList.add(new User("Paredes", passwordService.createPasswordHash("123"), paredes));
 
         // Resolutions
         ExercisePractice exercisePracticeDepaul = ExercisePractice.newExercisePractice(new ExercisePracticeDTO("https://pf5302.s3.us-east-2.amazonaws.com/audios/toquesligeros.mp3"));

@@ -18,7 +18,7 @@ public class ExercisePractice {
     private LocalDate date;
     private String recordingUrl;
 
-    public static ExercisePractice newExercisePractice(ExercisePracticeDTO exercisePracticeDTO) {
-        return builder().date(LocalDate.now()).recordingUrl(exercisePracticeDTO.recordingUrl()).build();
+    public static ExercisePractice newExercisePractice(String recordingUrl) {
+        return builder().date(LocalDate.now()).recordingUrl(recordingUrl).build();
     }
 }

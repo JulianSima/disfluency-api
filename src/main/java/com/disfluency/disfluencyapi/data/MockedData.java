@@ -105,8 +105,8 @@ public class MockedData {
         userList.add(new User("Paredes", "123", paredes));
 
         // Resolutions
-        ExercisePractice exercisePracticeDepaul = ExercisePractice.newExercisePractice(new ExercisePracticeDTO("https://pf5302.s3.us-east-2.amazonaws.com/audios/toquesligeros.mp3"));
-        ExercisePractice exercisePracticeMessi = ExercisePractice.newExercisePractice(new ExercisePracticeDTO("https://pf5302.s3.us-east-2.amazonaws.com/audios/iniciosuave.mp3"));
+        ExercisePractice exercisePracticeDepaul = ExercisePractice.newExercisePractice("https://pf5302.s3.us-east-2.amazonaws.com/audios/toquesligeros.mp3");
+        ExercisePractice exercisePracticeMessi = ExercisePractice.newExercisePractice("https://pf5302.s3.us-east-2.amazonaws.com/audios/iniciosuave.mp3");
         exercisePracticeList.addAll(Arrays.asList(exercisePracticeMessi, exercisePracticeDepaul));
 
         // Assignments

@@ -12,7 +12,7 @@ public class ExercisePracticeService {
 
     private final ExercisePracticeRepo exercisePracticeRepo;
 
-    public ExercisePractice createExercisePractice(ExercisePracticeDTO exercisePracticeDTO) {
-        return exercisePracticeRepo.save(ExercisePractice.newExercisePractice(exercisePracticeDTO));
+    public ExercisePractice createExercisePractice(String recordingUrl) {
+        return exercisePracticeRepo.save(ExercisePractice.newExercisePractice(recordingUrl));
     }
 }

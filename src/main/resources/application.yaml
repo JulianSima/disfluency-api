@@ -5,3 +5,9 @@ spring:
       database: disfluency
 server:
   port: 8081
+
+amazon:
+  aws:
+    accessKeyId: AKIA4GKSFFQDZ3UXS3IX
+    accessKeySecret: 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
+    region: us-east-2

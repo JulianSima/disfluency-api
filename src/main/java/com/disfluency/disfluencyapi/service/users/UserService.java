@@ -16,6 +16,8 @@ import com.disfluency.disfluencyapi.service.therapists.TherapistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -31,6 +33,10 @@ public class UserService {
                         .orElseThrow( () -> new UserNotFoundException(userDTO.account()) );
         passwordService.validatePassword(userDTO.password(), user.getPassword(), user.getSalt());
         return user.getRole();
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepo.findOneByAccount(username);
     }
 
     public UserRoleDTO createTherapistUser(NewTherapistUserDTO newUser) {

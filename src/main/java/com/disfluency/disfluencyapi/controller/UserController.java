@@ -3,7 +3,6 @@ package com.disfluency.disfluencyapi.controller;
 import com.disfluency.disfluencyapi.domain.tokens.RefreshToken;
 import com.disfluency.disfluencyapi.dto.tokens.JwtResponse;
 import com.disfluency.disfluencyapi.dto.tokens.RefreshTokenRequest;
-import com.disfluency.disfluencyapi.dto.tokens.RefreshTokenResponse;
 import com.disfluency.disfluencyapi.dto.users.NewTherapistUserDTO;
 import com.disfluency.disfluencyapi.dto.users.UserDTO;
 import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
@@ -29,12 +28,12 @@ public class UserController {
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public JwtResponse login(@RequestBody UserDTO userDTO) {
-        var user = userService.getUserRoleByAccount(userDTO);
+        var user = userService.getUserByAccount(userDTO);
         var username = userDTO.account();
         return JwtResponse.builder()
                 .accessToken(jwtService.generateJwtToken(username))
-                .refreshToken(refreshTokenService.createRefreshToken(username).getToken())
-                .userRoleDTO(user)
+                .refreshToken(refreshTokenService.createRefreshToken(user.getId()).getToken())
+                .userRoleDTO(user.getRole())
                 .build();
     }
 
@@ -44,20 +43,22 @@ public class UserController {
     }
 
     @PostMapping(value = "/refreshToken", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public RefreshTokenResponse refreshToken(@RequestBody RefreshTokenRequest refreshRequest) {
+    public JwtResponse refreshToken(@RequestBody RefreshTokenRequest refreshRequest) {
         var refreshToken = refreshRequest.refreshToken();
         return refreshTokenService
                 .findByToken(refreshToken)
                 .map(refreshTokenService::verifyExpiration)
                 .map(RefreshToken::getUserId)
-                .map(user -> {
-                    var newAccessToken = jwtService.generateJwtToken(user);
-                    return RefreshTokenResponse.builder()
-                            .accessToken(newAccessToken)
+                .map(userId -> {
+                    var user = userService.getUserById(userId);
+                    var newAccessToken = jwtService.generateJwtToken(user.getAccount());
+
+                    return JwtResponse.builder()
                             .refreshToken(refreshToken)
-                            .tokenType("Bearer")
+                            .accessToken(newAccessToken)
+                            .userRoleDTO(user.getRole())
                             .build();
-                }).orElseThrow(() -> new TokenRefreshException(refreshToken,
-                        "Refresh token is not in database!"));
+                    }
+                ).orElseThrow(() -> new TokenRefreshException(refreshToken, "Refresh token is not in database!"));
     }
 }

@@ -28,11 +28,15 @@ public class UserService {
     private final PatientService patientService;
     private final PasswordService passwordService;
 
-    public UserRole getUserRoleByAccount(UserDTO userDTO) {
+    public User getUserByAccount(UserDTO userDTO) {
         var user = userRepo.findOneByAccount(userDTO.account())
                         .orElseThrow( () -> new UserNotFoundException(userDTO.account()) );
         passwordService.validatePassword(userDTO.password(), user.getPassword(), user.getSalt());
-        return user.getRole();
+        return user;
+    }
+
+    public User getUserById(String id){
+        return userRepo.findById(id).orElseThrow( () -> new UserNotFoundException(id) );
     }
 
     public Optional<User> findByUsername(String username) {

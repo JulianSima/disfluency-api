@@ -26,6 +26,7 @@ public class RefreshTokenService {
     }
 
     public RefreshToken createRefreshToken(String userId) {
+        //TODO: borrar token anterior
         RefreshToken refreshToken = RefreshToken.builder()
                 .userId(userId)
                 .expiryDate(Instant.now().plusSeconds(refreshTokenDurationDays* 86400L))

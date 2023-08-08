@@ -4,6 +4,7 @@ import com.disfluency.disfluencyapi.domain.tokens.RefreshToken;
 import com.disfluency.disfluencyapi.exception.TokenRefreshException;
 import com.disfluency.disfluencyapi.repository.RefreshTokenRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RefreshTokenService {
 
     @Value("${jwt.refreshTokenDurationDays}")
@@ -26,7 +28,9 @@ public class RefreshTokenService {
     }
 
     public RefreshToken createRefreshToken(String userId) {
-        //TODO: borrar token anterior
+        var deletedToken = deleteByUserId(userId);
+        log.info("Deleted old refresh token: {}", deletedToken);
+
         RefreshToken refreshToken = RefreshToken.builder()
                 .userId(userId)
                 .expiryDate(Instant.now().plusSeconds(refreshTokenDurationDays* 86400L))
@@ -40,14 +44,12 @@ public class RefreshTokenService {
     public RefreshToken verifyExpiration(RefreshToken refreshToken) {
         if (refreshToken.isExpired()) {
             refreshTokenRepo.delete(refreshToken);
-            throw new TokenRefreshException(refreshToken.getToken(),
-                    "Refresh token was expired.");
+            throw new TokenRefreshException(refreshToken.getToken(), "Refresh token was expired.");
         }
 
         return refreshToken;
     }
 
-    @Transactional
     public int deleteByUserId(String userId) {
         return refreshTokenRepo.deleteByUserId(userId);
     }

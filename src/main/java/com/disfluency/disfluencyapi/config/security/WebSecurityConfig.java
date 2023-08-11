@@ -52,7 +52,7 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()
                 .requestMatchers("/login").permitAll()
-                .requestMatchers("/signUp").permitAll()
+                .requestMatchers("/signup").permitAll()
                 .requestMatchers("/refreshToken").permitAll()
                 .anyRequest().authenticated();
 

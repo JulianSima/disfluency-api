@@ -1,6 +1,7 @@
 package com.disfluency.disfluencyapi.service.users;
 
 import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.domain.users.User;
 import com.disfluency.disfluencyapi.domain.users.UserPassword;
 import com.disfluency.disfluencyapi.domain.users.UserRole;
@@ -43,10 +44,11 @@ public class UserService {
         return userRepo.findOneByAccount(username);
     }
 
-    public UserRoleDTO createTherapistUser(NewTherapistUserDTO newUser) {
+    public Therapist createTherapistUser(NewTherapistUserDTO newUser) {
         validateExistingAccount(newUser.account());
         var therapist = therapistService.createTherapist(newUser.user());
-        return createUser(newUser.account(), newUser.password(), therapist).toUserRoleDTO();
+        createUser(newUser.account(), newUser.password(), therapist);
+        return therapist;
     }
 
     public Patient createPatientForTherapist(NewPatientDTO newPatient, String therapistId) {

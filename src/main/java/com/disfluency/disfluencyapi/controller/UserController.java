@@ -1,5 +1,6 @@
 package com.disfluency.disfluencyapi.controller;
 
+import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.domain.tokens.RefreshToken;
 import com.disfluency.disfluencyapi.dto.tokens.JwtResponse;
 import com.disfluency.disfluencyapi.dto.tokens.RefreshTokenRequest;
@@ -37,9 +38,15 @@ public class UserController {
                 .build();
     }
 
-    @PostMapping(value = "/signUp", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserRoleDTO signUp(@RequestBody NewTherapistUserDTO newUser) {
-        return userService.createTherapistUser(newUser);
+    @PostMapping(value = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public JwtResponse signUp(@RequestBody NewTherapistUserDTO newUser) {
+        Therapist createdTherapist = userService.createTherapistUser(newUser);
+        //TODO: ver de separar en dos endpoints por ahi? o mas bien que este solo de de alta pero no te logge
+        return JwtResponse.builder()
+                .accessToken(jwtService.generateJwtToken(newUser.account()))
+                .refreshToken(refreshTokenService.createRefreshToken(createdTherapist.getId()).getToken())
+                .userRoleDTO(createdTherapist)
+                .build();
     }
 
     @PostMapping(value = "/refreshToken", consumes = MediaType.APPLICATION_JSON_VALUE)

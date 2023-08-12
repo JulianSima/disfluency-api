@@ -13,6 +13,7 @@ import com.disfluency.disfluencyapi.exception.UserNotFoundException;
 import com.disfluency.disfluencyapi.repository.UserRepo;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import com.disfluency.disfluencyapi.service.therapists.TherapistService;
+import com.disfluency.disfluencyapi.service.users.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class UserService {
     private final TherapistService therapistService;
     private final PatientService patientService;
     private final PasswordService passwordService;
+    private final EmailService emailService;
 
     public UserRole getUserRoleByAccount(UserDTO userDTO) {
         var user = userRepo.findOneByAccount(userDTO.account())
@@ -49,6 +51,7 @@ public class UserService {
         validateExistingAccount(account);
         var patient = patientService.createPatient(newPatient);
         createUser(account, password, patient);
+        emailService.sendEmail("Probando", newPatient.email(), "Que es subject");
         return patient;
     }
 

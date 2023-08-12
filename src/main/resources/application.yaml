@@ -1,9 +1,24 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://disfluency:oFH58ghKTYy0655p@disfluency.4phwfce.mongodb.net/?retryWrites=true&w=majority
-#      uri: mongodb://localhost:27017
+#      uri: mongodb+srv://disfluency:oFH58ghKTYy0655p@disfluency.4phwfce.mongodb.net/?retryWrites=true&w=majority
+      uri: mongodb://localhost:27017
       database: disfluency
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: disfluencytherapy@gmail.com
+    password: jnowpbowqiaizdca
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
 server:
   port: 8081
   error:

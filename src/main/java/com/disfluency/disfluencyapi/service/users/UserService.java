@@ -51,7 +51,7 @@ public class UserService {
         validateExistingAccount(account);
         var patient = patientService.createPatient(newPatient);
         createUser(account, password, patient);
-        emailService.sendEmail("Probando", newPatient.email(), "Que es subject");
+        emailService.sendEmail("Probando", newPatient.email(), "Comienza tu viaje hacia una mejor comunicación.");
         return patient;
     }
 

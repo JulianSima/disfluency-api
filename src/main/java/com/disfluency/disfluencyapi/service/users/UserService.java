@@ -44,29 +44,27 @@ public class UserService {
         return userRepo.findOneByAccount(username);
     }
 
-    public Therapist createTherapistUser(NewTherapistUserDTO newUser) {
+    public User createTherapistUser(NewTherapistUserDTO newUser) {
         validateExistingAccount(newUser.account());
         var therapist = therapistService.createTherapist(newUser.user());
-        createUser(newUser.account(), newUser.password(), therapist);
-        return therapist;
+        return createUser(newUser.account(), newUser.password(), therapist);
     }
 
     public Patient createPatientForTherapist(NewPatientDTO newPatient, String therapistId) {
-        var patient = createPatientUser(newPatient.email(), "12345678", newPatient); //TODO mandar mail
+        Patient patient = (Patient) createPatientUser(newPatient.email(), "12345678", newPatient).getRole(); //TODO mandar mail
         therapistService.addPatientToTherapist(therapistId, patient);
         return patient;
     }
 
-    private Patient createPatientUser(String account, String password, NewPatientDTO newPatient) {
+    private User createPatientUser(String account, String password, NewPatientDTO newPatient) {
         validateExistingAccount(account);
         var patient = patientService.createPatient(newPatient);
-        createUser(account, password, patient);
-        return patient;
+        return createUser(account, password, patient);
     }
 
-    private UserRole createUser(String account, String password, UserRole user) {
+    private User createUser(String account, String password, UserRole user) {
         UserPassword userPassword = passwordService.createPasswordHash(password);
-        return userRepo.save(new User(account, userPassword,user)).getRole();
+        return userRepo.save(new User(account, userPassword,user));
     }
 
     private void validateExistingAccount(String account) {

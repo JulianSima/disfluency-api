@@ -40,12 +40,12 @@ public class UserController {
 
     @PostMapping(value = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE)
     public JwtResponse signUp(@RequestBody NewTherapistUserDTO newUser) {
-        Therapist createdTherapist = userService.createTherapistUser(newUser);
+        var createdTherapist = userService.createTherapistUser(newUser);
         //TODO: ver de separar en dos endpoints por ahi? o mas bien que este solo de de alta pero no te logge
         return JwtResponse.builder()
                 .accessToken(jwtService.generateJwtToken(newUser.account()))
                 .refreshToken(refreshTokenService.createRefreshToken(createdTherapist.getId()).getToken())
-                .userRoleDTO(createdTherapist)
+                .userRoleDTO(createdTherapist.getRole())
                 .build();
     }
 

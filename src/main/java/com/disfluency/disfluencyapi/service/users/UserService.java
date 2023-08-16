@@ -1,6 +1,7 @@
 package com.disfluency.disfluencyapi.service.users;
 
 import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.domain.users.User;
 import com.disfluency.disfluencyapi.domain.users.UserPassword;
 import com.disfluency.disfluencyapi.domain.users.UserRole;
@@ -16,6 +17,8 @@ import com.disfluency.disfluencyapi.service.therapists.TherapistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -26,35 +29,42 @@ public class UserService {
     private final PatientService patientService;
     private final PasswordService passwordService;
 
-    public UserRole getUserRoleByAccount(UserDTO userDTO) {
+    public User getUserByAccount(UserDTO userDTO) {
         var user = userRepo.findOneByAccount(userDTO.account())
                         .orElseThrow( () -> new UserNotFoundException(userDTO.account()) );
         passwordService.validatePassword(userDTO.password(), user.getPassword(), user.getSalt());
-        return user.getRole();
+        return user;
     }
 
-    public UserRoleDTO createTherapistUser(NewTherapistUserDTO newUser) {
+    public User getUserById(String id){
+        return userRepo.findById(id).orElseThrow( () -> new UserNotFoundException(id) );
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepo.findOneByAccount(username);
+    }
+
+    public User createTherapistUser(NewTherapistUserDTO newUser) {
         validateExistingAccount(newUser.account());
         var therapist = therapistService.createTherapist(newUser.user());
-        return createUser(newUser.account(), newUser.password(), therapist).toUserRoleDTO();
+        return createUser(newUser.account(), newUser.password(), therapist);
     }
 
     public Patient createPatientForTherapist(NewPatientDTO newPatient, String therapistId) {
-        var patient = createPatientUser(newPatient.email(), "12345678", newPatient); //TODO mandar mail
+        Patient patient = (Patient) createPatientUser(newPatient.email(), "12345678", newPatient).getRole(); //TODO mandar mail
         therapistService.addPatientToTherapist(therapistId, patient);
         return patient;
     }
 
-    private Patient createPatientUser(String account, String password, NewPatientDTO newPatient) {
+    private User createPatientUser(String account, String password, NewPatientDTO newPatient) {
         validateExistingAccount(account);
         var patient = patientService.createPatient(newPatient);
-        createUser(account, password, patient);
-        return patient;
+        return createUser(account, password, patient);
     }
 
-    private UserRole createUser(String account, String password, UserRole user) {
+    private User createUser(String account, String password, UserRole user) {
         UserPassword userPassword = passwordService.createPasswordHash(password);
-        return userRepo.save(new User(account, userPassword,user)).getRole();
+        return userRepo.save(new User(account, userPassword,user));
     }
 
     private void validateExistingAccount(String account) {

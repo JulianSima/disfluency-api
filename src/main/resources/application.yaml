@@ -2,9 +2,18 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://disfluency:oFH58ghKTYy0655p@disfluency.4phwfce.mongodb.net/?retryWrites=true&w=majority
+#      uri: mongodb://localhost:27017
       database: disfluency
 server:
   port: 8081
+  error:
+    include-message: always
+
+jwt:
+  jwtSecret: disfluencySecret
+  jwtSalt: disfluencySalt
+  jwtExpirationMs: 3600000
+  refreshTokenDurationDays: 60
 
 amazon:
   aws:

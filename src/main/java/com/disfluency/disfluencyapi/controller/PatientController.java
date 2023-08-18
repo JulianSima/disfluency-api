@@ -1,8 +1,6 @@
 package com.disfluency.disfluencyapi.controller;
 
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
-import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
-import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import lombok.RequiredArgsConstructor;
@@ -20,21 +18,11 @@ public class PatientController {
 
     @GetMapping("patient/{patientId}")
     public PatientDTO getPatientById(@PathVariable String patientId) {
-        return patientService.getPatientById(patientId).orElseThrow().toDTO();
+        return patientService.getPatientById(patientId).toDTO();
     }
 
     @GetMapping("patient/{patientId}/exerciseAssignments")
     public List<ExerciseAssignment> getExerciseAssignmentsPatient(@PathVariable String patientId) {
-        return patientService.getPatientById(patientId).orElseThrow().getExerciseAssignments();
-    }
-
-    @GetMapping("patient/{patientId}/formAssignments")
-    public List<FormAssignment> getFormAssignmentsPatient(@PathVariable String patientId) {
-        return patientService.getPatientById(patientId).orElseThrow().getFormAssignments();
-    }
-
-    @GetMapping("patient/{patientId}/therapySession")
-    public List<Session> getTherapySessionPatient(@PathVariable String patientId) {
-        return patientService.getPatientById(patientId).orElseThrow().getTherapySession();
+        return patientService.getPatientById(patientId).getExerciseAssignments();
     }
 }

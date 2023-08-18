@@ -4,7 +4,7 @@ import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.domain.exercises.ExercisePractice;
 import com.disfluency.disfluencyapi.dto.exercises.ExercisePracticeDTO;
-import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentsService;
+import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentService;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 public class ExerciseController {
 
     private final ExerciseService exerciseService;
-    private final ExerciseAssignmentsService exerciseAssignmentService;
+    private final ExerciseAssignmentService exerciseAssignmentService;
 
     @GetMapping("exercises/{exerciseId}")
     public Exercise getExerciseById(@PathVariable String exerciseId) {

@@ -17,7 +17,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ExerciseAssignmentsService {
+public class ExerciseAssignmentService {
 
     private final ExerciseAssignmentsRepo exerciseAssignmentsRepo;
     private final ExercisePracticeService exercisePracticeService;

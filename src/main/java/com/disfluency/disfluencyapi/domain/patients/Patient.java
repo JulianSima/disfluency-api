@@ -40,11 +40,13 @@ public class Patient implements UserRole {
 
     private LocalDate joinedSince;
 
+    @DocumentReference
     @JsonIgnore
     private List<Session> therapySession;
     @JsonIgnore
     @DocumentReference
     private List<ExerciseAssignment> exerciseAssignments;
+    @DocumentReference
     @JsonIgnore
     private List<FormAssignment> formAssignments;
     @JsonIgnore

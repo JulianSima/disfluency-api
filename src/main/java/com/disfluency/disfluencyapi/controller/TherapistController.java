@@ -23,19 +23,9 @@ public class TherapistController {
     private final TherapistService therapistService;
     private final UserService userService;
 
-    @PostMapping(value = "/therapists", consumes = MediaType.APPLICATION_JSON_VALUE) //TODO Eliminar
-    public Therapist createTherapist(@RequestBody NewTherapistDTO newTherapist) {
-        return therapistService.createTherapist(newTherapist);
-    }
-
     @GetMapping("/therapists/{therapistId}")
     public TherapistDTO getTherapistById(@PathVariable String therapistId) {
         return therapistService.getTherapistById(therapistId).toDTO();
-    }
-
-    @GetMapping("/therapists") //TODO Eliminar
-    public List<Therapist> getAllTherapist() {
-        return therapistService.getAllTherapist();
     }
 
     @PostMapping(value = "/therapists/{therapistId}/patients", consumes = MediaType.APPLICATION_JSON_VALUE)

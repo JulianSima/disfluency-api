@@ -4,6 +4,7 @@ import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
 import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.domain.sessions.SessionTurn;
+import com.disfluency.disfluencyapi.domain.state.PatientUserState;
 import com.disfluency.disfluencyapi.domain.users.UserRole;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
@@ -56,6 +57,9 @@ public class Patient implements UserRole {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
 
+    @JsonIgnore
+    private PatientUserState state;
+
     public PatientDTO toDTO() {
         return new PatientDTO(name, lastName, dateOfBirth, id, email, joinedSince,
                 profilePictureUrl, sessionTurn.getWeeklyTurn(), sessionTurn.getWeeklyHour(), exerciseAssignments);
@@ -73,6 +77,7 @@ public class Patient implements UserRole {
                 .exerciseAssignments(new ArrayList<>())
                 .formAssignments(new ArrayList<>())
                 .email(newPatientDTO.email())
+                .state(PatientUserState.PENDING)
                 .build();
     }
 

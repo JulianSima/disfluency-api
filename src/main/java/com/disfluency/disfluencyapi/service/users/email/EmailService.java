@@ -9,14 +9,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EmailService {
 
+    private static final String INVITATION_URL = "https://disfluency.com/sign-up-confirmation/{id}";
+
     private final JavaMailSender sender;
 
-    public void sendEmail(String message, String email, String subject) {
+    public void sendPatientInvitationEmail(String patientId, String patientAccount) {
         var mimeMessage = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
         try {
-            helper.setTo(email);
-            String prueba = "<!DOCTYPE html>\n" +
+            helper.setTo(patientAccount);
+            String inviteUrl = buildInvitationUrl(patientId);
+            String body = "<!DOCTYPE html>\n" +
                     "<html lang=\"es\">\n" +
                     "<head>\n" +
                     "    <meta charset=\"UTF-8\">\n" +
@@ -25,7 +28,7 @@ public class EmailService {
                     "</head>\n" +
                     "<body style=\"font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;\">\n" +
                     "\n" +
-                    "    <div style=\"background-color: #4a90e2; color: #fff; text-align: center; padding: 20px;\">\n" +
+                    "    <div style=\"background-color: #fc8538; color: #fff; text-align: center; padding: 20px;\">\n" +
                     "        <h1>¡Bienvenido a Disfluency App!</h1>\n" +
                     "        <p>Tu terapeuta te invita a unirte a nuestra aplicación para llevar a cabo tu terapia de manera efectiva.</p>\n" +
                     "    </div>\n" +
@@ -37,7 +40,7 @@ public class EmailService {
                     "            <li>Haz clic en el siguiente enlace para actualizar tu contraseña y finalizar el proceso de registro:</li>\n" +
                     "        </ol>\n" +
                     "        <p style=\"text-align: center;\">\n" +
-                    "            <a href=\"URL_DE_ACTUALIZACIÓN_DE_CONTRASEÑA\" style=\"display: inline-block; padding: 10px 20px; background-color: #4a90e2; color: #fff; text-decoration: none; border-radius: 5px;\">Actualizar Contraseña</a>\n" +
+                    "            <a href=\"{INVITE_URL}\" style=\"display: inline-block; padding: 10px 20px; background-color: #4a90e2; color: #fff; text-decoration: none; border-radius: 5px;\">Completar Registro</a>\n" +
                     "        </p>\n" +
                     "        <p>Una vez hayas actualizado tu contraseña, estarás listo para aprovechar al máximo nuestra aplicación y trabajar junto con tu terapeuta para lograr tus objetivos de comunicación.</p>\n" +
                     "    </div>\n" +
@@ -48,12 +51,16 @@ public class EmailService {
                     "\n" +
                     "</body>\n" +
                     "</html>\n";
-            helper.setText(prueba, true);
-            helper.setSubject(subject);
+            body = body.replace("{INVITE_URL}", inviteUrl);
+            helper.setText(body, true);
+            helper.setSubject("Comienza tu viaje hacia una mejor comunicación.");
             sender.send(mimeMessage);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    private String buildInvitationUrl(String id){
+        return INVITATION_URL.replace("{id}", id);
+    }
 }

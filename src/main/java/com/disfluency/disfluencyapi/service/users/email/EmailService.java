@@ -40,12 +40,12 @@ public class EmailService {
                     "            <li>Haz clic en el siguiente enlace para actualizar tu contraseña y finalizar el proceso de registro:</li>\n" +
                     "        </ol>\n" +
                     "        <p style=\"text-align: center;\">\n" +
-                    "            <a href=\"{INVITE_URL}\" style=\"display: inline-block; padding: 10px 20px; background-color: #4a90e2; color: #fff; text-decoration: none; border-radius: 5px;\">Completar Registro</a>\n" +
+                    "            <a href=\"{INVITE_URL}\" style=\"display: inline-block; padding: 10px 20px; background-color: #fc8538; color: #fff; text-decoration: none; border-radius: 5px;\">Completar Registro</a>\n" +
                     "        </p>\n" +
                     "        <p>Una vez hayas actualizado tu contraseña, estarás listo para aprovechar al máximo nuestra aplicación y trabajar junto con tu terapeuta para lograr tus objetivos de comunicación.</p>\n" +
                     "    </div>\n" +
                     "\n" +
-                    "    <div style=\"background-color: #4a90e2; color: #fff; text-align: center; padding: 20px;\">\n" +
+                    "    <div style=\"background-color: #fc8538; color: #fff; text-align: center; padding: 20px;\">\n" +
                     "        <p>Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos. ¡Esperamos verte pronto en Disfluency App!</p>\n" +
                     "    </div>\n" +
                     "\n" +

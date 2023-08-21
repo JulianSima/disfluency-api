@@ -33,7 +33,7 @@ public class ExerciseAssignmentService {
 
     public String createExercisePractice(String exerciseId) {
         var exerciseAssignment = exerciseAssignmentsRepo.findById(exerciseId).orElseThrow();
-        String url = "/audios/" + exerciseId + LocalDateTime.now() + ".mp3";
+        String url = "audios/" + exerciseId + LocalDateTime.now() + ".mp3";
         var preSignedUrl = s3Service.generatePreSignedUrl(url, "pf5302", HttpMethod.PUT);
         exerciseAssignment.addExercisePractice(exercisePracticeService.createExercisePractice("https://pf5302.s3.us-east-2.amazonaws.com" + url));
         log.info(exerciseAssignment.toString());

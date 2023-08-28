@@ -54,6 +54,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/signup").permitAll()
                 .requestMatchers("/refreshToken").permitAll()
+                .requestMatchers("/exercisesAssignments/getUrl").permitAll() //TODO: borrar
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());

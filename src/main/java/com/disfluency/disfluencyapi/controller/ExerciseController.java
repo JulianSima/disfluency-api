@@ -41,4 +41,11 @@ public class ExerciseController {
     public List<ExercisePractice> getPracticeAttemptsByExerciseAssignmentId(@PathVariable String exerciseId) {
         return exerciseAssignmentService.getExerciseAssignmentById(exerciseId).orElseThrow().getPracticeAttempts();
     }
+
+    //TODO: terminar de probar lo de la presigned a partir de la url normal. La idea es que cuando te traes el objeto del ejercicio desde la base
+    // le generes la presigned y pongas eso en el objeto en vez de la url normal
+    @GetMapping(value = "/exercisesAssignments/getUrl")
+    public ExercisePracticeDTO getAudioUrl(@RequestBody String url) {
+        return new ExercisePracticeDTO(exerciseAssignmentService.getPreSignedAudioUrl(url));
+    }
 }

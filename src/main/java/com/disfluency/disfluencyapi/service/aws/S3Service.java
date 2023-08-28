@@ -14,10 +14,10 @@ public class S3Service {
 
     private final AmazonS3 amazonS3Client;
 
-    public String generatePreSignedUrl(String filePath, String bucketName, HttpMethod httpMethod) {
+    public String generatePreSignedUrl(String filePath, String bucketName, HttpMethod httpMethod, int expirationMinutes) {
         var calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.MINUTE, 10);
+        calendar.add(Calendar.MINUTE, expirationMinutes);
         return amazonS3Client.generatePresignedUrl(bucketName, filePath, calendar.getTime(), httpMethod).toString();
     }
 }

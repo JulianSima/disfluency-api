@@ -16,6 +16,6 @@ public class S3Controller {
 
     @GetMapping("/presigned-url")
     public String generatePreSignedUrl() {
-        return s3Service.generatePreSignedUrl(UUID.randomUUID().toString() + ".txt", "pf5302", HttpMethod.PUT);
+        return s3Service.generatePreSignedUrl(UUID.randomUUID().toString() + ".txt", "pf5302", HttpMethod.PUT, 10);
     }
 }

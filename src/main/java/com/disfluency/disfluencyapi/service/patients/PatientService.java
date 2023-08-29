@@ -1,6 +1,7 @@
 package com.disfluency.disfluencyapi.service.patients;
 
 import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.state.PatientUserState;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.exception.PatientNotFoundException;
 import com.disfluency.disfluencyapi.repository.PatientRepo;
@@ -23,5 +24,10 @@ public class PatientService {
 
     public Patient createPatient(NewPatientDTO newPatient) {
         return patientRepo.save(Patient.newPatient(newPatient));
+    }
+
+    public Patient confirmPatient(Patient patient){
+        patient.setState(PatientUserState.ACTIVE);
+        return patientRepo.save(patient);
     }
 }

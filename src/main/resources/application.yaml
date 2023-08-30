@@ -9,6 +9,9 @@ server:
   error:
     include-message: always
 
+analysisApi:
+  url: http://localhost:5000/
+
 jwt:
   jwtSecret: disfluencySecret
   jwtSalt: disfluencySalt

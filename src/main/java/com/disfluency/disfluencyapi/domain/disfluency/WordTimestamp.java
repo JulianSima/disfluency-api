@@ -1,7 +1,10 @@
 package com.disfluency.disfluencyapi.domain.disfluency;
 
+import lombok.Data;
+
+@Data
 public class WordTimestamp {
 
-    private Long start;
-    private Long end;
+    private float start;
+    private float end;
 }

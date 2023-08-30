@@ -14,7 +14,7 @@ public class AnalysisService {
     public Session getAnalysedSession(String sessionId) {
         // get session from session service
         // build analysis request
-        var response = analysisApiClient.getAnalysis(new AnalysisRequest("audioUrlFromSession"));
+        var response = analysisApiClient.getAnalysis(new AnalysisRequest("C:\\Users\\ACER\\Documents\\Sound Recordings\\test.mp3"));
         var session = new Session();
         session.setTranscription(response.getChunks());
         return session;

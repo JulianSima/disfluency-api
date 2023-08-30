@@ -52,4 +52,8 @@ public class ExerciseAssignmentService {
         String shortUrl = url.replace(S3_BASE_URL, "");
         return s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION);
     }
+
+    public void presignExerciseUrls(ExerciseAssignment exerciseAssignment) {
+        exerciseAssignment.getPracticeAttempts().forEach(exercisePracticeService::presignUrl);
+    }
 }

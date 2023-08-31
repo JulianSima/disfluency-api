@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -14,10 +14,10 @@ public class ExercisePractice {
 
     @Id
     private String id;
-    private LocalDate date;
+    private LocalDateTime date;
     private String recordingUrl;
 
     public static ExercisePractice newExercisePractice(String recordingUrl) {
-        return builder().date(LocalDate.now()).recordingUrl(recordingUrl).build();
+        return builder().date(LocalDateTime.now()).recordingUrl(recordingUrl).build();
     }
 }

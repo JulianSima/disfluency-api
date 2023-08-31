@@ -1,12 +1,10 @@
 package com.disfluency.disfluencyapi.controller;
 
-import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.domain.tokens.RefreshToken;
 import com.disfluency.disfluencyapi.dto.tokens.JwtResponse;
 import com.disfluency.disfluencyapi.dto.tokens.RefreshTokenRequest;
 import com.disfluency.disfluencyapi.dto.users.NewTherapistUserDTO;
 import com.disfluency.disfluencyapi.dto.users.UserDTO;
-import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
 import com.disfluency.disfluencyapi.exception.TokenRefreshException;
 import com.disfluency.disfluencyapi.service.security.JwtService;
 import com.disfluency.disfluencyapi.service.security.RefreshTokenService;

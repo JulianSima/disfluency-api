@@ -17,6 +17,6 @@ jwt:
 
 amazon:
   aws:
-    accessKeyId: AKIA4GKSFFQDZ3UXS3IX
-    accessKeySecret: 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
+    accessKeyId: ${AWS_ACCESS_ID}
+    accessKeySecret: ${AWS_ACCESS_SECRET}
     region: us-east-2

@@ -1,20 +1,24 @@
 package com.disfluency.disfluencyapi.controller;
 
+import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.domain.tokens.RefreshToken;
+import com.disfluency.disfluencyapi.dto.patients.PatientInviteConfirmationDTO;
 import com.disfluency.disfluencyapi.dto.tokens.JwtResponse;
 import com.disfluency.disfluencyapi.dto.tokens.RefreshTokenRequest;
 import com.disfluency.disfluencyapi.dto.users.NewTherapistUserDTO;
+import com.disfluency.disfluencyapi.dto.users.PatientConfirmationDTO;
 import com.disfluency.disfluencyapi.dto.users.UserDTO;
 import com.disfluency.disfluencyapi.exception.TokenRefreshException;
+import com.disfluency.disfluencyapi.exception.UserNotFoundException;
 import com.disfluency.disfluencyapi.service.security.JwtService;
 import com.disfluency.disfluencyapi.service.security.RefreshTokenService;
 import com.disfluency.disfluencyapi.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -65,5 +69,17 @@ public class UserController {
                             .build();
                     }
                 ).orElseThrow(() -> new TokenRefreshException(refreshToken, "Refresh token is not in database!"));
+    }
+
+    @GetMapping("/pending/patient/{patientId}")
+    public PatientInviteConfirmationDTO getPendingPatientById(@PathVariable String patientId){
+        var patient = (Patient) userService.getPendingPatientById(patientId).getRole();
+        return new PatientInviteConfirmationDTO(patient.getName(), patient.getLastName(), patient.getEmail(), patient.getProfilePictureUrl());
+    }
+
+    @PostMapping(value = "/pending/patient/{patientId}/confirm", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void confirmPendingPatientById(@PathVariable String patientId, @RequestBody PatientConfirmationDTO patientConfirmation){
+        userService.confirmPendingPatient(patientId, patientConfirmation.password());
     }
 }

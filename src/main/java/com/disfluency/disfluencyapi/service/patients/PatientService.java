@@ -1,6 +1,7 @@
 package com.disfluency.disfluencyapi.service.patients;
 
 import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.state.PatientUserState;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.exception.PatientNotFoundException;
 import com.disfluency.disfluencyapi.repository.PatientRepo;
@@ -28,5 +29,10 @@ public class PatientService {
     public Patient presignPatientUrls(Patient patient) {
         patient.getExerciseAssignments().forEach(exerciseAssignmentService::presignExerciseUrls);
         return patient;
+    }
+  
+    public Patient confirmPatient(Patient patient){
+        patient.setState(PatientUserState.ACTIVE);
+        return patientRepo.save(patient);
     }
 }

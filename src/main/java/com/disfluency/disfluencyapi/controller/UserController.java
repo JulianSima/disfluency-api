@@ -9,7 +9,6 @@ import com.disfluency.disfluencyapi.dto.tokens.RefreshTokenRequest;
 import com.disfluency.disfluencyapi.dto.users.NewTherapistUserDTO;
 import com.disfluency.disfluencyapi.dto.users.PatientConfirmationDTO;
 import com.disfluency.disfluencyapi.dto.users.UserDTO;
-import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
 import com.disfluency.disfluencyapi.exception.TokenRefreshException;
 import com.disfluency.disfluencyapi.exception.UserNotFoundException;
 import com.disfluency.disfluencyapi.service.security.JwtService;

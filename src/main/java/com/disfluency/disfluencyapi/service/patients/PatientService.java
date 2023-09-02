@@ -5,11 +5,10 @@ import com.disfluency.disfluencyapi.domain.state.PatientUserState;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.exception.PatientNotFoundException;
 import com.disfluency.disfluencyapi.repository.PatientRepo;
+import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +16,7 @@ import java.util.Optional;
 public class PatientService {
     
     private final PatientRepo patientRepo;
+    private final ExerciseAssignmentService exerciseAssignmentService;
 
     public Patient getPatientById(String patientId) {
         return patientRepo.findById(patientId).orElseThrow( () -> new PatientNotFoundException(patientId));
@@ -26,6 +26,11 @@ public class PatientService {
         return patientRepo.save(Patient.newPatient(newPatient));
     }
 
+    public Patient presignPatientUrls(Patient patient) {
+        patient.getExerciseAssignments().forEach(exerciseAssignmentService::presignExerciseUrls);
+        return patient;
+    }
+  
     public Patient confirmPatient(Patient patient){
         patient.setState(PatientUserState.ACTIVE);
         return patientRepo.save(patient);

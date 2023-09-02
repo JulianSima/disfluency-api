@@ -29,3 +29,9 @@ jwt:
   jwtSalt: disfluencySalt
   jwtExpirationMs: 3600000
   refreshTokenDurationDays: 60
+
+amazon:
+  aws:
+    accessKeyId: ${AWS_ACCESS_ID}
+    accessKeySecret: ${AWS_ACCESS_SECRET}
+    region: us-east-2

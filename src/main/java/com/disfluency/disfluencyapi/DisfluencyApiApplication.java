@@ -26,7 +26,7 @@ public class DisfluencyApiApplication {
 
 
 		return args -> {
-//			MockedData.saveData(patientRepo, therapistRepo, exerciseRepo, userRepo, exerciseAssignmentsRepo, exercisePracticeRepo);
+			//MockedData.saveData(patientRepo, therapistRepo, exerciseRepo, userRepo, exerciseAssignmentsRepo, exercisePracticeRepo);
 //			MockedData.drop(patientRepo, therapistRepo, exerciseRepo, userRepo, exerciseAssignmentsRepo, exercisePracticeRepo);
 		};
 	}

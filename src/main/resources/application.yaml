@@ -20,7 +20,6 @@ spring:
           timeout: 5000
           writetimeout: 5000
 server:
-  port: 8081
   error:
     include-message: always
 

@@ -2,21 +2,28 @@ package com.disfluency.disfluencyapi.service.analysis;
 
 import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.dto.analysis.AnalysisRequest;
+import com.disfluency.disfluencyapi.dto.analysis.ResultsRequest;
+import com.disfluency.disfluencyapi.dto.analysis.ResultsResponse;
+import com.disfluency.disfluencyapi.service.session.SessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
 public class AnalysisService {
 
     private final AnalysisApiClient analysisApiClient;
+    private final SessionService sessionService;
 
-    public Session getAnalysedSession(String sessionId) {
-        // get session from session service
-        // build analysis request
-        var response = analysisApiClient.getAnalysis(new AnalysisRequest("C:\\Users\\ACER\\Documents\\Sound Recordings\\test.mp3"));
-        var session = new Session();
-        session.setTranscription(response.getChunks());
-        return session;
+    public Session createAnalysedSession(String audioUrl) {
+        var analysis = analysisApiClient.getAnalysis(new AnalysisRequest(audioUrl));
+        return sessionService.createSession(audioUrl, analysis);
+    }
+
+    public ResultsResponse getSessionResults(String sessionId) {
+        var session = sessionService.getSessionById(sessionId);
+        return analysisApiClient.getResults(new ResultsRequest("sarasa", session.getTranscription()));
     }
 }

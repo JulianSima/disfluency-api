@@ -10,7 +10,7 @@ server:
     include-message: always
 
 analysisApi:
-  url: http://localhost:5000/
+  url: https://disfluency-analysis-api-x2fd6efwba-ue.a.run.app/
 
 jwt:
   jwtSecret: disfluencySecret

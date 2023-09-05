@@ -143,7 +143,9 @@ public class MockedData {
         userRepo.saveAll(userList);
     }
 
-    public static void drop(PatientRepo patientRepo, TherapistRepo therapistRepo, ExerciseRepo exerciseRepo, UserRepo userRepo, ExerciseAssignmentsRepo exerciseAssignmentsRepo, ExercisePracticeRepo exercisePracticeRepo){
+    public static void drop(PatientRepo patientRepo, TherapistRepo therapistRepo, ExerciseRepo exerciseRepo, UserRepo userRepo, ExerciseAssignmentsRepo exerciseAssignmentsRepo, ExercisePracticeRepo exercisePracticeRepo, FormRepo formRepo, FormQuestionRepo formQuestionRepo){
+        formRepo.deleteAll();
+        formQuestionRepo.deleteAll();
         patientRepo.deleteAll();
         exerciseRepo.deleteAll();
         therapistRepo.deleteAll();

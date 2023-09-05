@@ -34,7 +34,6 @@ public class Therapist implements UserRole {
     @JsonIgnore
     private List<Exercise> exercises;
     @DocumentReference
-    @JsonIgnore
     private List<Form> forms;
 
     public void addPatient(Patient patient) {
@@ -69,5 +68,9 @@ public class Therapist implements UserRole {
     @Override
     public UserRoleDTO toUserRoleDTO() {
         return new UserRoleDTO("Therapist", this);
+    }
+
+    public void addForm(Form form) {
+        this.forms.add(form);
     }
 }

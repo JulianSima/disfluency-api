@@ -55,6 +55,8 @@ public class WebSecurityConfig {
                 .requestMatchers("/signup").permitAll()
                 .requestMatchers("/refreshToken").permitAll()
                 .requestMatchers("/pending/patient/**").permitAll()
+                .requestMatchers("/therapists/*/forms").permitAll() //TODO remove
+                .requestMatchers("/forms/**").permitAll() //TODO remove
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());

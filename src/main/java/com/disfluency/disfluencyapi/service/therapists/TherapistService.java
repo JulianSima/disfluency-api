@@ -1,11 +1,14 @@
 package com.disfluency.disfluencyapi.service.therapists;
 
+import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
+import com.disfluency.disfluencyapi.dto.forms.NewFormDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.exception.UserNotFoundException;
 import com.disfluency.disfluencyapi.exception.TherapistNotFoundException;
 import com.disfluency.disfluencyapi.repository.TherapistRepo;
+import com.disfluency.disfluencyapi.service.forms.FormService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import java.util.List;
 public class TherapistService {
     
     private final TherapistRepo therapistRepo;
+    private final FormService formService;
 
     public Therapist createTherapist(NewTherapistDTO newTherapist) {
         var therapist = Therapist.newTherapist(newTherapist);
@@ -51,5 +55,14 @@ public class TherapistService {
         var therapist = getTherapistById(therapistId);
         therapist.addPatient(patient);
         therapistRepo.save(therapist);
+    }
+
+
+    public Form createFormForTherapist(String therapistId, NewFormDTO newForm) {
+        var therapist = getTherapistById(therapistId);
+        var form = formService.createForm(newForm);
+        therapist.addForm(form);
+        therapistRepo.save(therapist);
+        return form;
     }
 }

@@ -1,7 +1,9 @@
 package com.disfluency.disfluencyapi.controller;
 
+import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
+import com.disfluency.disfluencyapi.dto.forms.NewFormDTO;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
@@ -12,6 +14,7 @@ import com.disfluency.disfluencyapi.service.therapists.TherapistService;
 import com.disfluency.disfluencyapi.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +49,12 @@ public class TherapistController {
                 .map(patientService::presignPatientUrls)
                 .map(Patient::toDTO)
                 .toList();
+    }
+
+    @PostMapping(value = "/therapists/{therapistId}/forms", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Form createForm(@RequestBody NewFormDTO newForm, @PathVariable String therapistId) {
+        log.info(newForm.toString());
+        therapistService.validateExistingTherapist(therapistId);
+        return therapistService.createFormForTherapist(therapistId, newForm);
     }
 }

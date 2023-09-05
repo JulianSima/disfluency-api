@@ -1,10 +1,15 @@
 package com.disfluency.disfluencyapi.service.session;
 
+import com.amazonaws.HttpMethod;
 import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.dto.analysis.AnalysisResponse;
 import com.disfluency.disfluencyapi.repository.SessionRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+
+import static com.disfluency.disfluencyapi.service.aws.S3Service.*;
 
 
 @Service

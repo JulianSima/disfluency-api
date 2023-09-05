@@ -15,20 +15,12 @@ public class S3Service {
 
     private final AmazonS3 amazonS3Client;
 
-    @Value("${amazon.aws.uploadExpiration}")
-    public static Integer PRE_SIGNED_UPLOAD_EXPIRATION;
-
-    @Value("${amazon.aws.getExpiration}")
-    public static Integer PRE_SIGNED_GET_EXPIRATION;
-
-    @Value("${amazon.aws.s3BaseUrl}")
-    public static String S3_BASE_URL;
-
-    @Value("${amazon.aws.s3Bucket}")
-    public static String S3_BUCKET;
-
-    @Value("${amazon.aws.s3UploadFolder}")
-    public static String S3_UPLOAD_FOLDER;
+    //TODO usar properties para obtener valores
+    public static Integer PRE_SIGNED_UPLOAD_EXPIRATION = 10;
+    public static Integer PRE_SIGNED_GET_EXPIRATION = 1000;
+    public static String S3_BASE_URL = "https://pf5302.s3.us-east-2.amazonaws.com/";
+    public static String S3_BUCKET = "pf5302";
+    public static String S3_UPLOAD_FOLDER = "audios/";
 
     public String generatePreSignedUrl(String filePath, String bucketName, HttpMethod httpMethod, int expirationMinutes) {
         var calendar = Calendar.getInstance();

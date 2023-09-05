@@ -5,6 +5,7 @@ import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.domain.state.PatientUserState;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
+import com.disfluency.disfluencyapi.dto.patients.PreSignedUrlDTO;
 import com.disfluency.disfluencyapi.dto.session.NewSessionDTO;
 import com.disfluency.disfluencyapi.exception.PatientNotFoundException;
 import com.disfluency.disfluencyapi.repository.PatientRepo;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.disfluency.disfluencyapi.service.aws.S3Service.*;
@@ -64,5 +66,10 @@ public class PatientService {
     public Patient confirmPatient(Patient patient){
         patient.setState(PatientUserState.ACTIVE);
         return patientRepo.save(patient);
+    }
+
+    public PreSignedUrlDTO getPreSignedUrl(String patientId){
+        String newUrl = S3_UPLOAD_FOLDER + patientId + LocalDateTime.now() + ".mp3";
+        return new PreSignedUrlDTO(s3Service.generatePreSignedUrl(newUrl, S3_BUCKET, HttpMethod.PUT, PRE_SIGNED_UPLOAD_EXPIRATION));
     }
 }

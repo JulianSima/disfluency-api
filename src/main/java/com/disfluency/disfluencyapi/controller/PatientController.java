@@ -3,6 +3,7 @@ package com.disfluency.disfluencyapi.controller;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
+import com.disfluency.disfluencyapi.dto.patients.PreSignedUrlDTO;
 import com.disfluency.disfluencyapi.dto.session.NewSessionDTO;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,10 @@ public class PatientController {
     @GetMapping("patient/{patientId}/sessions")
     public List<Session> getTherapySessions(@PathVariable String patientId) {
         return patientService.getTherapySessionsForPatient(patientId);
+    }
+
+    @GetMapping("patient/{patientId}/presignedUrl")
+    public PreSignedUrlDTO getPresignedUrl(@PathVariable String patientId) {
+        return patientService.getPreSignedUrl(patientId);
     }
 }

@@ -1,14 +1,18 @@
 package com.disfluency.disfluencyapi.service.exercises;
 
+import com.amazonaws.HttpMethod;
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
-import com.disfluency.disfluencyapi.dto.exercises.ExercisePracticeDTO;
 import com.disfluency.disfluencyapi.repository.ExerciseAssignmentsRepo;
+import com.disfluency.disfluencyapi.service.aws.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
+
+import static com.disfluency.disfluencyapi.service.aws.S3Service.*;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +21,7 @@ public class ExerciseAssignmentService {
 
     private final ExerciseAssignmentsRepo exerciseAssignmentsRepo;
     private final ExercisePracticeService exercisePracticeService;
+    private final S3Service s3Service;
 
     public ExerciseAssignment createExerciseAssignments(Exercise exercise){
         return exerciseAssignmentsRepo.save(new ExerciseAssignment(exercise));
@@ -26,10 +31,24 @@ public class ExerciseAssignmentService {
         return exerciseAssignmentsRepo.findById(exerciseId);
     }
 
-    public void createExercisePractice(String exerciseId, ExercisePracticeDTO exercisePracticeDTO) {
+    public String createExercisePractice(String exerciseId) {
         var exerciseAssignment = exerciseAssignmentsRepo.findById(exerciseId).orElseThrow();
-        exerciseAssignment.addExercisePractice(exercisePracticeService.createExercisePractice(exercisePracticeDTO));
+        String url = S3_UPLOAD_FOLDER + exerciseId + LocalDateTime.now() + ".mp3";
+        var preSignedUrl = s3Service.generatePreSignedUrl(url, S3_BUCKET, HttpMethod.PUT, PRE_SIGNED_UPLOAD_EXPIRATION);
+        log.info(preSignedUrl);
+
+        exerciseAssignment.addExercisePractice(exercisePracticeService.createExercisePractice(S3_BASE_URL + url));
         log.info(exerciseAssignment.toString());
         exerciseAssignmentsRepo.save(exerciseAssignment);
+        return preSignedUrl;
+    }
+
+    public String getPreSignedAudioUrl(String url){
+        String shortUrl = url.replace(S3_BASE_URL, "");
+        return s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION);
+    }
+
+    public void presignExerciseUrls(ExerciseAssignment exerciseAssignment) {
+        exerciseAssignment.getPracticeAttempts().forEach(exercisePracticeService::presignUrl);
     }
 }

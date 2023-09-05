@@ -8,6 +8,8 @@ import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
 import com.disfluency.disfluencyapi.dto.session.NewSessionDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
+import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentService;
+import com.disfluency.disfluencyapi.service.patients.PatientService;
 import com.disfluency.disfluencyapi.service.therapists.TherapistService;
 import com.disfluency.disfluencyapi.service.users.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class TherapistController {
     
     private final TherapistService therapistService;
     private final UserService userService;
+    private final PatientService patientService;
 
     @GetMapping("/therapists/{therapistId}")
     public TherapistDTO getTherapistById(@PathVariable String therapistId) {
@@ -41,9 +44,10 @@ public class TherapistController {
     public List<PatientDTO> getPatientsByTherapistId(@PathVariable String therapistId) {
         log.info("Retrieving patients of therapist: " + therapistId);
         return therapistService.getPatientsByTherapistId(therapistId)
-            .stream()
-            .map(Patient::toDTO)
-            .toList();
+                .stream()
+                .map(patientService::presignPatientUrls)
+                .map(Patient::toDTO)
+                .toList();
     }
 
 }

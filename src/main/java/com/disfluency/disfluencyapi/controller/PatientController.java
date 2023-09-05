@@ -24,7 +24,8 @@ public class PatientController {
 
     @GetMapping("patient/{patientId}/exerciseAssignments")
     public List<ExerciseAssignment> getExerciseAssignmentsPatient(@PathVariable String patientId) {
-        return patientService.getPatientById(patientId).getExerciseAssignments();
+        var patient = patientService.getPatientById(patientId);
+        return patientService.presignPatientUrls(patient).getExerciseAssignments();
     }
 
     @PostMapping(value = "patient/{patientId}/sessions", consumes = MediaType.APPLICATION_JSON_VALUE)

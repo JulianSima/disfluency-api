@@ -32,13 +32,20 @@ public class ExerciseController {
     }
 
     // TODO
-    @PostMapping(value = "exercisesAssignments/{exerciseId}/practices", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createExercisePractice(@RequestBody ExercisePracticeDTO practice, @PathVariable String exerciseId) {
-        exerciseAssignmentService.createExercisePractice(exerciseId, practice);
+    @PostMapping(value = "exercisesAssignments/{exerciseId}/practices", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ExercisePracticeDTO createExercisePractice(@PathVariable String exerciseId) {
+        return new ExercisePracticeDTO(exerciseAssignmentService.createExercisePractice(exerciseId));
     }
 
     @GetMapping("exercisesAssignments/{exerciseId}/practices")
     public List<ExercisePractice> getPracticeAttemptsByExerciseAssignmentId(@PathVariable String exerciseId) {
         return exerciseAssignmentService.getExerciseAssignmentById(exerciseId).orElseThrow().getPracticeAttempts();
+    }
+
+    //TODO: terminar de probar lo de la presigned a partir de la url normal. La idea es que cuando te traes el objeto del ejercicio desde la base
+    // le generes la presigned y pongas eso en el objeto en vez de la url normal
+    @GetMapping(value = "/exercisesAssignments/getUrl")
+    public ExercisePracticeDTO getAudioUrl(@RequestBody String url) {
+        return new ExercisePracticeDTO(exerciseAssignmentService.getPreSignedAudioUrl(url));
     }
 }

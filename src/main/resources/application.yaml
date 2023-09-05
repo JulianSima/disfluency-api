@@ -4,6 +4,21 @@ spring:
       uri: mongodb+srv://disfluency:oFH58ghKTYy0655p@disfluency.4phwfce.mongodb.net/?retryWrites=true&w=majority
 #      uri: mongodb://localhost:27017
       database: disfluency
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: disfluencytherapy@gmail.com
+    password: jnowpbowqiaizdca
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
 server:
   port: 8081
   error:
@@ -17,3 +32,14 @@ jwt:
   jwtSalt: disfluencySalt
   jwtExpirationMs: 3600000
   refreshTokenDurationDays: 60
+
+amazon:
+  aws:
+    accessKeyId: ${AWS_ACCESS_ID}
+    accessKeySecret: ${AWS_ACCESS_SECRET}
+    region: us-east-2
+    s3BaseUrl: https://pf5302.s3.us-east-2.amazonaws.com/
+    s3Bucket: pf5302
+    s3UploadFolder: audios/
+    uploadExpiration: 10
+    getExpiration: 1000

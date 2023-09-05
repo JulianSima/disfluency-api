@@ -1,12 +1,14 @@
 package com.disfluency.disfluencyapi.service.users;
 
 import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.state.PatientUserState;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.domain.users.User;
 import com.disfluency.disfluencyapi.domain.users.UserPassword;
 import com.disfluency.disfluencyapi.domain.users.UserRole;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.users.NewTherapistUserDTO;
+import com.disfluency.disfluencyapi.dto.users.PatientConfirmationDTO;
 import com.disfluency.disfluencyapi.dto.users.UserDTO;
 import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
 import com.disfluency.disfluencyapi.exception.ExistingAccountException;
@@ -14,6 +16,7 @@ import com.disfluency.disfluencyapi.exception.UserNotFoundException;
 import com.disfluency.disfluencyapi.repository.UserRepo;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import com.disfluency.disfluencyapi.service.therapists.TherapistService;
+import com.disfluency.disfluencyapi.service.users.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +31,7 @@ public class UserService {
     private final TherapistService therapistService;
     private final PatientService patientService;
     private final PasswordService passwordService;
+    private final EmailService emailService;
 
     public User getUserByAccount(UserDTO userDTO) {
         var user = userRepo.findOneByAccount(userDTO.account())
@@ -51,20 +55,25 @@ public class UserService {
     }
 
     public Patient createPatientForTherapist(NewPatientDTO newPatient, String therapistId) {
-        Patient patient = (Patient) createPatientUser(newPatient.email(), "12345678", newPatient).getRole(); //TODO mandar mail
+        Patient patient = (Patient) createPatientUser(newPatient).getRole();
         therapistService.addPatientToTherapist(therapistId, patient);
         return patient;
     }
 
-    private User createPatientUser(String account, String password, NewPatientDTO newPatient) {
-        validateExistingAccount(account);
+    private User createPatientUser(NewPatientDTO newPatient) {
+        validateExistingAccount(newPatient.email());
+
         var patient = patientService.createPatient(newPatient);
-        return createUser(account, password, patient);
+        var user = new User(newPatient.email(), patient);
+        var persistedUser = userRepo.save(user);
+
+        emailService.sendPatientInvitationEmail(persistedUser.getId(), newPatient.email());
+        return persistedUser;
     }
 
     private User createUser(String account, String password, UserRole user) {
         UserPassword userPassword = passwordService.createPasswordHash(password);
-        return userRepo.save(new User(account, userPassword,user));
+        return userRepo.save(new User(account, userPassword, user));
     }
 
     private void validateExistingAccount(String account) {
@@ -75,5 +84,28 @@ public class UserService {
 
     private Boolean isAnExistingAccount(String account) {
         return userRepo.findOneByAccount(account).isPresent();
+    }
+
+    public User getPendingPatientById(String id) {
+        var user = userRepo.findById(id).orElseThrow( () -> new UserNotFoundException(id) );
+
+        if (user.getRole() instanceof Therapist)
+            throw new UserNotFoundException(id);
+
+        var patient = (Patient) user.getRole();
+        if (patient.getState() != PatientUserState.PENDING)
+            throw new ExistingAccountException(user.getAccount());
+
+        return user;
+    }
+
+    public void confirmPendingPatient(String patientId, String password){
+        User targetUser = getPendingPatientById(patientId);
+        UserPassword userPassword = passwordService.createPasswordHash(password);
+        targetUser.setPassword(userPassword);
+        userRepo.save(targetUser);
+
+        var patient = (Patient) targetUser.getRole();
+        patientService.confirmPatient(patient);
     }
 }

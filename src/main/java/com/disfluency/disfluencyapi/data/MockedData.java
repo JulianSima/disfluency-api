@@ -4,6 +4,7 @@ import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.domain.exercises.ExercisePractice;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.state.PatientUserState;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
 import com.disfluency.disfluencyapi.domain.users.User;
 import com.disfluency.disfluencyapi.dto.exercises.ExercisePracticeDTO;
@@ -77,6 +78,7 @@ public class MockedData {
         Patient dibu = Patient.newPatient(
                 new NewPatientDTO("Emiliano", "Martinez", "tecomo@gmail.com", LocalDate.now().minusYears(32),
                         List.of(DayOfWeek.MONDAY, DayOfWeek.THURSDAY), LocalTime.of(15, 30), PROFILE_PICTURES[2]));
+        dibu.setState(PatientUserState.ACTIVE);
         scaloni.addPatient(dibu);
         patientList.add(dibu);
         userList.add(new User("Dibu", passwordService.createPasswordHash("123"), dibu));
@@ -84,6 +86,7 @@ public class MockedData {
         Patient messi = Patient.newPatient(
                 new NewPatientDTO("Lionel Andrés", "Messi", "lio@gmail.com", LocalDate.now().minusYears(36),
                         List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY), LocalTime.of(15, 30),PROFILE_PICTURES[1]));
+        messi.setState(PatientUserState.ACTIVE);
         scaloni.addPatient(messi);
         patientList.add(messi);
         userList.add(new User("Messi", passwordService.createPasswordHash("123"), messi));
@@ -91,6 +94,7 @@ public class MockedData {
         Patient depaul = Patient.newPatient(
                 new NewPatientDTO("Rodrigo", "De Paul", "rodri@gmail.com", LocalDate.now().minusYears(28),
                         List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY), LocalTime.of(15, 30), PROFILE_PICTURES[3]));
+        depaul.setState(PatientUserState.ACTIVE);
         scaloni.addPatient(depaul);
         patientList.add(depaul);
         userList.add(new User("Rodri", passwordService.createPasswordHash("123"), depaul));
@@ -99,13 +103,14 @@ public class MockedData {
         Patient paredes = Patient.newPatient(
                 new NewPatientDTO("Leandro", "Paredes", "paredes@gmail.com", LocalDate.now().minusYears(29),
                         List.of(DayOfWeek.TUESDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY), LocalTime.of(15, 30), PROFILE_PICTURES[5]));
+        paredes.setState(PatientUserState.ACTIVE);
         scaloni.addPatient(paredes);
         patientList.add(paredes);
         userList.add(new User("Paredes", passwordService.createPasswordHash("123"), paredes));
 
         // Resolutions
-        ExercisePractice exercisePracticeDepaul = ExercisePractice.newExercisePractice(new ExercisePracticeDTO("https://pf5302.s3.us-east-2.amazonaws.com/audios/toquesligeros.mp3"));
-        ExercisePractice exercisePracticeMessi = ExercisePractice.newExercisePractice(new ExercisePracticeDTO("https://pf5302.s3.us-east-2.amazonaws.com/audios/iniciosuave.mp3"));
+        ExercisePractice exercisePracticeDepaul = ExercisePractice.newExercisePractice("https://pf5302.s3.us-east-2.amazonaws.com/audios/toquesligeros.mp3");
+        ExercisePractice exercisePracticeMessi = ExercisePractice.newExercisePractice("https://pf5302.s3.us-east-2.amazonaws.com/audios/iniciosuave.mp3");
         exercisePracticeList.addAll(Arrays.asList(exercisePracticeMessi, exercisePracticeDepaul));
 
         // Assignments

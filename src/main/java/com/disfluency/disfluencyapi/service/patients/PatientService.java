@@ -61,7 +61,7 @@ public class PatientService {
 
     public List<Session> getTherapySessionsForPatient(String patientId) {
         var patient = getPatientById(patientId);
-        return patient.getTherapySession().stream().map(this::preSignSessionUrl).collect(Collectors.toList());
+        return patient.getTherapySession().stream().map(this::preSignSessionUrl).toList();
     }
 
     public Patient presignPatientUrls(Patient patient) {
@@ -80,7 +80,8 @@ public class PatientService {
     }
 
     private Session preSignSessionUrl(Session session){
-        var preSignedUrl = s3Service.generatePreSignedUrl(session.getRecordingUrl(), S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION);
+        String shortUrl = session.getRecordingUrl().replace(S3_BASE_URL, "");
+        var preSignedUrl = s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION);
         session.setRecordingUrl(preSignedUrl);
         return session;
     }

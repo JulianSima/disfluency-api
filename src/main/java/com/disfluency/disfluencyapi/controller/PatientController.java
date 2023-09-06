@@ -1,6 +1,7 @@
 package com.disfluency.disfluencyapi.controller;
 
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
+import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,11 @@ public class PatientController {
     public List<ExerciseAssignment> getExerciseAssignmentsPatient(@PathVariable String patientId) {
         var patient = patientService.getPatientById(patientId);
         return patientService.presignPatientUrls(patient).getExerciseAssignments();
+    }
+
+    @GetMapping("patient/{patientId}/formAssignments")
+    public List<FormAssignment> getFormAssignmentsPatient(@PathVariable String patientId) {
+        var patient = patientService.getPatientById(patientId);
+        return patient.getFormAssignments();
     }
 }

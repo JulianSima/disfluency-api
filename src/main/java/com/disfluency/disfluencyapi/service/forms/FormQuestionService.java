@@ -18,6 +18,10 @@ public class FormQuestionService {
 
     private final FormQuestionRepo formQuestionRepo;
 
+    public FormQuestion getFormQuestionById(String formQuestionId) {
+        return formQuestionRepo.findById(formQuestionId).orElseThrow();
+    }
+
     public List<FormQuestion> createQuestions(List<NewFormQuestionDTO> newFormQuestionDTO) {
         List<FormQuestion> questions = newFormQuestionDTO.stream()
                 .map(q -> FormQuestion.newFormQuestion(q))

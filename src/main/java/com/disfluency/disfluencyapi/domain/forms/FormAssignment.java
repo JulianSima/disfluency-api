@@ -18,4 +18,6 @@ public class FormAssignment {
     private LocalDate date;
     @DocumentReference
     private List<FormCompletionEntry> completionEntries;
+
+
 }

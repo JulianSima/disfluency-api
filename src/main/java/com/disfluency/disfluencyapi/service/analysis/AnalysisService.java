@@ -17,9 +17,9 @@ public class AnalysisService {
     private final AnalysisApiClient analysisApiClient;
     private final SessionService sessionService;
 
-    public Session createAnalysedSession(String audioUrl) {
+    public Session createAnalysedSession(String audioUrl, String preSignedUrl) {
 
-        var analysis = analysisApiClient.getAnalysis(new AnalysisRequest(audioUrl));
+        var analysis = analysisApiClient.getAnalysis(new AnalysisRequest(preSignedUrl));
         return sessionService.createSession(audioUrl, analysis);
     }
 

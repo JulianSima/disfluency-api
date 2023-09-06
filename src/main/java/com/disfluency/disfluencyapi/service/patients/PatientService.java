@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.disfluency.disfluencyapi.service.aws.S3Service.*;
 
@@ -52,7 +53,7 @@ public class PatientService {
                 .replace("%3A", ":");
 
         var preSignedUrl = s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION);
-        var session = analysisService.createAnalysedSession(preSignedUrl);
+        var session = analysisService.createAnalysedSession(shortUrl, preSignedUrl);
         patient.addTherapySession(session);
         patientRepo.save(patient);
         return session;
@@ -60,7 +61,7 @@ public class PatientService {
 
     public List<Session> getTherapySessionsForPatient(String patientId) {
         var patient = getPatientById(patientId);
-        return patient.getTherapySession();
+        return patient.getTherapySession().stream().map(this::preSignSessionUrl).collect(Collectors.toList());
     }
 
     public Patient presignPatientUrls(Patient patient) {
@@ -76,5 +77,11 @@ public class PatientService {
     public PreSignedUrlDTO getPreSignedUrl(String patientId){
         String newUrl = S3_UPLOAD_FOLDER + patientId + LocalDateTime.now() + ".mp3";
         return new PreSignedUrlDTO(s3Service.generatePreSignedUrl(newUrl, S3_BUCKET, HttpMethod.PUT, PRE_SIGNED_UPLOAD_EXPIRATION));
+    }
+
+    private Session preSignSessionUrl(Session session){
+        var preSignedUrl = s3Service.generatePreSignedUrl(session.getRecordingUrl(), S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION);
+        session.setRecordingUrl(preSignedUrl);
+        return session;
     }
 }

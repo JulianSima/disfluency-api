@@ -45,7 +45,12 @@ public class PatientService {
     public Session createTherapySessionForPatient(NewSessionDTO newSession, String patientId) {
         var patient = getPatientById(patientId);
         var url = newSession.recordingUrl();
-        String shortUrl = url.replace(S3_BASE_URL, "");
+
+        String shortUrl = url
+                .substring(0, url.indexOf("?"))
+                .replace(S3_BASE_URL, "")
+                .replace("%3A", ":");
+
         var preSignedUrl = s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION);
         var session = analysisService.createAnalysedSession(preSignedUrl);
         patient.addTherapySession(session);

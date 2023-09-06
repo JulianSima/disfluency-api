@@ -7,6 +7,7 @@ import com.disfluency.disfluencyapi.dto.patients.PreSignedUrlDTO;
 import com.disfluency.disfluencyapi.dto.session.NewSessionDTO;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class PatientController {
 
     private final PatientService patientService;
@@ -31,6 +33,7 @@ public class PatientController {
 
     @PostMapping(value = "patient/{patientId}/sessions", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Session createTherapySession(@RequestBody NewSessionDTO newSession, @PathVariable String patientId) {
+        log.info("session: " + newSession + " | " + patientId);
         return patientService.createTherapySessionForPatient(newSession, patientId);
     }
 

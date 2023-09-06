@@ -1,5 +1,6 @@
 package com.disfluency.disfluencyapi.controller;
 
+import com.disfluency.disfluencyapi.dto.analysis.ResultsDTO;
 import com.disfluency.disfluencyapi.dto.analysis.ResultsResponse;
 import com.disfluency.disfluencyapi.service.analysis.AnalysisService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,9 @@ public class SessionController {
     private final AnalysisService analysisService;
 
     @GetMapping("session/{sessionId}/result")
-    public ResultsResponse getSessionResult(@PathVariable String sessionId) {
-        return analysisService.getSessionResults(sessionId);
+    public ResultsDTO getSessionResult(@PathVariable String sessionId) {
+        var results = analysisService.getSessionResults(sessionId);
+        return ResultsDTO.from(results);
     }
 
 }

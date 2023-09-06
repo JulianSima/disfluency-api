@@ -53,7 +53,7 @@ public class PatientService {
                 .replace("%3A", ":");
 
         var preSignedUrl = s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION);
-        var session = analysisService.createAnalysedSession(shortUrl, preSignedUrl);
+        var session = analysisService.createAnalysedSession(S3_BASE_URL + shortUrl, preSignedUrl);
         patient.addTherapySession(session);
         patientRepo.save(patient);
         return session;

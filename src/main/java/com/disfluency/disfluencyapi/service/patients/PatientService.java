@@ -1,6 +1,7 @@
 package com.disfluency.disfluencyapi.service.patients;
 
 import com.amazonaws.HttpMethod;
+import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.domain.state.PatientUserState;
@@ -12,6 +13,7 @@ import com.disfluency.disfluencyapi.repository.PatientRepo;
 import com.disfluency.disfluencyapi.service.analysis.AnalysisService;
 import com.disfluency.disfluencyapi.service.aws.S3Service;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentService;
+import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ public class PatientService {
     
     private final PatientRepo patientRepo;
     private final AnalysisService analysisService;
+    private final ExerciseService exerciseService;
     private final ExerciseAssignmentService exerciseAssignmentService;
     private final S3Service s3Service;
 
@@ -71,7 +74,17 @@ public class PatientService {
   
     public Patient confirmPatient(Patient patient){
         patient.setState(PatientUserState.ACTIVE);
+        patient.addExercisesAssignment(generateExerciseAssignments());
         return patientRepo.save(patient);
+    }
+
+    /**
+     * Tempo
+     * @return
+     */
+    private List<ExerciseAssignment> generateExerciseAssignments(){
+        var exercises = exerciseService.getAllExercises();
+        return exercises.stream().map(exerciseAssignmentService::createExerciseAssignments).toList();
     }
 
     public PreSignedUrlDTO getPreSignedUrl(String patientId){

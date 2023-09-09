@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class FormQuestionResponseService {
 
-    private FormQuestionResponseRepo formQuestionResponseRepo;
+    private final FormQuestionResponseRepo formQuestionResponseRepo;
 
     private final FormQuestionService formQuestionService;
 

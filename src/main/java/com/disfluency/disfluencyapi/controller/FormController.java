@@ -1,9 +1,12 @@
 package com.disfluency.disfluencyapi.controller;
 
 import com.disfluency.disfluencyapi.domain.forms.Form;
+import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
 import com.disfluency.disfluencyapi.domain.forms.FormCompletionEntry;
+import com.disfluency.disfluencyapi.domain.forms.FormQuestionResponse;
 import com.disfluency.disfluencyapi.dto.forms.NewFormCompletionEntryDTO;
 import com.disfluency.disfluencyapi.service.forms.FormAssignmentService;
+import com.disfluency.disfluencyapi.service.forms.FormCompletionEntryService;
 import com.disfluency.disfluencyapi.service.forms.FormQuestionResponseService;
 import com.disfluency.disfluencyapi.service.forms.FormService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,11 +24,17 @@ public class FormController {
     private final FormService formService;
     private final FormAssignmentService formAssignmentService;
     private final FormQuestionResponseService formQuestionResponseService;
+    private final FormCompletionEntryService formCompletionEntryService;
 
 
     @GetMapping("forms/{formId}")
     public Form getFormById(@PathVariable String formId) {
         return formService.getFormById(formId);
+    }
+
+    @GetMapping("formAssignments/{formAssignmentId}")
+    public FormAssignment getFormAssignmentsById(@PathVariable String formAssignmentId) {
+        return formAssignmentService.getFormAssignmentById(formAssignmentId);
     }
 
     @GetMapping("formAssignments/{formAssignmentId}/formCompletionEntries")
@@ -33,9 +43,11 @@ public class FormController {
     }
 
     @PostMapping("formAssignments/{formAssignmentId}/formCompletionEntries")
-    public List<FormCompletionEntry> completeFormAssignment(@RequestBody NewFormCompletionEntryDTO formCompletionEntryDTO, @PathVariable String formAssignmentId) {
+    public FormAssignment completeFormAssignment(@RequestBody NewFormCompletionEntryDTO formCompletionEntryDTO, @PathVariable String formAssignmentId) {
         var responses = formCompletionEntryDTO.responses()
-                .stream().map( response -> formQuestionResponseService.createFormQuestionResponse(response) );
-        return formAssignmentService.completeFormAssignment(formAssignmentId);
+                .stream().map( response -> formQuestionResponseService.createFormQuestionResponse(response) )
+                .collect(Collectors.toList());
+        var formCompletionEntry = formCompletionEntryService.createFormCompletionEntry(responses);
+        return formAssignmentService.completeFormAssignment(formAssignmentId, formCompletionEntry);
     }
 }

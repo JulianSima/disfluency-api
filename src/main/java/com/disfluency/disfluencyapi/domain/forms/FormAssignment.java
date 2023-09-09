@@ -1,6 +1,5 @@
 package com.disfluency.disfluencyapi.domain.forms;
 
-import com.disfluency.disfluencyapi.repository.FormAssignmentRepo;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -27,6 +26,10 @@ public class FormAssignment {
                 .date(LocalDate.now())
                 .completionEntries(new ArrayList<>())
                 .build();
+    }
+
+    public void addCompletionEntry(FormCompletionEntry completionEntry) {
+        this.completionEntries.add(completionEntry);
     }
 
 }

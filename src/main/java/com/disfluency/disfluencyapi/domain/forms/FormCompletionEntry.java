@@ -17,4 +17,12 @@ public class FormCompletionEntry {
     private LocalDate date;
     @DocumentReference
     private List<FormQuestionResponse> responses;
+
+    public static FormCompletionEntry newFormCompletionEntry(List<FormQuestionResponse> responses) {
+        return FormCompletionEntry
+                    .builder()
+                    .date(LocalDate.now())
+                    .responses(responses)
+                    .build();
+    }
 }

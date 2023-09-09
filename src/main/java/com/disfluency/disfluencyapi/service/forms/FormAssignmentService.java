@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,9 +30,9 @@ public class FormAssignmentService {
         return formAssignment.getCompletionEntries();
     }
 
-    public List<FormCompletionEntry> completeFormAssignment(String formAssignmentId) {
+    public FormAssignment completeFormAssignment(String formAssignmentId, FormCompletionEntry completionEntry) {
         var formAssignment = getFormAssignmentById(formAssignmentId);
-        //formAssignment.addCompletion
-        return new ArrayList<>();
+        formAssignment.addCompletionEntry(completionEntry);
+        return formAssignmentRepo.save(formAssignment);
     }
 }

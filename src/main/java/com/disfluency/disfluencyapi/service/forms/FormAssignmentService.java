@@ -1,5 +1,6 @@
 package com.disfluency.disfluencyapi.service.forms;
 
+import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
 import com.disfluency.disfluencyapi.domain.forms.FormCompletionEntry;
 import com.disfluency.disfluencyapi.repository.FormAssignmentRepo;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,6 +17,10 @@ import java.util.List;
 public class FormAssignmentService {
 
     private final FormAssignmentRepo formAssignmentRepo;
+
+    public FormAssignment createExerciseAssignments(Form form){
+        return formAssignmentRepo.save(FormAssignment.newFormAssignment(form));
+    }
 
     public FormAssignment getFormAssignmentById(String formAssignmentId) {
         return formAssignmentRepo.findById(formAssignmentId).orElseThrow();
@@ -27,6 +33,7 @@ public class FormAssignmentService {
 
     public List<FormCompletionEntry> completeFormAssignment(String formAssignmentId) {
         var formAssignment = getFormAssignmentById(formAssignmentId);
-        formAssignment.addCompletion
+        //formAssignment.addCompletion
+        return new ArrayList<>();
     }
 }

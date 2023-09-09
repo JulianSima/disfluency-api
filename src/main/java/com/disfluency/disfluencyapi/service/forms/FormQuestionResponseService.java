@@ -19,15 +19,8 @@ public class FormQuestionResponseService {
     private final FormQuestionService formQuestionService;
 
     public FormQuestionResponse createFormQuestionResponse(FormQuestionResponseDTO response) {
-        validateResponse(response);
         var question = formQuestionService.getFormQuestionById(response.idQuestion());
         var formQuestionResponse = FormQuestionResponse.newFormQuestionResponse(response, question);
         return formQuestionResponseRepo.save(formQuestionResponse);
-    }
-
-    private void validateResponse(FormQuestionResponseDTO response) {
-        if(AnswerScale.ME_CUESTA.equals( response.scaleResponse() ) &&  response.followUpResponse() == null) {
-            throw new RuntimeException("The response must have a follow up response"); //TODO
-        }
     }
 }

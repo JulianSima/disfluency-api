@@ -65,6 +65,10 @@ public class Therapist implements UserRole {
         return patients.stream().filter(patient -> patientsIds.contains(patient.getId()) ).toList();
     }
 
+    public List<Form> getFormsWithIds(List<String> formsIds) {
+        return forms.stream().filter( form ->  formsIds.contains(form.getId()) ).toList();
+    }
+
     @Override
     public UserRoleDTO toUserRoleDTO() {
         return new UserRoleDTO("Therapist", this);

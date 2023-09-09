@@ -48,15 +48,13 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and() //TODO Devuelve todo 401 aunque el controller retorne un 404 u otro
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/signup").permitAll()
                 .requestMatchers("/refreshToken").permitAll()
                 .requestMatchers("/pending/patient/**").permitAll()
-                .requestMatchers("/therapists/*/forms").permitAll() //TODO remove
-                .requestMatchers("/forms/**").permitAll() //TODO remove
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());

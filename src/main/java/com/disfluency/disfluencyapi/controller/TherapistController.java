@@ -2,19 +2,16 @@ package com.disfluency.disfluencyapi.controller;
 
 import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
-import com.disfluency.disfluencyapi.domain.therapists.Therapist;
+import com.disfluency.disfluencyapi.dto.forms.NewFormAssignmentDTO;
 import com.disfluency.disfluencyapi.dto.forms.NewFormDTO;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
-import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
-import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentService;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import com.disfluency.disfluencyapi.service.therapists.TherapistService;
 import com.disfluency.disfluencyapi.service.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,5 +53,19 @@ public class TherapistController {
         log.info(newForm.toString());
         therapistService.validateExistingTherapist(therapistId);
         return therapistService.createFormForTherapist(therapistId, newForm);
+    }
+
+    @GetMapping(value = "/therapists/{therapistId}/forms")
+    public List<Form> getFormsFromTherapist(@PathVariable String therapistId) {
+        log.info(String.format("Forms by '%s' therapist", therapistId));
+        therapistService.validateExistingTherapist(therapistId);
+        var therapist = therapistService.getTherapistById(therapistId);
+        return therapist.getForms();
+    }
+
+    @PostMapping(value = "/therapists/{therapistId}/formAssignments", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createExercisesAssignment(@RequestBody NewFormAssignmentDTO assignment, @PathVariable String therapistId) {
+        log.info(assignment.toString());
+        therapistService.createFormAssignment(assignment, therapistId);
     }
 }

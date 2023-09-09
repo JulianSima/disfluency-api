@@ -3,12 +3,14 @@ package com.disfluency.disfluencyapi.service.therapists;
 import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
+import com.disfluency.disfluencyapi.dto.forms.NewFormAssignmentDTO;
 import com.disfluency.disfluencyapi.dto.forms.NewFormDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.exception.UserNotFoundException;
 import com.disfluency.disfluencyapi.exception.TherapistNotFoundException;
 import com.disfluency.disfluencyapi.repository.TherapistRepo;
 import com.disfluency.disfluencyapi.service.forms.FormService;
+import com.disfluency.disfluencyapi.service.patients.PatientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class TherapistService {
     
     private final TherapistRepo therapistRepo;
     private final FormService formService;
+    private final PatientService patientService;
 
     public Therapist createTherapist(NewTherapistDTO newTherapist) {
         var therapist = Therapist.newTherapist(newTherapist);
@@ -64,5 +67,13 @@ public class TherapistService {
         therapist.addForm(form);
         therapistRepo.save(therapist);
         return form;
+    }
+
+    public void createFormAssignment(NewFormAssignmentDTO assignment, String therapistId) {
+        var therapist = getTherapistById(therapistId);
+        log.info(therapist.toString());
+        List<Form> forms = therapist.getFormsWithIds(assignment.formIds());
+        List<Patient> patients = therapist.getPatientsWithIds(assignment.patientsIds());
+        patients.forEach(patient -> patientService.formAssignments(patient.getId(), forms));
     }
 }

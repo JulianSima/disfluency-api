@@ -1,11 +1,13 @@
 package com.disfluency.disfluencyapi.domain.forms;
 
+import com.disfluency.disfluencyapi.repository.FormAssignmentRepo;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,5 +21,12 @@ public class FormAssignment {
     @DocumentReference
     private List<FormCompletionEntry> completionEntries;
 
+    public static FormAssignment newFormAssignment(Form form){
+        return FormAssignment.builder()
+                .form(form)
+                .date(LocalDate.now())
+                .completionEntries(new ArrayList<>())
+                .build();
+    }
 
 }

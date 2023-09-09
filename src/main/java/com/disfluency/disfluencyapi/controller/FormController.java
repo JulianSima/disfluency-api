@@ -24,10 +24,10 @@ public class FormController {
 
     @GetMapping("forms/{formId}")
     public Form getFormById(@PathVariable String formId) {
-        return formService.getFormById(formId).orElseThrow();
+        return formService.getFormById(formId);
     }
 
-    @GetMapping("formAssignments/{formAssignmentId}")
+    @GetMapping("formAssignments/{formAssignmentId}/formCompletionEntries")
     public List<FormCompletionEntry> getCompletionEntriesByFormAssignmentId(@PathVariable String formAssignmentId) {
         return formAssignmentService.getCompletionEntriesByFormAssignmentId(formAssignmentId);
     }

@@ -2,6 +2,7 @@ package com.disfluency.disfluencyapi.service.forms;
 
 import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.dto.forms.NewFormDTO;
+import com.disfluency.disfluencyapi.exception.FormNotFoundException;
 import com.disfluency.disfluencyapi.repository.FormRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class FormService {
         return form;
     }
 
-    public Optional<Form> getFormById(String formId) {
-        return formRepo.findById(formId);
+    public Form getFormById(String formId) {
+        return formRepo.findById(formId).orElseThrow( () ->new FormNotFoundException(formId));
     }
 }

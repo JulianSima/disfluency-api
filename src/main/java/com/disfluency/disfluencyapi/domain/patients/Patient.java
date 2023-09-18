@@ -93,4 +93,8 @@ public class Patient implements UserRole {
     public UserRoleDTO toUserRoleDTO() {
         return new UserRoleDTO("Patient", this);
     }
+
+    public void addTherapySession(Session session) {
+        this.therapySession.add(session);
+    }
 }

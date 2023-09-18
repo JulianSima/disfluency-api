@@ -12,17 +12,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static com.disfluency.disfluencyapi.service.aws.S3Service.*;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ExerciseAssignmentService {
-
-    private static final Integer PRE_SIGNED_UPLOAD_EXPIRATION = 10;
-    private static final Integer PRE_SIGNED_GET_EXPIRATION = 1000;
-
-    private static final String S3_BASE_URL = "https://pf5302.s3.us-east-2.amazonaws.com/";
-    private static final String S3_BUCKET = "pf5302";
-    private static final String S3_UPLOAD_FOLDER = "audios/";
 
     private final ExerciseAssignmentsRepo exerciseAssignmentsRepo;
     private final ExercisePracticeService exercisePracticeService;

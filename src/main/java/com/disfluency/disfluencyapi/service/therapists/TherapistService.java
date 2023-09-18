@@ -1,7 +1,9 @@
 package com.disfluency.disfluencyapi.service.therapists;
 
 import com.disfluency.disfluencyapi.domain.patients.Patient;
+import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
+import com.disfluency.disfluencyapi.dto.session.NewSessionDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.exception.UserNotFoundException;
 import com.disfluency.disfluencyapi.exception.TherapistNotFoundException;
@@ -52,4 +54,5 @@ public class TherapistService {
         therapist.addPatient(patient);
         therapistRepo.save(therapist);
     }
+
 }

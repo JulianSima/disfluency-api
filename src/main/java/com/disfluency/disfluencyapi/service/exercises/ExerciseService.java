@@ -6,6 +6,7 @@ import com.disfluency.disfluencyapi.repository.ExerciseRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,5 +21,9 @@ public class ExerciseService {
 
     public Optional<Exercise> getExerciseById(String exerciseId) {
         return exerciseRepo.findById(exerciseId);
+    }
+
+    public List<Exercise> getAllExercises() {
+        return exerciseRepo.findAll();
     }
 }

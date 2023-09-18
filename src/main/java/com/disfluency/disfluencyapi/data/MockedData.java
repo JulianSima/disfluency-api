@@ -29,11 +29,11 @@ public class MockedData {
         List<ExercisePractice> exercisePracticeList = exerciseAssignmentList.stream().flatMap(a -> a.getPracticeAttempts().stream()).toList();
 
         // Adding all to database
-        formQuestionResponseRepo.saveAll(questionResponseList);
-        formCompletionEntryRepo.saveAll(formCompletionList);
-        formAssignmentRepo.saveAll(formAssignmentList);
         formQuestionRepo.saveAll(questionList);
         formRepo.saveAll(formList);
+        formAssignmentRepo.saveAll(formAssignmentList);
+        formQuestionResponseRepo.saveAll(questionResponseList);
+        formCompletionEntryRepo.saveAll(formCompletionList);
         exerciseRepo.saveAll(exerciseList);
         exercisePracticeRepo.saveAll(exercisePracticeList);
         exerciseAssignmentsRepo.saveAll(exerciseAssignmentList);

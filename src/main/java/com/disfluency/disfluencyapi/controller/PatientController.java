@@ -24,13 +24,13 @@ public class PatientController {
     }
 
     @GetMapping("patient/{patientId}/exerciseAssignments")
-    public List<ExerciseAssignment> getExerciseAssignmentsPatient(@PathVariable String patientId) {
+    public List<ExerciseAssignment> getExerciseAssignmentsByPatient(@PathVariable String patientId) {
         var patient = patientService.getPatientById(patientId);
         return patientService.presignPatientUrls(patient).getExerciseAssignments();
     }
 
     @GetMapping("patient/{patientId}/formAssignments")
-    public List<FormAssignment> getFormAssignmentsPatient(@PathVariable String patientId) {
+    public List<FormAssignment> getFormAssignmentsByPatient(@PathVariable String patientId) {
         var patient = patientService.getPatientById(patientId);
         return patient.getFormAssignments();
     }

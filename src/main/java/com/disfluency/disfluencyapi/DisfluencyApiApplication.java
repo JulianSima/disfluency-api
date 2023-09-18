@@ -25,12 +25,17 @@ public class DisfluencyApiApplication {
 								   ExerciseRepo exerciseRepo,
 								   ExerciseAssignmentsRepo exerciseAssignmentsRepo,
 								   ExercisePracticeRepo exercisePracticeRepo,
-								   FormRepo formRepo, FormQuestionRepo formQuestionRepo) {
+								   FormRepo formRepo,
+								   FormQuestionRepo formQuestionRepo,
+								   FormAssignmentRepo formAssignmentRepo,
+								   FormQuestionResponseRepo formQuestionResponseRepo,
+								   FormCompletionEntryRepo formCompletionEntryRepo
+	) {
 
 
 		return args -> {
-//			MockedData.saveData(patientRepo, therapistRepo, exerciseRepo, userRepo, exerciseAssignmentsRepo, exercisePracticeRepo);
-// 			MockedData.drop(patientRepo, therapistRepo, exerciseRepo, userRepo, exerciseAssignmentsRepo, exercisePracticeRepo, formRepo, formQuestionRepo);
+//			MockedData.saveData(patientRepo, therapistRepo, exerciseRepo, userRepo, exerciseAssignmentsRepo, exercisePracticeRepo, formRepo, formQuestionRepo, formAssignmentRepo, formQuestionResponseRepo, formCompletionEntryRepo);
+// 			MockedData.drop(patientRepo, therapistRepo, exerciseRepo, userRepo, exerciseAssignmentsRepo, exercisePracticeRepo, formRepo, formQuestionRepo, formAssignmentRepo, formQuestionResponseRepo, formCompletionEntryRepo);
 		};
 	}
 

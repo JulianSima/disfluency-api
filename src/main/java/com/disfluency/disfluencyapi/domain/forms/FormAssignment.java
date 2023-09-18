@@ -1,5 +1,6 @@
 package com.disfluency.disfluencyapi.domain.forms;
 
+import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;

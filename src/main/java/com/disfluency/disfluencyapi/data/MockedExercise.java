@@ -1,6 +1,7 @@
 package com.disfluency.disfluencyapi.data;
 
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
+import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
 
 import java.util.List;
@@ -44,5 +45,9 @@ public class MockedExercise {
         );
 
         all = List.of(fonacionContinuada, inicioSuave, toquesLigeros, velocidadComoda);
+    }
+
+    public static List<ExerciseAssignment> allAssignments(){
+        return all.stream().map(ExerciseAssignment::newExerciseAssignment).toList();
     }
 }

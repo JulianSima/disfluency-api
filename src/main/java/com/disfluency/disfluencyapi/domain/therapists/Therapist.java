@@ -31,7 +31,6 @@ public class Therapist implements UserRole {
     @JsonIgnore
     private List<Patient> patients;
     @DocumentReference
-    @JsonIgnore
     private List<Exercise> exercises;
     @DocumentReference
     private List<Form> forms;

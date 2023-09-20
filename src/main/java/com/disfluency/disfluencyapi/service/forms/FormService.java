@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,5 +28,9 @@ public class FormService {
 
     public Form getFormById(String formId) {
         return formRepo.findById(formId).orElseThrow( () ->new FormNotFoundException(formId));
+    }
+
+    public List<Form> getAllForms() {
+        return formRepo.findAll();
     }
 }

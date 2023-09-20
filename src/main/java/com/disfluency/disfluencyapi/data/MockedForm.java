@@ -1,6 +1,5 @@
 package com.disfluency.disfluencyapi.data;
 
-import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.domain.forms.AnswerScale;
 import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.forms.FormAssignment;

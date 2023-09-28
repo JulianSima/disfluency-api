@@ -4,8 +4,10 @@ import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.domain.exercises.ExercisePractice;
 import com.disfluency.disfluencyapi.dto.exercises.ExercisePracticeDTO;
+import com.disfluency.disfluencyapi.dto.exercises.NewExerciseAssignmentDTO;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentService;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
+import com.disfluency.disfluencyapi.service.patients.PatientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -19,6 +21,7 @@ import java.util.List;
 public class ExerciseController {
 
     private final ExerciseService exerciseService;
+    private final PatientService patientService;
     private final ExerciseAssignmentService exerciseAssignmentService;
 
     @GetMapping("exercises/{exerciseId}")
@@ -47,5 +50,10 @@ public class ExerciseController {
     @GetMapping(value = "/exercisesAssignments/getUrl")
     public ExercisePracticeDTO getAudioUrl(@RequestBody String url) {
         return new ExercisePracticeDTO(exerciseAssignmentService.getPreSignedAudioUrl(url));
+    }
+
+    @PostMapping(value = "/exercisesAssignments")
+    public void assignExercisesToPatients(@RequestBody NewExerciseAssignmentDTO assignmentDTO){
+        exerciseService.assignExercisesToPatients(assignmentDTO, patientService);
     }
 }

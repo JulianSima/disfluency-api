@@ -1,6 +1,7 @@
 package com.disfluency.disfluencyapi.service.patients;
 
 import com.amazonaws.HttpMethod;
+import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
@@ -47,6 +48,10 @@ public class PatientService {
 
     public Patient getPatientById(String patientId) {
         return patientRepo.findById(patientId).orElseThrow( () -> new PatientNotFoundException(patientId));
+    }
+
+    public List<Patient> getPatientsByIdList(List<String> ids) {
+        return patientRepo.findAllById(ids);
     }
 
     public Patient createPatient(NewPatientDTO newPatient) {
@@ -126,5 +131,21 @@ public class PatientService {
         var preSignedUrl = s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION);
         session.setRecordingUrl(preSignedUrl);
         return session;
+    }
+
+    public void assignExercisesToPatient(String patientId, List<Exercise> exercises) {
+        var patient = getPatientById(patientId);
+
+        List<ExerciseAssignment> exerciseAssignments = exercises.stream()
+                .map(exerciseAssignmentService::createExerciseAssignments)
+                .toList();
+
+        patient.addExercisesAssignment(exerciseAssignments);
+        patientRepo.save(patient);
+//        try{
+//            notificationService.sendCommonMessage("A trabajar", "Tu terapeuta te ha asignado ejercicios para practicar.", patient.getFcmToken());
+//        }catch (Exception e){
+//            log.error("Error while notificating: {}",e.toString());
+//        }
     }
 }

@@ -1,21 +1,30 @@
 package com.disfluency.disfluencyapi.service.therapists;
 
+import com.amazonaws.HttpMethod;
+import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
+import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
 import com.disfluency.disfluencyapi.dto.forms.NewFormAssignmentDTO;
 import com.disfluency.disfluencyapi.dto.forms.NewFormDTO;
+import com.disfluency.disfluencyapi.dto.patients.PreSignedUrlDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.exception.UserNotFoundException;
 import com.disfluency.disfluencyapi.exception.TherapistNotFoundException;
 import com.disfluency.disfluencyapi.repository.TherapistRepo;
+import com.disfluency.disfluencyapi.service.aws.S3Service;
+import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
 import com.disfluency.disfluencyapi.service.forms.FormService;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.disfluency.disfluencyapi.service.aws.S3Service.*;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +34,8 @@ public class TherapistService {
     private final TherapistRepo therapistRepo;
     private final FormService formService;
     private final PatientService patientService;
+    private final ExerciseService exerciseService;
+    private final S3Service s3Service;
 
     public Therapist createTherapist(NewTherapistDTO newTherapist) {
         var therapist = Therapist.newTherapist(newTherapist);
@@ -77,4 +88,21 @@ public class TherapistService {
         List<Patient> patients = therapist.getPatientsWithIds(assignment.patientsIds());
         patients.forEach(patient -> patientService.formAssignments(patient.getId(), forms));
     }
+
+    public Exercise createExerciseForTherapist(String therapistId, NewExerciseDTO newExercise) {
+        var therapist = getTherapistById(therapistId);
+
+        var sampleUrl = s3Service.reversePreSignedUrl(newExercise.sampleRecordingUrl());
+        var exercise = exerciseService.createExercise(new NewExerciseDTO(newExercise.title(), newExercise.instruction(), newExercise.phrase(), sampleUrl));
+
+        therapist.addExercise(exercise);
+        therapistRepo.save(therapist);
+        return exercise;
+    }
+
+    public PreSignedUrlDTO getPreSignedUrl(String therapistId){
+        String newUrl = S3_UPLOAD_FOLDER + therapistId + "/exercise/" + LocalDateTime.now() + ".mp3";
+        return new PreSignedUrlDTO(s3Service.generatePreSignedUrl(newUrl, S3_BUCKET, HttpMethod.PUT, PRE_SIGNED_UPLOAD_EXPIRATION));
+    }
+
 }

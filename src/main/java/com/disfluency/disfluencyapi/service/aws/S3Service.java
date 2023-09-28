@@ -28,4 +28,14 @@ public class S3Service {
         calendar.add(Calendar.MINUTE, expirationMinutes);
         return amazonS3Client.generatePresignedUrl(bucketName, filePath, calendar.getTime(), httpMethod).toString();
     }
+
+    /**
+     * Given a pre signed url, returns the original url to the s3 file
+     * @param url pre signed url
+     * @return base url of the given pre signed url
+     */
+    public String reversePreSignedUrl(String url) {
+        //removes pre-signed suffix and reformats ':' characters
+        return url.substring(0, url.indexOf("?")).replace("%3A", ":");
+    }
 }

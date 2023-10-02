@@ -4,6 +4,7 @@ import com.disfluency.disfluencyapi.domain.patients.Patient;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @Data
 @RequiredArgsConstructor

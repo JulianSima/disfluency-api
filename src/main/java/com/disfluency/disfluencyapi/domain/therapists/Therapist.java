@@ -31,10 +31,8 @@ public class Therapist implements UserRole {
     @JsonIgnore
     private List<Patient> patients;
     @DocumentReference
-    @JsonIgnore
     private List<Exercise> exercises;
     @DocumentReference
-    @JsonIgnore
     private List<Form> forms;
 
     public void addPatient(Patient patient) {
@@ -66,8 +64,16 @@ public class Therapist implements UserRole {
         return patients.stream().filter(patient -> patientsIds.contains(patient.getId()) ).toList();
     }
 
+    public List<Form> getFormsWithIds(List<String> formsIds) {
+        return forms.stream().filter( form ->  formsIds.contains(form.getId()) ).toList();
+    }
+
     @Override
     public UserRoleDTO toUserRoleDTO() {
         return new UserRoleDTO("Therapist", this);
+    }
+
+    public void addForm(Form form) {
+        this.forms.add(form);
     }
 }

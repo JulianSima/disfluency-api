@@ -24,7 +24,7 @@ public class ExerciseAssignmentService {
     private final S3Service s3Service;
 
     public ExerciseAssignment createExerciseAssignments(Exercise exercise){
-        return exerciseAssignmentsRepo.save(new ExerciseAssignment(exercise));
+        return exerciseAssignmentsRepo.save(ExerciseAssignment.newExerciseAssignment(exercise));
     }
 
     public Optional<ExerciseAssignment> getExerciseAssignmentById(String exerciseId) {

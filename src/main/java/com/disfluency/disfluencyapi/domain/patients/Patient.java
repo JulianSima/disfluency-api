@@ -85,6 +85,10 @@ public class Patient implements UserRole {
         this.exerciseAssignments.addAll(exerciseAssignments);
     }
 
+    public void addFormsAssignment(List<FormAssignment> formAssignments) {
+        this.formAssignments.addAll(formAssignments);
+    }
+
     @Override
     public UserRoleDTO toUserRoleDTO() {
         return new UserRoleDTO("Patient", this);

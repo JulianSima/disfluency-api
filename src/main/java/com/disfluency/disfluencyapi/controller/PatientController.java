@@ -2,6 +2,7 @@ package com.disfluency.disfluencyapi.controller;
 
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.domain.sessions.Session;
+import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PreSignedUrlDTO;
 import com.disfluency.disfluencyapi.dto.session.NewSessionDTO;
@@ -10,6 +11,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -26,9 +31,15 @@ public class PatientController {
     }
 
     @GetMapping("patient/{patientId}/exerciseAssignments")
-    public List<ExerciseAssignment> getExerciseAssignmentsPatient(@PathVariable String patientId) {
+    public List<ExerciseAssignment> getExerciseAssignmentsByPatient(@PathVariable String patientId) {
         var patient = patientService.getPatientById(patientId);
         return patientService.presignPatientUrls(patient).getExerciseAssignments();
+    }
+
+    @GetMapping("patient/{patientId}/formAssignments")
+    public List<FormAssignment> getFormAssignmentsByPatient(@PathVariable String patientId) {
+        var patient = patientService.getPatientById(patientId);
+        return patient.getFormAssignments();
     }
 
     @PostMapping(value = "patient/{patientId}/sessions", consumes = MediaType.APPLICATION_JSON_VALUE)

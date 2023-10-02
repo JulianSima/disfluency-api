@@ -1,7 +1,10 @@
 package com.disfluency.disfluencyapi.service.patients;
 
 import com.amazonaws.HttpMethod;
+import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
+import com.disfluency.disfluencyapi.domain.forms.Form;
+import com.disfluency.disfluencyapi.domain.forms.FormAssignment;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.domain.state.PatientUserState;
@@ -13,10 +16,14 @@ import com.disfluency.disfluencyapi.repository.PatientRepo;
 import com.disfluency.disfluencyapi.service.analysis.AnalysisService;
 import com.disfluency.disfluencyapi.service.aws.S3Service;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentService;
+import com.disfluency.disfluencyapi.service.forms.FormAssignmentService;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
+import com.disfluency.disfluencyapi.service.forms.FormService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,12 +40,18 @@ public class PatientService {
     private final PatientRepo patientRepo;
     private final AnalysisService analysisService;
     private final ExerciseService exerciseService;
+    private final FormService formService;
     private final ExerciseAssignmentService exerciseAssignmentService;
+    private final FormAssignmentService formAssignmentService;
     private final S3Service s3Service;
 
 
     public Patient getPatientById(String patientId) {
         return patientRepo.findById(patientId).orElseThrow( () -> new PatientNotFoundException(patientId));
+    }
+
+    public List<Patient> getPatientsByIdList(List<String> ids) {
+        return patientRepo.findAllById(ids);
     }
 
     public Patient createPatient(NewPatientDTO newPatient) {
@@ -75,7 +88,23 @@ public class PatientService {
     public Patient confirmPatient(Patient patient){
         patient.setState(PatientUserState.ACTIVE);
         patient.addExercisesAssignment(generateExerciseAssignments());
+        patient.addFormsAssignment(generateFormAssignments());
         return patientRepo.save(patient);
+    }
+
+    public void formAssignments(String patientId, List<Form> forms) {
+        var patient = getPatientById(patientId);
+
+        List<FormAssignment> formAssignments = forms.stream()
+                .map(formAssignmentService::createExerciseAssignments)
+                .toList();
+        patient.addFormsAssignment(formAssignments);
+        patientRepo.save(patient);
+//        try{
+//            notificationService.sendCommonMessage("A trabajar", "Tu terapeuta te ha asignado ejercicios para practicar.", patient.getFcmToken());
+//        }catch (Exception e){
+//            log.error("Error while notificating: {}",e.toString());
+//        }
     }
 
     /**
@@ -85,6 +114,11 @@ public class PatientService {
     private List<ExerciseAssignment> generateExerciseAssignments(){
         var exercises = exerciseService.getAllExercises();
         return exercises.stream().map(exerciseAssignmentService::createExerciseAssignments).toList();
+    }
+
+    private List<FormAssignment> generateFormAssignments(){
+        var forms = formService.getAllForms();
+        return forms.stream().map(formAssignmentService::createExerciseAssignments).toList();
     }
 
     public PreSignedUrlDTO getPreSignedUrl(String patientId){
@@ -97,5 +131,21 @@ public class PatientService {
         var preSignedUrl = s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION);
         session.setRecordingUrl(preSignedUrl);
         return session;
+    }
+
+    public void assignExercisesToPatient(String patientId, List<Exercise> exercises) {
+        var patient = getPatientById(patientId);
+
+        List<ExerciseAssignment> exerciseAssignments = exercises.stream()
+                .map(exerciseAssignmentService::createExerciseAssignments)
+                .toList();
+
+        patient.addExercisesAssignment(exerciseAssignments);
+        patientRepo.save(patient);
+//        try{
+//            notificationService.sendCommonMessage("A trabajar", "Tu terapeuta te ha asignado ejercicios para practicar.", patient.getFcmToken());
+//        }catch (Exception e){
+//            log.error("Error while notificating: {}",e.toString());
+//        }
     }
 }

@@ -12,11 +12,14 @@
 				{
 					"name": "login",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"account\": \"jbruzzoni@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+							"raw": "{\r\n    \"account\": \"Scalo\",\r\n    \"password\": \"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -148,6 +151,99 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "create form",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"En la universidad, o en la epoca de la escuela...\",\r\n    \"questions\": [\r\n        {\r\n            \"scaleQuestion\": \"Pensas que es dificil hablar con los profesores?\",\r\n            \"followUpQuestion\": \"Que es lo que me hace sentir mal de esta situacion?\",\r\n            \"majorScale\": \"Muy dificil\",\r\n            \"minorScale\": \"No es dificil\"\r\n        },\r\n        {\r\n            \"scaleQuestion\": \"Te cuesta comunicarte con tus compañeros?\",\r\n            \"followUpQuestion\": \"Que es lo que me hace sentir mal de esta situacion?\",\r\n            \"majorScale\": \"Me cuesta mucho\",\r\n            \"minorScale\": \"No me cuesta\"\r\n        },\r\n        {\r\n            \"scaleQuestion\": \"Que tan dificil es para vos leer en voz alta frente a tus compañeros\",\r\n            \"followUpQuestion\": \"Que es lo que me hace sentir mal de esta situacion?\",\r\n            \"majorScale\": \"Muy dificil\",\r\n            \"minorScale\": \"Facil\"\r\n        },\r\n        {\r\n            \"scaleQuestion\": \"Que tanto te cuesta participar en exposiciones orales?\",\r\n            \"followUpQuestion\": \"Que es lo que me hace sentir mal de esta situacion?\",\r\n            \"majorScale\": \"Me cuesta mucho\",\r\n            \"minorScale\": \"No me cuesta\"\r\n        },\r\n        {\r\n            \"scaleQuestion\": \"Hacer tramites administrativos te cuesta\",\r\n            \"followUpQuestion\": \"Que es lo que me hace sentir mal de esta situacion?\",\r\n            \"majorScale\": \"Me cuesta mucho\",\r\n            \"minorScale\": \"No me cuesta\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/therapists/::id/forms",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"therapists",
+								"::id",
+								"forms"
+							],
+							"variable": [
+								{
+									"key": ":id",
+									"value": "{{fonoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forms by fonoId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/therapists/::id/forms",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"therapists",
+								"::id",
+								"forms"
+							],
+							"variable": [
+								{
+									"key": ":id",
+									"value": "{{fonoId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create formAssignments",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patientsIds\": [\r\n        \"64fc85947d98c57bc58de97b\",\r\n        \"64fc85947d98c57bc58de97c\"\r\n    ],\r\n    \"formIds\": [\r\n        \"64fc85e27d98c57bc58de991\",\r\n        \"64fc86047d98c57bc58de998\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/therapists/:therapistId/formAssignments",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"therapists",
+								":therapistId",
+								"formAssignments"
+							],
+							"variable": [
+								{
+									"key": "therapistId",
+									"value": "{{fonoId}}"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -177,24 +273,225 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "borrar",
-			"item": [
+				},
 				{
-					"name": "all therapist",
+					"name": "formAssignments by patiendId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server}}/therapists",
+							"raw": "{{server}}/patient/::id/formAssignments",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
-								"therapists"
+								"patient",
+								"::id",
+								"formAssignments"
+							],
+							"variable": [
+								{
+									"key": ":id",
+									"value": "{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "exerciseAssignments by patiendId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/patient/::id/exerciseAssignments",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"patient",
+								"::id",
+								"exerciseAssignments"
+							],
+							"variable": [
+								{
+									"key": ":id",
+									"value": "{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "analysis",
+			"item": [
+				{
+					"name": "parser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"s3uri\": \"C:\\\\Users\\\\acmartinez\\\\Documents\\\\Grabaciones de sonido\\\\Rsi\\\\105.mp3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/parser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"parser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "parser mock",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"s3uri\": \"C:\\\\Users\\\\acmartinez\\\\Documents\\\\Grabaciones de sonido\\\\P\\\\mock1.mp3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/parser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"parser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "forms",
+			"item": [
+				{
+					"name": "form by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/forms/:formId",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"forms",
+								":formId"
+							],
+							"variable": [
+								{
+									"key": "formId",
+									"value": "64fc85e27d98c57bc58de991"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "formAssingmet by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/formAssignments/:formAssignmentId",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"formAssignments",
+								":formAssignmentId"
+							],
+							"variable": [
+								{
+									"key": "formAssignmentId",
+									"value": "64fc87777d98c57bc58de9a4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "formCompletionEntries by formAssingmetId Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/formAssignments/:formAssignmentId/formCompletionEntries",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"formAssignments",
+								":formAssignmentId",
+								"formCompletionEntries"
+							],
+							"variable": [
+								{
+									"key": "formAssignmentId",
+									"value": "64fc87777d98c57bc58de9a4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create CompletionEntries",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"responses\": [\r\n        {\r\n            \"idQuestion\": \"64fc85e27d98c57bc58de98c\",\r\n            \"scaleResponse\": 2,\r\n            \"followUpResponse\": \"Me pongo muy nervioso cuando no se la respuesta a lo que pregunta\"\r\n        },\r\n        {\r\n            \"idQuestion\": \"64fc85e27d98c57bc58de98d\",\r\n            \"scaleResponse\": 4,\r\n            \"followUpResponse\": \"Con ellos estoy mas relajado y me trabo poco\"\r\n        },\r\n        {\r\n            \"idQuestion\": \"64fc85e27d98c57bc58de98e\",\r\n            \"scaleResponse\": 4,\r\n            \"followUpResponse\": \"Cuando leo no me trabo tanto, es como que cuando leo no pienso tanto lo que voy a decir y me sale mas fluido\"\r\n        },\r\n        {\r\n            \"idQuestion\": \"64fc85e27d98c57bc58de98f\",\r\n            \"scaleResponse\": 1,\r\n            \"followUpResponse\": \"Me pongo muy nervioso cuando todos me miran y soy el centro de atencion\"\r\n        },\r\n        {\r\n            \"idQuestion\": \"64fc85e27d98c57bc58de990\",\r\n            \"scaleResponse\": 4,\r\n            \"followUpResponse\": \"\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/formAssignments/:formAssignmentId/formCompletionEntries",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"formAssignments",
+								":formAssignmentId",
+								"formCompletionEntries"
+							],
+							"variable": [
+								{
+									"key": "formAssignmentId",
+									"value": "64fc87777d98c57bc58de9a4"
+								}
 							]
 						}
 					},
@@ -203,12 +500,61 @@
 			]
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
 				"type": "text/javascript",
 				"exec": [
+					"//var username = \"Scalo\";",
+					"//var password = \"123\";",
+					"",
+					"var username = pm.collectionVariables.get('username');",
+					"var password = pm.collectionVariables.get('password');",
+					"var server = pm.collectionVariables.get('server');",
+					"var pathLogin = pm.collectionVariables.get('pathLogin');",
+					"",
+					"var credentials = {",
+					"    account: username,",
+					"    password: password",
+					"};",
+					"",
+					"pm.sendRequest({",
+					"    url: server + pathLogin,",
+					"    method: 'POST',",
+					"    header: {",
+					"        'Content-Type': 'application/json'",
+					"    },",
+					"    body: {",
+					"        mode: 'raw',",
+					"        raw: JSON.stringify(credentials)",
+					"    }",
+					"}, function (err, response) {",
+					"    if (err) {",
+					"        console.error(err);",
+					"    } else {",
+					"        if (response.code === 200) {",
+					"            console.log(response)",
+					"            var responseBody = JSON.parse(response.text());",
+					"            console.log(responseBody)",
+					"            ",
+					"            // Guarda el token en una variable de entorno",
+					"            pm.environment.set('token', responseBody.accessToken);",
+					"        } else {",
+					"            console.error('No se pudo obtener el token de sesión.');",
+					"        }",
+					"    }",
+					"});",
 					""
 				]
 			}
@@ -231,12 +577,27 @@
 		},
 		{
 			"key": "fonoId",
-			"value": "64c1717ded027e2d9fdef130",
+			"value": "64fc85947d98c57bc58de97f",
 			"type": "string"
 		},
 		{
 			"key": "patientId",
-			"value": "64c171bbed027e2d9fdef132",
+			"value": "64fc85947d98c57bc58de97b",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "Scalo",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "123",
+			"type": "string"
+		},
+		{
+			"key": "pathLogin",
+			"value": "/login",
 			"type": "string"
 		}
 	]

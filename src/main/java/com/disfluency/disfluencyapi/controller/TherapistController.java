@@ -1,11 +1,14 @@
 package com.disfluency.disfluencyapi.controller;
 
+import com.disfluency.disfluencyapi.domain.exercises.Exercise;
+import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
-import com.disfluency.disfluencyapi.domain.sessions.Session;
-import com.disfluency.disfluencyapi.domain.therapists.Therapist;
+import com.disfluency.disfluencyapi.dto.exercises.NewExerciseDTO;
+import com.disfluency.disfluencyapi.dto.forms.NewFormAssignmentDTO;
+import com.disfluency.disfluencyapi.dto.forms.NewFormDTO;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
-import com.disfluency.disfluencyapi.dto.session.NewSessionDTO;
+import com.disfluency.disfluencyapi.dto.patients.PreSignedUrlDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentService;
@@ -50,4 +53,36 @@ public class TherapistController {
                 .toList();
     }
 
+    @PostMapping(value = "/therapists/{therapistId}/forms", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Form createForm(@RequestBody NewFormDTO newForm, @PathVariable String therapistId) {
+        log.info(newForm.toString());
+        therapistService.validateExistingTherapist(therapistId);
+        return therapistService.createFormForTherapist(therapistId, newForm);
+    }
+
+    @GetMapping(value = "/therapists/{therapistId}/forms")
+    public List<Form> getFormsFromTherapist(@PathVariable String therapistId) {
+        log.info(String.format("Forms by '%s' therapist", therapistId));
+        therapistService.validateExistingTherapist(therapistId);
+        var therapist = therapistService.getTherapistById(therapistId);
+        return therapist.getForms();
+    }
+
+    @PostMapping(value = "/therapists/{therapistId}/formAssignments", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createFormAssignment(@RequestBody NewFormAssignmentDTO assignment, @PathVariable String therapistId) {
+        log.info(assignment.toString());
+        therapistService.createFormAssignment(assignment, therapistId);
+    }
+
+    @GetMapping(value = "/therapist/{therapistId}/exercises/presigned")
+    public PreSignedUrlDTO getExerciseSamplePreSignedUrl(@PathVariable String therapistId){
+        log.info("Generating pre-signed url for new exercise of therapist: " + therapistId);
+        return therapistService.getPreSignedUrl(therapistId);
+    }
+
+    @PostMapping(value = "/therapist/{therapistId}/exercises", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Exercise createExercise(@RequestBody NewExerciseDTO newExercise, @PathVariable String therapistId) {
+        log.info("Creating new exercise '"+ newExercise.title() + "' of therapist: " + therapistId);
+        return therapistService.createExerciseForTherapist(therapistId, newExercise);
+    }
 }

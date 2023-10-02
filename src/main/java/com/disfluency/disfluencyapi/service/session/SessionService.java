@@ -1,6 +1,7 @@
 package com.disfluency.disfluencyapi.service.session;
 
 import com.amazonaws.HttpMethod;
+import com.disfluency.disfluencyapi.domain.analysis.Analysis;
 import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.dto.analysis.AnalysisResponse;
 import com.disfluency.disfluencyapi.repository.SessionRepo;
@@ -18,8 +19,8 @@ public class SessionService {
 
     private final SessionRepo sessionRepo;
 
-    public Session createSession(String audioUrl, AnalysisResponse analysisResponse) {
-        return sessionRepo.save(Session.newSession(audioUrl, analysisResponse));
+    public Session createSession(Analysis analysis) {
+        return sessionRepo.save(Session.newSession(analysis));
     }
 
     public Session getSessionById(String sessionId) {

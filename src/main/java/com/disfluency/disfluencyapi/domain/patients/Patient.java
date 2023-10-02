@@ -62,7 +62,7 @@ public class Patient implements UserRole {
 
     public PatientDTO toDTO() {
         return new PatientDTO(name, lastName, dateOfBirth, id, email, joinedSince,
-                profilePictureUrl, sessionTurn.getWeeklyTurn(), sessionTurn.getWeeklyHour(), exerciseAssignments);
+                profilePictureUrl, sessionTurn.getWeeklyTurn(), sessionTurn.getWeeklyHour(), exerciseAssignments, formAssignments);
     }
 
     public static Patient newPatient(NewPatientDTO newPatientDTO) {

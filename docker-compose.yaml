@@ -17,7 +17,7 @@ services:
       dockerfile: Dockerfile
     container_name: disfluency-analysis-api
     ports:
-      - "${PORT_DISFLUENCY_ANALYSIS_API:-8080}:8080"
+      - "${PORT_DISFLUENCY_ANALYSIS_API:-8084}:8084"
     networks:
       - disfluency-red
     depends_on:
@@ -31,7 +31,7 @@ services:
       dockerfile: Dockerfile
     container_name: disfluency-api
     ports:
-      - "${PORT_DISFLUENCY_API:-8081}:8082"
+      - "${PORT_DISFLUENCY_API:-8081}:8081"
     networks:
       - disfluency-red
     depends_on:

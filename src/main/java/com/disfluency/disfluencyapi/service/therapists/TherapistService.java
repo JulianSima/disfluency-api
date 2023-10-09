@@ -81,14 +81,6 @@ public class TherapistService {
         return form;
     }
 
-    public void createFormAssignment(NewFormAssignmentDTO assignment, String therapistId) {
-        var therapist = getTherapistById(therapistId);
-        log.info(therapist.toString());
-        List<Form> forms = therapist.getFormsWithIds(assignment.formIds());
-        List<Patient> patients = therapist.getPatientsWithIds(assignment.patientsIds());
-        patients.forEach(patient -> patientService.formAssignments(patient.getId(), forms));
-    }
-
     public Exercise createExerciseForTherapist(String therapistId, NewExerciseDTO newExercise) {
         var therapist = getTherapistById(therapistId);
 

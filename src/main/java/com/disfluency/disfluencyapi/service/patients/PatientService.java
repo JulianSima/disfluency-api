@@ -39,8 +39,6 @@ public class PatientService {
     
     private final PatientRepo patientRepo;
     private final AnalysisService analysisService;
-    private final ExerciseService exerciseService;
-    private final FormService formService;
     private final ExerciseAssignmentService exerciseAssignmentService;
     private final FormAssignmentService formAssignmentService;
     private final S3Service s3Service;
@@ -87,8 +85,8 @@ public class PatientService {
   
     public Patient confirmPatient(Patient patient){
         patient.setState(PatientUserState.ACTIVE);
-        patient.addExercisesAssignment(generateExerciseAssignments());
-        patient.addFormsAssignment(generateFormAssignments());
+//        patient.addExercisesAssignment(generateExerciseAssignments());
+//        patient.addFormsAssignment(generateFormAssignments());
         return patientRepo.save(patient);
     }
 
@@ -107,19 +105,6 @@ public class PatientService {
 //        }
     }
 
-    /**
-     * Tempo
-     * @return
-     */
-    private List<ExerciseAssignment> generateExerciseAssignments(){
-        var exercises = exerciseService.getAllExercises();
-        return exercises.stream().map(exerciseAssignmentService::createExerciseAssignments).toList();
-    }
-
-    private List<FormAssignment> generateFormAssignments(){
-        var forms = formService.getAllForms();
-        return forms.stream().map(formAssignmentService::createExerciseAssignments).toList();
-    }
 
     public PreSignedUrlDTO getPreSignedUrl(String patientId){
         String newUrl = S3_UPLOAD_FOLDER + patientId + LocalDateTime.now() + ".mp3";

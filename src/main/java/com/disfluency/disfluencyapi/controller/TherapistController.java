@@ -68,12 +68,6 @@ public class TherapistController {
         return therapist.getForms();
     }
 
-    @PostMapping(value = "/therapists/{therapistId}/formAssignments", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createFormAssignment(@RequestBody NewFormAssignmentDTO assignment, @PathVariable String therapistId) {
-        log.info(assignment.toString());
-        therapistService.createFormAssignment(assignment, therapistId);
-    }
-
     @GetMapping(value = "/therapist/{therapistId}/exercises/presigned")
     public PreSignedUrlDTO getExerciseSamplePreSignedUrl(@PathVariable String therapistId){
         log.info("Generating pre-signed url for new exercise of therapist: " + therapistId);

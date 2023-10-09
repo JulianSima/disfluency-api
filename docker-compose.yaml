@@ -1,0 +1,46 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - disfluency-red
+
+  disfluency-analysis-api:
+    image: disfluency-analysis-api:1.0.0
+    build:
+      context: ../disfluency-analysis-api
+      dockerfile: Dockerfile
+    container_name: disfluency-analysis-api
+    ports:
+      - "${PORT_DISFLUENCY_ANALYSIS_API:-8080}:8080"
+    networks:
+      - disfluency-red
+    depends_on:
+      - mongodb
+    env_file: ../disfluency-analysis-api/.env
+
+  disfluency-api:
+    image: disfluency-api:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: disfluency-api
+    ports:
+      - "${PORT_DISFLUENCY_API:-8081}:8082"
+    networks:
+      - disfluency-red
+    depends_on:
+      - disfluency-analysis-api
+    env_file: .env
+
+networks:
+  disfluency-red:
+    driver: bridge
+
+volumes:
+  mongodb-data:

@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class SessionController {
+public class AnalysisController {
 
     private final AnalysisService analysisService;
-    private final SessionService sessionService;
 
-    @GetMapping("session/{sessionId}/result")
-    public ResultsDTO getSessionResult(@PathVariable String sessionId) {
-        var results = analysisService.getSessionResults(sessionId);
+    @GetMapping("analysis/{analysisId}/result")
+    public ResultsDTO getAnalysisResult(@PathVariable String analysisId) {
+        var results = analysisService.getAnalysisResults(analysisId);
         return ResultsDTO.from(results);
     }
 

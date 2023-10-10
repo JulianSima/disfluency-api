@@ -1,11 +1,13 @@
 package com.disfluency.disfluencyapi.controller;
 
+import com.disfluency.disfluencyapi.domain.analysis.Analysis;
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.exercises.ExerciseAssignment;
 import com.disfluency.disfluencyapi.domain.exercises.ExercisePractice;
 import com.disfluency.disfluencyapi.dto.exercises.ExercisePracticeDTO;
 import com.disfluency.disfluencyapi.dto.exercises.NewExerciseAssignmentDTO;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentService;
+import com.disfluency.disfluencyapi.service.exercises.ExercisePracticeService;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class ExerciseController {
     private final ExerciseService exerciseService;
     private final PatientService patientService;
     private final ExerciseAssignmentService exerciseAssignmentService;
+    private final ExercisePracticeService exercisePracticeService;
 
     @GetMapping("exercises/{exerciseId}")
     public Exercise getExerciseById(@PathVariable String exerciseId) {
@@ -55,5 +58,10 @@ public class ExerciseController {
     @PostMapping(value = "/exercisesAssignments")
     public void assignExercisesToPatients(@RequestBody NewExerciseAssignmentDTO assignmentDTO){
         exerciseService.assignExercisesToPatients(assignmentDTO, patientService);
+    }
+
+    @GetMapping("exercisesPractices/{practiceId}/analysis")
+    public Analysis getAnalysisByExercisePracticeId(@PathVariable String practiceId) {
+        return exercisePracticeService.getAnalysisByExercisePracticeId(practiceId);
     }
 }

@@ -112,9 +112,9 @@ public class PatientService {
     }
 
     private Session preSignSessionUrl(Session session){
-        String shortUrl = session.getRecordingUrl().replace(S3_BASE_URL, "");
+        String shortUrl = session.getAnalysis().getRecordingUrl().replace(S3_BASE_URL, "");
         var preSignedUrl = s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION);
-        session.setRecordingUrl(preSignedUrl);
+        session.getAnalysis().setRecordingUrl(preSignedUrl);
         return session;
     }
 

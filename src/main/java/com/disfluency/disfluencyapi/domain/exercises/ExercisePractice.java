@@ -19,6 +19,7 @@ public class ExercisePractice {
     private String recordingUrl;
     private Analysis analysis;
 
+
     public static ExercisePractice newExercisePractice(String recordingUrl) {
         return builder()
                 .date(LocalDateTime.now())

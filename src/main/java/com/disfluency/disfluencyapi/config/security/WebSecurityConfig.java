@@ -54,8 +54,6 @@ public class WebSecurityConfig {
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/signup").permitAll()
                 .requestMatchers("/refreshToken").permitAll()
-                .requestMatchers("/patient/*/*").permitAll()
-                .requestMatchers("/session/*/result").permitAll()
                 .requestMatchers("/pending/patient/**").permitAll()
                 .anyRequest().authenticated();
 

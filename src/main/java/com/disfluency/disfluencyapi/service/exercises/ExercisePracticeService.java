@@ -1,9 +1,10 @@
 package com.disfluency.disfluencyapi.service.exercises;
 
 import com.amazonaws.HttpMethod;
+import com.disfluency.disfluencyapi.domain.analysis.Analysis;
 import com.disfluency.disfluencyapi.domain.exercises.ExercisePractice;
-import com.disfluency.disfluencyapi.dto.exercises.ExercisePracticeDTO;
 import com.disfluency.disfluencyapi.repository.ExercisePracticeRepo;
+import com.disfluency.disfluencyapi.service.analysis.AnalysisService;
 import com.disfluency.disfluencyapi.service.aws.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class ExercisePracticeService {
 
     private final ExercisePracticeRepo exercisePracticeRepo;
     private final S3Service s3Service;
+    private final AnalysisService analysisService;
+
 
     public ExercisePractice createExercisePractice(String recordingUrl) {
         return exercisePracticeRepo.save(ExercisePractice.newExercisePractice(recordingUrl));
@@ -29,5 +32,18 @@ public class ExercisePracticeService {
         exercisePractice.setRecordingUrl(
                 s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION)
         );
+    }
+
+    public Analysis getAnalysisByExercisePracticeId(String practiceId) {
+        var practice = exercisePracticeRepo.findById(practiceId).orElseThrow();
+        if(practice.getAnalysis() == null){
+            var audioUrl = practice.getRecordingUrl();
+            presignUrl(practice);
+            var preSignedUrl = practice.getRecordingUrl();
+            practice.setAnalysis(analysisService.createAnalysis(audioUrl, preSignedUrl));
+            practice.setRecordingUrl(audioUrl);
+            exercisePracticeRepo.save(practice);
+        }
+        return practice.getAnalysis();
     }
 }

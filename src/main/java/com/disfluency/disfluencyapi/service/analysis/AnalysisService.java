@@ -5,6 +5,7 @@ import com.disfluency.disfluencyapi.domain.sessions.Session;
 import com.disfluency.disfluencyapi.dto.analysis.AnalysisRequest;
 import com.disfluency.disfluencyapi.dto.analysis.ResultsRequest;
 import com.disfluency.disfluencyapi.dto.analysis.ResultsResponse;
+import com.disfluency.disfluencyapi.dto.session.UpdatedSessionDTO;
 import com.disfluency.disfluencyapi.repository.AnalysisRepo;
 import com.disfluency.disfluencyapi.service.session.SessionService;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,12 @@ public class AnalysisService {
     public ResultsResponse getAnalysisResults(String analysisId) {
         var analysis = getAnalysisById(analysisId);
         return analysisApiClient.getResults(new ResultsRequest("sarasa", analysis.getTranscription()));
+    }
+
+    public Analysis updateAnalysisWithId(String sessionId, UpdatedSessionDTO updatedSessionDTO) {
+        var analysis = getAnalysisById(sessionId);
+        analysis.updatedAnalysis(updatedSessionDTO.updatedAnalysis());
+        analysisRepo.save(analysis);
+        return analysis;
     }
 }

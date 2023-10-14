@@ -4,6 +4,7 @@ import com.disfluency.disfluencyapi.domain.exercises.Exercise;
 import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.users.UserRole;
+import com.disfluency.disfluencyapi.dto.patients.PatientSimpleDTO;
 import com.disfluency.disfluencyapi.dto.therapists.NewTherapistDTO;
 import com.disfluency.disfluencyapi.dto.therapists.TherapistDTO;
 import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
@@ -14,6 +15,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class Therapist implements UserRole {
     private List<Exercise> exercises;
     @DocumentReference
     private List<Form> forms;
+    private List<PatientSimpleDTO> todayPatients;
 
     public void addPatient(Patient patient) {
         patients.add(patient);
@@ -53,7 +56,7 @@ public class Therapist implements UserRole {
     }
 
     public TherapistDTO toDTO() {
-        return new TherapistDTO(id, name, lastName, Integer.valueOf(profilePictureUrl));
+        return new TherapistDTO(id, name, lastName, Integer.valueOf(profilePictureUrl), todayPatients);
     }
 
     public List<Exercise> getExercisesWithIds(List<String> exercisesIds) {
@@ -71,6 +74,14 @@ public class Therapist implements UserRole {
     @Override
     public UserRoleDTO toUserRoleDTO() {
         return new UserRoleDTO("Therapist", this);
+    }
+
+    public List<PatientSimpleDTO> getTodayPatients() {
+        var today = LocalDate.now().getDayOfWeek();
+        return this.getPatients().stream()
+                .filter(p -> p.getSessionTurn().getWeeklyTurn().contains(today))
+                .map(Patient::toSimpleDTO)
+                .toList();
     }
 
     public void addForm(Form form) {

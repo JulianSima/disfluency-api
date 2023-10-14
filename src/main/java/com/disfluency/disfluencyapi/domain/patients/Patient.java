@@ -8,6 +8,7 @@ import com.disfluency.disfluencyapi.domain.state.PatientUserState;
 import com.disfluency.disfluencyapi.domain.users.UserRole;
 import com.disfluency.disfluencyapi.dto.patients.NewPatientDTO;
 import com.disfluency.disfluencyapi.dto.patients.PatientDTO;
+import com.disfluency.disfluencyapi.dto.patients.PatientSimpleDTO;
 import com.disfluency.disfluencyapi.dto.users.UserRoleDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -63,6 +64,11 @@ public class Patient implements UserRole {
     public PatientDTO toDTO() {
         return new PatientDTO(name, lastName, dateOfBirth, id, email, joinedSince,
                 profilePictureUrl, sessionTurn.getWeeklyTurn(), sessionTurn.getWeeklyHour(), exerciseAssignments, formAssignments);
+    }
+
+    public PatientSimpleDTO toSimpleDTO() {
+        return new PatientSimpleDTO(name, lastName, dateOfBirth, id, email, joinedSince,
+                profilePictureUrl, sessionTurn.getWeeklyTurn(), sessionTurn.getWeeklyHour());
     }
 
     public static Patient newPatient(NewPatientDTO newPatientDTO) {

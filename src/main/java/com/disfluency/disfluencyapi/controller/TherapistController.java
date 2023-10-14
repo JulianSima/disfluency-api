@@ -33,7 +33,8 @@ public class TherapistController {
 
     @GetMapping("/therapists/{therapistId}")
     public TherapistDTO getTherapistById(@PathVariable String therapistId) {
-        return therapistService.getTherapistById(therapistId).toDTO();
+        var therapist = therapistService.getTherapistById(therapistId);
+        return therapist.toDTO();
     }
 
     @PostMapping(value = "/therapists/{therapistId}/patients", consumes = MediaType.APPLICATION_JSON_VALUE)

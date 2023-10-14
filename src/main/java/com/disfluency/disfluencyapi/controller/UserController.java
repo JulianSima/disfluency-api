@@ -79,7 +79,7 @@ public class UserController {
 
     @PostMapping(value = "/pending/patient/{patientId}/confirm", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void confirmPendingPatientById(@PathVariable String patientId, @RequestBody PatientConfirmationDTO patientConfirmation){
+    public void     confirmPendingPatientById(@PathVariable String patientId, @RequestBody PatientConfirmationDTO patientConfirmation){
         userService.confirmPendingPatient(patientId, patientConfirmation.password());
     }
 }

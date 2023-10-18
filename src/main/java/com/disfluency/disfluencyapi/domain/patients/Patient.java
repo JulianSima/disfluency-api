@@ -61,6 +61,8 @@ public class Patient implements UserRole {
     @JsonIgnore
     private PatientUserState state;
 
+    private PatientProgressInfo progressInfo;
+
     public PatientDTO toDTO() {
         return new PatientDTO(name, lastName, dateOfBirth, id, email, joinedSince,
                 profilePictureUrl, sessionTurn.getWeeklyTurn(), sessionTurn.getWeeklyHour(), exerciseAssignments, formAssignments);
@@ -102,5 +104,9 @@ public class Patient implements UserRole {
 
     public void addTherapySession(Session session) {
         this.therapySession.add(session);
+    }
+
+    public PatientProgressInfo getProgressInfo() {
+        return new PatientProgressInfo(this);
     }
 }

@@ -31,9 +31,15 @@ public record ResultsDTO(
                         DisfluencyResultDTO.from(resultsResponse.getV(), Disfluency.V),
                         DisfluencyResultDTO.from(resultsResponse.getP(), Disfluency.P),
                         DisfluencyResultDTO.from(resultsResponse.getM(), Disfluency.M),
+                        DisfluencyResultDTO.from(resultsResponse.getB(), Disfluency.B),
+                        DisfluencyResultDTO.from(resultsResponse.getGG(), Disfluency.GG),
+                        DisfluencyResultDTO.from(resultsResponse.getCA(), Disfluency.CA),
+                        DisfluencyResultDTO.from(resultsResponse.getTAu(), Disfluency.TAu),
+                        DisfluencyResultDTO.from(resultsResponse.getTVi(), Disfluency.TVi),
                         DisfluencyResultDTO.from(resultsResponse.getN(), Disfluency.N),
                         DisfluencyResultDTO.from(resultsResponse.getU(), Disfluency.U),
-                        DisfluencyResultDTO.from(resultsResponse.getD(), Disfluency.D)
+                        DisfluencyResultDTO.from(resultsResponse.getD(), Disfluency.D),
+                        DisfluencyResultDTO.from(resultsResponse.getAc(), Disfluency.Ac)
                 )
         );
     }

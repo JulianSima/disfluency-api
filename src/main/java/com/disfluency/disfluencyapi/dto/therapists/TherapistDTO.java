@@ -1,4 +1,8 @@
 package com.disfluency.disfluencyapi.dto.therapists;
 
-public record TherapistDTO(String id, String name, String lastName,Integer profilePictureUrl) {
+import com.disfluency.disfluencyapi.dto.patients.PatientSimpleDTO;
+
+import java.util.List;
+
+public record TherapistDTO(String id, String name, String lastName, Integer profilePictureUrl, List<PatientSimpleDTO> todayPatients) {
 }

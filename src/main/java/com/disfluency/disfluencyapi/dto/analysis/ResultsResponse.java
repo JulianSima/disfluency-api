@@ -21,6 +21,26 @@ public class ResultsResponse {
     private DisfluencyResult Rsi;
     @JsonProperty("V")
     private DisfluencyResult V;
+    @JsonProperty("M")
+    private DisfluencyResult M;
+    @JsonProperty("B")
+    private DisfluencyResult B;
+    @JsonProperty("GG")
+    private DisfluencyResult GG;
+    @JsonProperty("CA")
+    private DisfluencyResult CA;
+    @JsonProperty("N")
+    private DisfluencyResult N;
+    @JsonProperty("TAu")
+    private DisfluencyResult TAu;
+    @JsonProperty("TVi")
+    private DisfluencyResult TVi;
+    @JsonProperty("Ac")
+    private DisfluencyResult Ac;
+    @JsonProperty("U")
+    private DisfluencyResult U;
+    @JsonProperty("D")
+    private DisfluencyResult D;
     @JsonProperty("average disfluencies per phrase")
     private float averageDisfluenciesPerPhrase;
     @JsonProperty("fluency index")

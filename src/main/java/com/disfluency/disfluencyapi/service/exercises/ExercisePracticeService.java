@@ -44,6 +44,10 @@ public class ExercisePracticeService {
             practice.setRecordingUrl(audioUrl);
             exercisePracticeRepo.save(practice);
         }
+        String shortUrl = practice.getRecordingUrl().replace(S3_BASE_URL, "");
+        practice.getAnalysis().setRecordingUrl(s3Service.generatePreSignedUrl(
+                shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION
+        ));
         return practice.getAnalysis();
     }
 }

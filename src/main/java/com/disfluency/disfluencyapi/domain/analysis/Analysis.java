@@ -26,4 +26,8 @@ public class Analysis {
                 .transcription(analysisResponse.getChunks())
                 .build();
     }
+
+    public void updatedAnalysis(List<TranscriptionWord> transcription) {
+        this.transcription = transcription;
+    }
 }

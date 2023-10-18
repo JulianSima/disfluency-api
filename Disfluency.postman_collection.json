@@ -19,7 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"account\": \"Scalo\",\r\n    \"password\": \"123\"\r\n}",
+							"raw": "{\r\n    \"account\": \"ale\",\r\n    \"password\": \"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -344,12 +344,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/parser",
+							"raw": "http://localhost:8080/parser",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "5000",
+							"port": "8080",
 							"path": [
 								"parser"
 							]
@@ -380,6 +380,63 @@
 							"port": "5000",
 							"path": [
 								"parser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update analysis",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"updatedAnalysis\": [\r\n        {\r\n            \"text\": \"Mmmmmmmmamá\",\r\n            \"timestamp\": {\r\n                \"start\": 0.0,\r\n                \"end\": 4.26\r\n            },\r\n            \"disfluency\": [\r\n                \"P\"\r\n            ]\r\n        },\r\n        {\r\n            \"text\": \"ti-ti-ti-tiene\",\r\n            \"timestamp\": {\r\n                \"start\": 5.5,\r\n                \"end\": 7.18\r\n            },\r\n            \"disfluency\": [\r\n                \"Rsi\"\r\n            ]\r\n        },\r\n        {\r\n            \"text\": \" un\",\r\n            \"timestamp\": {\r\n                \"start\": 7.18,\r\n                \"end\": 8.4\r\n            },\r\n            \"disfluency\": []\r\n        },\r\n        {\r\n            \"text\": \" ttttttrabajjjjjjjo\",\r\n            \"timestamp\": {\r\n                \"start\": 8.4,\r\n                \"end\": 14.48\r\n            },\r\n            \"disfluency\": [\r\n                \"P\"\r\n            ]\r\n        },\r\n        {\r\n            \"text\": \" in-in-in-teresante.\",\r\n            \"timestamp\": {\r\n                \"start\": 14.48,\r\n                \"end\": 20.62\r\n            },\r\n            \"disfluency\": [\r\n                \"Rsi\"\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/session/:sessionId",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"session",
+								":sessionId"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "65260fcbc1e7382fefde5dcf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get session by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/session/:sessionId",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"session",
+								":sessionId"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "65260fcbc1e7382fefde5dcf"
+								}
 							]
 						}
 					},
@@ -572,7 +629,7 @@
 	"variable": [
 		{
 			"key": "server",
-			"value": "http://localhost:8081",
+			"value": "http://localhost:8082",
 			"type": "string"
 		},
 		{
@@ -587,7 +644,7 @@
 		},
 		{
 			"key": "username",
-			"value": "Scalo",
+			"value": "ale",
 			"type": "string"
 		},
 		{

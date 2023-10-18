@@ -4,6 +4,7 @@ import com.disfluency.disfluencyapi.domain.analysis.Analysis;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 
 @Builder
@@ -11,6 +12,7 @@ import org.springframework.data.annotation.Id;
 public class Session {
     @Id
     private String id;
+    @DocumentReference
     private Analysis analysis;
 
     public static Session newSession(Analysis analysis) {

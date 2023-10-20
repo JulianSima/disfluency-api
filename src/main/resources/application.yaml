@@ -7,7 +7,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: disfluencytherapy@gmail.com
-    password: jnowpbowqiaizdca
+    password: scyxihzcsxwunjqk
     properties:
       mail:
         smtp:

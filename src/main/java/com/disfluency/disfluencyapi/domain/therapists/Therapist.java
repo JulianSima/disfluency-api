@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @Data
 @Builder
+@Document(collection = "therapist")
 @JsonTypeName("therapist")
 public class Therapist implements UserRole {
 

@@ -4,6 +4,7 @@ import com.disfluency.disfluencyapi.domain.patients.Patient;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @Data
@@ -15,6 +16,8 @@ public class User {
     private String account;
     private byte[] password;
     private byte[] salt;
+
+    @DBRef
     private UserRole role;
 
 

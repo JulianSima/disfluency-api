@@ -20,9 +20,21 @@ public class AnalysisService {
     private final SessionService sessionService;
 
     public Analysis createAnalysis(String audioUrl, String preSignedUrl){
-        var analysis = analysisApiClient.getAnalysis(new AnalysisRequest(preSignedUrl));
-        return analysisRepo.save(Analysis.newAnalysis(audioUrl, analysis));
+        var intentos = 5;
+        while (intentos > 0) {
+            try {
+                var analysis = analysisApiClient.getAnalysis(new AnalysisRequest(preSignedUrl));
+                intentos = -1;
+                return analysisRepo.save(Analysis.newAnalysis(audioUrl, analysis));
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("retry!");
+                intentos--;
+            }
+        }
+        throw new RuntimeException("There was an error creating the analysis");
     }
+
 
     public Session createAnalysedSession(String audioUrl, String preSignedUrl) {
         var analysis = createAnalysis(audioUrl, preSignedUrl);

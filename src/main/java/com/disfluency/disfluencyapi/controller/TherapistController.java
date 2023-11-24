@@ -80,4 +80,10 @@ public class TherapistController {
         log.info("Creating new exercise '"+ newExercise.title() + "' of therapist: " + therapistId);
         return therapistService.createExerciseForTherapist(therapistId, newExercise);
     }
+
+    @GetMapping(value = "/therapist/{therapistId}/exercises")
+    public List<Exercise> getExercises(@PathVariable String therapistId) {
+        log.info("Getting excersises of therapist: " + therapistId);
+        return therapistService.getExercisesByTherapistId(therapistId);
+    }
 }

@@ -2,6 +2,7 @@ package com.disfluency.disfluencyapi.service.therapists;
 
 import com.amazonaws.HttpMethod;
 import com.disfluency.disfluencyapi.domain.exercises.Exercise;
+import com.disfluency.disfluencyapi.domain.exercises.ExercisePractice;
 import com.disfluency.disfluencyapi.domain.forms.Form;
 import com.disfluency.disfluencyapi.domain.patients.Patient;
 import com.disfluency.disfluencyapi.domain.therapists.Therapist;
@@ -18,6 +19,7 @@ import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
 import com.disfluency.disfluencyapi.service.forms.FormService;
 import com.disfluency.disfluencyapi.service.patients.PatientService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -98,4 +100,18 @@ public class TherapistService {
         return new PreSignedUrlDTO(s3Service.generatePreSignedUrl(newUrl, S3_BUCKET, HttpMethod.PUT, PRE_SIGNED_UPLOAD_EXPIRATION));
     }
 
+    public List<Exercise> getExercisesByTherapistId(String therapistId) {
+        var therapist = getTherapistById(therapistId);
+        var exercises = therapist.getExercises();
+        exercises.forEach(this::presignUrl);
+        log.info(exercises.stream().map(Exercise::getSampleRecordingUrl).toList().toString());
+        return exercises;
+    }
+
+    public void presignUrl(Exercise exercise) {
+        String shortUrl = exercise.getSampleRecordingUrl().replace(S3_BASE_URL, "");
+        exercise.setSampleRecordingUrl(
+                s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION)
+        );
+    }
 }

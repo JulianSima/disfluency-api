@@ -32,6 +32,7 @@ public class PatientController {
 
     @GetMapping("patient/{patientId}/exerciseAssignments")
     public List<ExerciseAssignment> getExerciseAssignmentsByPatient(@PathVariable String patientId) {
+        log.info("patient: " + patientId + " exerciseAssignments");
         var patient = patientService.getPatientById(patientId);
         return patientService.presignPatientUrls(patient).getExerciseAssignments();
     }

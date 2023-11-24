@@ -37,6 +37,11 @@ public class UserService {
         var user = userRepo.findOneByAccount(userDTO.account())
                         .orElseThrow( () -> new UserNotFoundException(userDTO.account()) );
         passwordService.validatePassword(userDTO.password(), user.getPassword(), user.getSalt());
+        if(user.getRole() instanceof Patient){
+            patientService.setFcmToken((Patient) user.getRole(), userDTO.fcmToken());
+        } else {
+            therapistService.setFcmToken((Therapist) user.getRole(), userDTO.fcmToken());
+        }
         return user;
     }
 

@@ -39,6 +39,8 @@ public class Therapist implements UserRole {
     @DocumentReference
     private List<Form> forms;
     private List<PatientSimpleDTO> todayPatients;
+    @JsonIgnore
+    private String fcmToken;
 
     public void addPatient(Patient patient) {
         patients.add(patient);

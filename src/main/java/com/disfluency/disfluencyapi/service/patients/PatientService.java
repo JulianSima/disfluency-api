@@ -140,4 +140,9 @@ public class PatientService {
         patient.setFcmToken(fcmToken);
         patientRepo.save(patient);
     }
+
+    public void setFcmTokenTherapist(Patient patient, String fcmTokenTherapist) {
+        patient.setFcmTokenTherapist(fcmTokenTherapist);
+        patientRepo.save(patient);
+    }
 }

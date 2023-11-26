@@ -18,6 +18,7 @@ import com.disfluency.disfluencyapi.service.patients.PatientService;
 import com.disfluency.disfluencyapi.service.therapists.TherapistService;
 import com.disfluency.disfluencyapi.service.users.email.EmailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -112,5 +113,11 @@ public class UserService {
 
         var patient = (Patient) targetUser.getRole();
         patientService.confirmPatient(patient);
+    }
+
+    public String getIdByUsername(String username) {
+        User user = this.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+        return user.getRole().getId();
     }
 }

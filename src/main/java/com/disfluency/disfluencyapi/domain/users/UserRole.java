@@ -13,4 +13,8 @@ public interface UserRole {
     void setFcmToken(String fcmToken);
 
     String getFcmToken();
+
+    String getId();
+
+    String getFcmTokenTherapist();
 }

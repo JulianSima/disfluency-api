@@ -2,6 +2,7 @@ package com.disfluency.disfluencyapi.config.security;
 
 import com.disfluency.disfluencyapi.service.security.JwtService;
 import com.disfluency.disfluencyapi.service.security.UserDetailsServiceImpl;
+import com.disfluency.disfluencyapi.service.users.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsServiceImpl userDetailsService;
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -31,6 +33,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             var jwt = jwtService.parseJwtFromRequest(request);
             if (jwt.isPresent() && jwtService.validateJwtToken(jwt.get())) {
                 var username = jwtService.getUserNameFromJwtToken(jwt.get());
+                var userId = userService.getIdByUsername(username);
+                request.setAttribute("userId", userId);
                 var userDetails = userDetailsService.loadUserByUsername(username);
                 var authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());

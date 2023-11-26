@@ -117,6 +117,7 @@ public class TherapistService {
 
     public void setFcmToken(Therapist therapist, String fcmToken) {
         therapist.setFcmToken(fcmToken);
+        therapist.getPatients().forEach( patient -> { patientService.setFcmTokenTherapist(patient, fcmToken); });
         therapistRepo.save(therapist);
     }
 }

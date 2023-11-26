@@ -91,4 +91,8 @@ public class Therapist implements UserRole {
     public void addForm(Form form) {
         this.forms.add(form);
     }
+
+    public String getFcmTokenTherapist() {
+        return this.fcmToken;
+    }
 }

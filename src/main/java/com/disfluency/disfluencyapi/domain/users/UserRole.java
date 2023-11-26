@@ -9,4 +9,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public interface UserRole {
 
     UserRoleDTO toUserRoleDTO();
+
+    void setFcmToken(String fcmToken);
+
+    String getFcmToken();
+
+    String getId();
+
+    String getFcmTokenTherapist();
 }

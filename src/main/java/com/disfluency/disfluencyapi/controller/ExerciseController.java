@@ -39,8 +39,9 @@ public class ExerciseController {
 
     // TODO
     @PostMapping(value = "exercisesAssignments/{exerciseId}/practices", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ExercisePracticeDTO createExercisePractice(@PathVariable String exerciseId) {
-        return new ExercisePracticeDTO(exerciseAssignmentService.createExercisePractice(exerciseId));
+    public ExercisePracticeDTO createExercisePractice(@PathVariable String exerciseId, @RequestAttribute("userId") String userId) {
+        var patient = patientService.getPatientById(userId);
+        return new ExercisePracticeDTO(exerciseAssignmentService.createExercisePractice(exerciseId, patient));
     }
 
     @GetMapping("exercisesAssignments/{exerciseId}/practices")

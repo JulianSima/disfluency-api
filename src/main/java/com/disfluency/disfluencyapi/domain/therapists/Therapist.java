@@ -39,6 +39,8 @@ public class Therapist implements UserRole {
     @DocumentReference
     private List<Form> forms;
     private List<PatientSimpleDTO> todayPatients;
+    @JsonIgnore
+    private String fcmToken;
 
     public void addPatient(Patient patient) {
         patients.add(patient);
@@ -88,5 +90,9 @@ public class Therapist implements UserRole {
 
     public void addForm(Form form) {
         this.forms.add(form);
+    }
+
+    public String getFcmTokenTherapist() {
+        return this.fcmToken;
     }
 }

@@ -47,12 +47,13 @@ public class FormController {
     }
 
     @PostMapping("formAssignments/{formAssignmentId}/formCompletionEntries")
-    public FormAssignment completeFormAssignment(@RequestBody NewFormCompletionEntryDTO formCompletionEntryDTO, @PathVariable String formAssignmentId) {
+    public FormAssignment completeFormAssignment(@RequestBody NewFormCompletionEntryDTO formCompletionEntryDTO, @PathVariable String formAssignmentId, @RequestAttribute("userId") String userId) {
         var responses = formCompletionEntryDTO.responses()
                 .stream().map( response -> formQuestionResponseService.createFormQuestionResponse(response) )
                 .collect(Collectors.toList());
         var formCompletionEntry = formCompletionEntryService.createFormCompletionEntry(responses);
-        return formAssignmentService.completeFormAssignment(formAssignmentId, formCompletionEntry);
+        var patient = patientService.getPatientById(userId);
+        return formAssignmentService.completeFormAssignment(formAssignmentId, formCompletionEntry, patient);
     }
 
     @PostMapping(value = "/formAssignments")

@@ -54,6 +54,9 @@ public class Patient implements UserRole {
     @JsonIgnore
     private String fcmToken;
     @JsonIgnore
+    private String fcmTokenTherapist;
+
+    @JsonIgnore
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }

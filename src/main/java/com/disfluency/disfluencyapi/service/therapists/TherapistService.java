@@ -114,4 +114,10 @@ public class TherapistService {
                 s3Service.generatePreSignedUrl(shortUrl, S3_BUCKET, HttpMethod.GET, PRE_SIGNED_GET_EXPIRATION)
         );
     }
+
+    public void setFcmToken(Therapist therapist, String fcmToken) {
+        therapist.setFcmToken(fcmToken);
+        therapist.getPatients().forEach( patient -> { patientService.setFcmTokenTherapist(patient, fcmToken); });
+        therapistRepo.save(therapist);
+    }
 }

@@ -19,6 +19,7 @@ import com.disfluency.disfluencyapi.service.exercises.ExerciseAssignmentService;
 import com.disfluency.disfluencyapi.service.forms.FormAssignmentService;
 import com.disfluency.disfluencyapi.service.exercises.ExerciseService;
 import com.disfluency.disfluencyapi.service.forms.FormService;
+import com.disfluency.disfluencyapi.service.notifications.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ public class PatientService {
     private final ExerciseAssignmentService exerciseAssignmentService;
     private final FormAssignmentService formAssignmentService;
     private final S3Service s3Service;
+    private final NotificationService notificationService;
 
 
     public Patient getPatientById(String patientId) {
@@ -98,11 +100,11 @@ public class PatientService {
                 .toList();
         patient.addFormsAssignment(formAssignments);
         patientRepo.save(patient);
-//        try{
-//            notificationService.sendCommonMessage("A trabajar", "Tu terapeuta te ha asignado ejercicios para practicar.", patient.getFcmToken());
-//        }catch (Exception e){
-//            log.error("Error while notificating: {}",e.toString());
-//        }
+        try{
+            notificationService.sendCommonMessage("A trabajar", "Tu terapeuta te ha asignado cuestionarios para practicar.", patient.getFcmToken());
+        }catch (Exception e){
+            log.error("Error while notificating: {}",e.toString());
+        }
     }
 
 
@@ -127,10 +129,20 @@ public class PatientService {
 
         patient.addExercisesAssignment(exerciseAssignments);
         patientRepo.save(patient);
-//        try{
-//            notificationService.sendCommonMessage("A trabajar", "Tu terapeuta te ha asignado ejercicios para practicar.", patient.getFcmToken());
-//        }catch (Exception e){
-//            log.error("Error while notificating: {}",e.toString());
-//        }
+        try{
+            notificationService.sendCommonMessage("A trabajar", "Tu terapeuta te ha asignado ejercicios para practicar.", patient.getFcmToken());
+        }catch (Exception e){
+            log.error("Error while notificating: {}",e.toString());
+        }
+    }
+
+    public void setFcmToken(Patient patient, String fcmToken) {
+        patient.setFcmToken(fcmToken);
+        patientRepo.save(patient);
+    }
+
+    public void setFcmTokenTherapist(Patient patient, String fcmTokenTherapist) {
+        patient.setFcmTokenTherapist(fcmTokenTherapist);
+        patientRepo.save(patient);
     }
 }
